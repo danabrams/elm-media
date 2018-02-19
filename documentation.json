@@ -1,0 +1,355 @@
+[
+  {
+    "name": "Media",
+    "comment": " This is a very experimental attempt to wrap the HTML5 Media API,\nmaking it possible to write more sophisticated audio and video players\nin elm. Let me reiterate, this is experiemental, and not nearly ready\nfor production. Use at your peril.\n\nThis library is helpful if you want to add some basic commands to an\naudio or video player, or if you want be an abstration, such as a\nreusable view, to provide more functionality than the browser's built-in\nmedia player.\n\nMedia is an interesting element to wrap in elm, because it inherently has\nstate. If the player is playing, its currentTime and duration, and other\nproperties may change regardless of user interaction. I tried to follow\nthe elm guidelines and believe this should be a subscription, returning\nstate every returnAnimationFrame, but honestly, Effect Managers are beyond\nme at this point, and I need some help to implement this. For the time being\nI'm using the getState function as a workaround.\n\nIt uses native code to return the record State which is a pretty close\nmapping to the properties of the HTMLMediaElement. (I would love to\nreplace this with a JSON decoder, and originally prototyped this way, but\ncannot figure out how to bring TimeRanges objects into elm without\nwriting a native TimeRanges decoder--which may happen in the future).\n\nIt also uses native code to wrap the basic HTMLMediaElement methods:\nplay, pause, load, fastSeek, and canPlayType. This is\nunavoidable. It also uses native code for the function seek. There might\nbe an alternative way to do this using Html.Attributes.property, but I\nhaven't figured it out yet.\n\nAll of these functions are Tasks, and perform checks in the native code\nto try to catch errors.\n\n###Media.State\n@docs State\n\n###Other Types\n@docs Id, ElementType, NetworkState, ReadyState, MediaError, TimeRange, TimeRanges, Error, CanPlay, AudioTrack, AudioTrackList, Playback, Volume\n\n###Video Types\n@docs VideoExtra, VideoTrack, VideoTrackList, VideoPlaybackQuality\n\n###Helpers\n@docs muted\n\n###Tasks\n@docs getState, play, pause, load, fastSeek, canPlayType, seek\n\n###Subscription\n@docs subscribe\n\n",
+    "aliases": [
+      {
+        "name": "AudioTrack",
+        "comment": " This represents an audio track. Media, especially video, can have multiple audio tracks, such as an alternative language, or a director's commentary.\n",
+        "args": [],
+        "type": "{ enabled : Bool , id : String , kind : String , label : String , language : String }"
+      },
+      {
+        "name": "AudioTrackList",
+        "comment": " The List of AudioTracks\n",
+        "args": [],
+        "type": "List Media.AudioTrack"
+      },
+      {
+        "name": "Id",
+        "comment": " String representing the Dom Id of your media element.\n\n**Important:** Please, please, please use unique Id's for your media elements. We use the Id to find the element to run Tasks like play, load, and getState. Media.Events events also currently return an Id. Please let them be unique.\n\n",
+        "args": [],
+        "type": "String"
+      },
+      {
+        "name": "State",
+        "comment": " The core record of the media library. This represents the state of an HTMLMediaElement at a given moment. getState and subscribe both return a state record. In other words, this is a record representing the current state of side effects on a media object\n\n**Important:** Please make sure to give your audio and video elements a unique Id.\n\n",
+        "args": [],
+        "type": "{ element : Media.ElementType , id : Media.Id , audioTracks : Media.AudioTrackList , buffered : Media.TimeRanges , controls : Bool , currentSource : String , currentTime : Time.Time , duration : Time.Time , loop : Bool , networkState : Media.NetworkState , playback : Media.Playback , playbackRate : Float , played : Media.TimeRanges , readyState : Media.ReadyState , seekable : Media.TimeRanges , seeking : Bool , volume : Media.Volume }"
+      },
+      {
+        "name": "TimeRange",
+        "comment": " Represents a start and end time within the duration of the media source. Does not necessarily (or usually) represent the duration of the media source itself.\n\nExamples include the sections of a media source that are buffered, the sections that are seekable, etc.\n\n",
+        "args": [],
+        "type": "{ start : Time.Time, end : Time.Time }"
+      },
+      {
+        "name": "TimeRanges",
+        "comment": " A list of TimeRanges. Usually you will just have one, but in some examples, an attribute of the media element may have more than one valid TimeRange.\n\nFor instance, If you are playing a video, and buffer the first two minutes, before jumping to five minutes in and buffering another two minutes, you may have a buffered of [{start:0, end: 120}, {start: 300, end: 420}].\n\n",
+        "args": [],
+        "type": "List Media.TimeRange"
+      },
+      {
+        "name": "VideoExtra",
+        "comment": " These are a set of extra properties unique to HTMLVideoElement. No quality information on browsers that don't support MSE, and VideoTrackList may be empty if the media hasn't yet loaded. Height and Width represent the height and width of the video, not the player.\n",
+        "args": [],
+        "type": "{ height : Int , width : Int , quality : Maybe.Maybe Media.VideoPlaybackQuality , tracks : Maybe.Maybe Media.VideoTrackList }"
+      },
+      {
+        "name": "VideoPlaybackQuality",
+        "comment": " Represents a VideoPlaybackQuality instance, which lets you know how well the browser is playing back a given resource.\n",
+        "args": [],
+        "type": "{ creationTime : Time.Time , totalFrames : Int , dropped : Int , corrupted : Int }"
+      },
+      {
+        "name": "VideoTrack",
+        "comment": " Same as AudioTrack, but for video. Unlike audio, video can have only one currently playing track, so it has a selected field instead of an enabled field.\n",
+        "args": [],
+        "type": "{ selected : Bool , id : String , kind : String , label : String , language : String }"
+      },
+      {
+        "name": "VideoTrackList",
+        "comment": " A list of the VideoTracks. Also includes the currently selected track.\n",
+        "args": [],
+        "type": "{ list : List Media.VideoTrack, selected : Media.VideoTrack }"
+      }
+    ],
+    "types": [
+      {
+        "name": "CanPlay",
+        "comment": " These are the three possible results of canPlayType.\n\nProbably: This source is probably a playable type (probably because media can have all sorts of problem and browser support is all over the place)\nMaybe: The player can try to play the media, but until it does, it has no idea where it will play or not\nNo: The media definitely cannot be played\n\n",
+        "args": [],
+        "cases": [
+          [
+            "Probably",
+            []
+          ],
+          [
+            "Maybe",
+            []
+          ],
+          [
+            "No",
+            []
+          ]
+        ]
+      },
+      {
+        "name": "ElementType",
+        "comment": " Represents the two possible types of elements (audio & video). Video type also carries a VideoOnlyProperties record, which are properties unique to the HTMLVideoElement\n",
+        "args": [],
+        "cases": [
+          [
+            "Audio",
+            []
+          ],
+          [
+            "Video",
+            [
+              "Media.VideoExtra"
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "Error",
+        "comment": " These are errors thrown by the tasks defined in this module.\n\nNotFound: No element with that Id was found. Returns the Id provided\nNotMediaElement: The element found with that Id was not an HTMLMediaElement. Returns the Id provided and the constructor of the element found with that id\nPlayPromiseFailure: On modern browsers, Play() returns a promise.\n\n",
+        "args": [],
+        "cases": [
+          [
+            "NotFound",
+            [
+              "Media.Id"
+            ]
+          ],
+          [
+            "NotMediaElement",
+            [
+              "Media.Id",
+              "String"
+            ]
+          ],
+          [
+            "PlayPromiseFailure",
+            [
+              "String"
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "MediaError",
+        "comment": " These are the errors the media player itself might throw. The errors include a human readable string with specific diagnostic information, passed from the browser itself.\n\nAborted: Fetching of the media resource was aborted by user request\nNetwork: A Network error occured that prevented the browser from fetching the media, despite it having been previously available\nDecode: The browser is unable to decode the media, despite it previously having been supported\nUnsupported: The resource or media provider object is not supported or is otherwise unsuitable\n\n",
+        "args": [],
+        "cases": [
+          [
+            "Aborted",
+            [
+              "String"
+            ]
+          ],
+          [
+            "Network",
+            [
+              "String"
+            ]
+          ],
+          [
+            "Decode",
+            [
+              "String"
+            ]
+          ],
+          [
+            "Unsupported",
+            [
+              "String"
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "NetworkState",
+        "comment": " Represents the four possible states of a media player loading\ndata from the media file:\n\nEmpty: No data yet. ReadyState is HaveNothing\nIdle: Media Element is active and has a resource, but is not currently using the network to load it|\nLoading: Media Element is currently downloading data\nNoSource: No Media Element Source found\n\n",
+        "args": [],
+        "cases": [
+          [
+            "Empty",
+            []
+          ],
+          [
+            "Idle",
+            []
+          ],
+          [
+            "DataLoading",
+            []
+          ],
+          [
+            "NoSource",
+            []
+          ]
+        ]
+      },
+      {
+        "name": "Playback",
+        "comment": " Current Playback state of the media player. Error represents a MediaError, thrown by the browser, not an Error thrown by the tasks in this module.\n",
+        "args": [],
+        "cases": [
+          [
+            "Playing",
+            []
+          ],
+          [
+            "Paused",
+            []
+          ],
+          [
+            "Buffering",
+            []
+          ],
+          [
+            "Loading",
+            []
+          ],
+          [
+            "Ended",
+            []
+          ],
+          [
+            "Error",
+            [
+              "Media.MediaError"
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "ReadyState",
+        "comment": " Representation of the ReadyState of Media data, which indicates when it will be ready to play.\n\nHaveNothing: No information is available about the media resource\nHaveMetadata: Enough information is available that metadata attributes are initialized.\nHaveCurrentData: Enough data is available to play the current frame, but only the current frame.\nHaveFutureData: Data beyond the current frame is available, but not the entire source. May be as little as two frames.\nHaveEnoughData: Enough data is available that if downloading continues at current data rate, user will be able to play until the end of the source without interruption\n\n",
+        "args": [],
+        "cases": [
+          [
+            "HaveNothing",
+            []
+          ],
+          [
+            "HaveMetadata",
+            []
+          ],
+          [
+            "HaveCurrentData",
+            []
+          ],
+          [
+            "HaveFutureData",
+            []
+          ],
+          [
+            "HaveEnoughData",
+            []
+          ]
+        ]
+      },
+      {
+        "name": "Volume",
+        "comment": " Represents a volume of between 0.0 and 1.0, or a Muted State\n",
+        "args": [],
+        "cases": [
+          [
+            "Volume",
+            [
+              "Float"
+            ]
+          ],
+          [
+            "Muted",
+            []
+          ]
+        ]
+      }
+    ],
+    "values": [
+      {
+        "name": "canPlayType",
+        "comment": " Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.\n",
+        "type": "Media.Id -> String -> Task.Task Media.Error Media.CanPlay"
+      },
+      {
+        "name": "fastSeek",
+        "comment": " Same as seek, but gives up some precision for speed.\n",
+        "type": "Media.Id -> Time.Time -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "getState",
+        "comment": " Takes an Id, and returns a State of it. Can result in Error if the Id is not found, or the element found by that Id isn't an HTMLMediaElement.\n",
+        "type": "Media.Id -> Task.Task Media.Error Media.State"
+      },
+      {
+        "name": "load",
+        "comment": " Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "muted",
+        "comment": " A helper function for easily setting the muted property on a media element.\n\n    player =\n        audio [ id \"player1\", controls True, muted False, src \"audiofile.mp3\" ]\n            []\n\n",
+        "type": "Bool -> Html.Attribute msg"
+      },
+      {
+        "name": "pause",
+        "comment": " Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "play",
+        "comment": " Tries to take an Id and switch it to a Playing state of Playback. Can fail if the Id isn't found, isn't an HTMLMediaElement, or fails to play.\n",
+        "type": "Media.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "seek",
+        "comment": " Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.Id -> Time.Time -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "subscribe",
+        "comment": " **Very Important -- Not Yet Implemented -- Do Not Use**\n\nA media element has many attributes that will update themselves without any user input. This is a serious side-effect. This function lets you subscribe to its current State, delivered with each Animation Frame, via requestAnimationFrame().\n\n    main =\n        Html.Program\n            { init = init\n            , view = view\n            , update = update\n            , subscriptions = subscription\n            }\n\n        subscription = Media.subscribe \"audioPlayer\" updateMediaState\n\nYou can also get these updates using getState after a variety of events in Media.Events, but subscription should be your prefered way to keep track of the side effects.\n\n",
+        "type": "Media.Id -> (Media.Id -> msg) -> Platform.Sub.Sub msg"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  },
+  {
+    "name": "Media.Events",
+    "comment": " ###Events\n@docs onPlaying, onPaused, onTimeUpdate, onDurationChange, onSeeked, onCanPlayThrough\n\n###Helpers\n@docs targetId\n\n",
+    "aliases": [],
+    "types": [],
+    "values": [
+      {
+        "name": "onCanPlayThrough",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "onDurationChange",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "onPaused",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "onPlaying",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "onSeeked",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "onTimeUpdate",
+        "comment": " ",
+        "type": "(String -> msg) -> Html.Attribute msg"
+      },
+      {
+        "name": "targetId",
+        "comment": " ",
+        "type": "Json.Decode.Decoder String"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  }
+]

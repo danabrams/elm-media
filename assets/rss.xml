@@ -1,0 +1,1288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <atom:link rel="self" type="application/atom+xml" href="https://rss.simplecast.com/podcasts/3995/rss" title="MP3 Audio"/>
+    <title>Elm Town</title>
+    <generator>https://simplecast.com</generator>
+    <description>A podcast about the people making and using the Elm language, and the things that they do.</description>
+    <copyright>Copyright Murphy Randle</copyright>
+    <language>en</language>
+    <pubDate>Wed, 07 Feb 2018 23:24:00 +0000</pubDate>
+    <lastBuildDate>Wed, 07 Feb 2018 23:34:44 +0000</lastBuildDate>
+    <link>https://elmtown.github.io/</link>
+    <image>
+      <url>https://media.simplecast.com/podcast/image/3995/1513463255-artwork.jpg</url>
+      <title>Elm Town</title>
+      <link>https://elmtown.github.io/</link>
+    </image>
+    <itunes:new-feed-url>https://rss.simplecast.com/podcasts/3995/rss</itunes:new-feed-url>
+    <itunes:author>Murphy Randle</itunes:author>
+    <itunes:image href="https://media.simplecast.com/podcast/image/3995/1513463255-artwork.jpg"/>
+    <itunes:summary>A podcast about the people making and using the Elm language, and the things that they do.</itunes:summary>
+    <itunes:subtitle>A podcast about the people making and using the Elm language, and the things that they do..</itunes:subtitle>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:keywords></itunes:keywords>
+    <itunes:type>episodic</itunes:type>
+    <itunes:owner>
+      <itunes:name>Murphy Randle</itunes:name>
+      <itunes:email>murphyrandle@gmail.com</itunes:email>
+    </itunes:owner>
+    <itunes:category text="Technology"/>
+    <itunes:category text="Tech News"/>
+    <itunes:category text="Software How-To"/>
+    <item>
+      <title>Elm Town 27 - Murphy Randle's Story</title>
+      <guid isPermaLink="false">c2250ab6-3218-4343-89c2-5dfceff21802</guid>
+      <link>http://elmtown.audio/27-murphy-randle</link>
+      <description>Surprise! Mario Rogic is your host for this episode, because he's interviewing the normal host of the podcast, Murphy Randle.
+</description>
+      <content:encoded>
+        <![CDATA[<p>Surprise! Mario Rogic is your host for this episode, because he's interviewing the normal host of the podcast, Murphy Randle.  Listen to hear about Murphy's background in Animation, and how Murphy came to the world of Web development, and eventually started Elm Town!</p>
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(00:25:50) <a href="https://www.youtube.com/watch?v=-JlC2Q89yg4">Climbing Into Elm </a></li>
+</ul>
+
+
+<a name="Picks"></a>
+<h2>Picks</h2>
+
+<ul>
+<li>(00:39:15) <a href="https://www.scalyr.com">Scalyr</a></li>
+<li>(00:40:19) <a href="https://www.patreon.com/towncasts">Our Patreon</a></li>
+<li>(00:40:37) <a href="https://reason.town/">Reason Town</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Wed, 07 Feb 2018 23:24:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/27550e4a.mp3" length="40985895" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/111821/1518046334-artwork.jpg"/>
+      <itunes:duration>00:42:38</itunes:duration>
+      <itunes:summary>Surprise! Mario Rogic is your host for this episode, because he's interviewing the normal host of the podcast, Murphy Randle.
+</itunes:summary>
+      <itunes:subtitle>Surprise! Mario Rogic is your host for this episode, because he's interviewing the normal host of the podcast, Murphy Randle.
+</itunes:subtitle>
+      <itunes:keywords>murphy, murphy randle, mario, mario rogic, elm town, animation, pixar</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>27</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 26 - Swedish and Norwegian News with Noah Hall</title>
+      <guid isPermaLink="false">d3ffa6ac-452a-4ab1-9fa0-bd80f14eb1bb</guid>
+      <link>http://elmtown.audio/26-noah-hall</link>
+      <description>Murphy and Noah talk about Omni, MinE24, and server-side rendering with Elm.
+</description>
+      <content:encoded>
+        <![CDATA[<p>Murphy and Noah talk about Omni, MinE24, and server-side rendering with Elm.</p>
+
+<ul>
+<li>(00:04:53) <a href="http://omni.se/">Omni</a></li>
+<li>(00:06:46) <a href="https://e24.no/">e24</a></li>
+<li>(00:07:33) <a href="https://play.google.com/store/apps/details?id=no.e24dinepenger.e24&amp;hl=en">MinE24</a></li>
+<li>(00:08:13) <a href="https://play.google.com/store/apps/details?id=se.omniekonomi&amp;hl=en">Omni Ekonomi</a></li>
+<li>(00:15:31) <a href="https://www.npmjs.com/package/elm-static-html-lib">elm-static-html-lib</a></li>
+<li>(00:32:29) Picks</li>
+<li>(00:32:36) <a href="https://discourse.elm-lang.org/">elm-discourse</a></li>
+<li>(00:33:49) <a href="https://www.typescriptlang.org/">typescript</a></li>
+<li>(00:35:03) <a href="https://reasonml.github.io/">ReasonML</a></li>
+<li>(00:35:49) <a href="https://github.com/rtfeldman/elm-css">elm-css</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 02 Feb 2018 04:18:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/408afdcd.mp3" length="35203430" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/110278/1517545734-artwork.jpg"/>
+      <itunes:duration>00:36:37</itunes:duration>
+      <itunes:summary>Murphy and Noah talk about Omni, MinE24, and server-side rendering with Elm.
+</itunes:summary>
+      <itunes:subtitle>Murphy and Noah talk about Omni, MinE24, and server-side rendering with Elm.
+</itunes:subtitle>
+      <itunes:keywords>noah hall, server-side rendering, omni, mine24</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>26</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 25 - The Evolution of an API, Part 2, with Richard Feldman</title>
+      <guid isPermaLink="false">0e5c3b51-7a0f-4446-b647-391968bebbea</guid>
+      <link>http://elmtown.audio/evolution-api-part-2-richard-feldman</link>
+      <description>Richard tells Murphy all about how the API for elm-css has grown and drastically changed over the years.
+</description>
+      <content:encoded>
+        <![CDATA[<p>This is an extra long episode, so get ready!</p>
+
+<ul>
+<li>(00:03:42) <a href="https://www.manning.com/books/elm-in-action">elm in action</a></li>
+<li>(00:03:49) <a href="https://frontendmasters.com/courses/elm/">front-end masters</a></li>
+<li>(00:07:00) <a href="https://github.com/rtfeldman/elm-css">elm-css</a></li>
+<li>(00:07:07) <a href="https://github.com/elm-community/elm-test">elm-test</a></li>
+<li>(00:07:28) <a href="http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest">decode-pipeline</a></li>
+<li>(00:41:02) <a href="https://twitter.com/vjeux?lang=en">@vjeux</a></li>
+<li>(00:45:23) <a href="https://github.com/css-modules/css-modules">css-modules</a></li>
+<li>(00:48:11) <a href="http://package.elm-lang.org/packages/abadi199/elm-creditcard/latest">abadi199/elm-creditcard</a></li>
+<li>(00:52:09) <a href="https://medium.com/dailyjs/high-performance-dynamic-styles-db28c873940">blog post about performant css and animations by Oleg Slobodskoi</a></li>
+<li>(01:09:39) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/latest">style-elements</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 19 Jan 2018 04:52:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/3652010f.mp3" length="82684390" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/106181/1516337938-artwork.jpg"/>
+      <itunes:duration>01:24:40</itunes:duration>
+      <itunes:summary>Richard tells Murphy all about how the API for elm-css has grown and drastically changed over the years.
+</itunes:summary>
+      <itunes:subtitle>Richard tells Murphy all about how the API for elm-css has grown and drastically changed over the years.
+</itunes:subtitle>
+      <itunes:keywords>elm-css,api</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>25</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 24 - Wonktonk with Jonathan Fishbein</title>
+      <guid isPermaLink="false">40937e7b-d03e-4023-b5ed-8d21f1ba3cd7</guid>
+      <link>http://elmtown.audio/24-wonk-tonk</link>
+      <description>Murphy chats with Jonathan Fishbein about choosing Elm, getting started, and using Elm for the startup company Wonktonk.
+</description>
+      <content:encoded>
+        <![CDATA[<p>Murphy chats with Jonathan Fishbein about choosing Elm, getting started, and using Elm for the startup company Wonktonk.</p>
+
+<hr />
+
+<ul>
+<li>(0:0:45) <a href="https://blog.codepen.io/radio/">Codepen Radio</a></li>
+<li>(0:4:54) <a href="https://wonktonk.com/">Wonktonk</a></li>
+<li>(0:16:38) <a href="http://underscorejs.org/">Underscore</a></li>
+<li>(0:16:39) <a href="https://lodash.com/">Lodash</a></li>
+<li>(0:16:42) <a href="http://ramdajs.com/">Ramda</a></li>
+<li>(0:22:37) <a href="https://webpack.js.org/">Webpack</a></li>
+<li>(0:25:10) <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">Egghead Videos</a></li>
+<li>(0:26:53) <a href="https://frontendmasters.com/courses/elm/">Richard's Front-End Masters</a></li>
+<li>(0:27:20) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/4.2.1">style-elements</a></li>
+<li>(0:30:02) <a href="http://package.elm-lang.org/packages/jonathanfishbein1/elm-comment/latest">elm-comment</a></li>
+<li>(0:32:58) <a href="https://soundcloud.com/lambda-cast">Lamda Cast</a></li>
+<li>(0:33:20) <a href="https://www.amazon.com/Becoming-Steve-Jobs-Evolution-Visionary/dp/0385347421">Becoming Steve Jobs</a></li>
+<li>(0:34:32) <a href="https://reasonml.github.io/">ReasonML</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 12 Jan 2018 04:56:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/65f8220a.mp3" length="35331743" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/105058/1515733255-artwork.jpg"/>
+      <itunes:duration>00:36:45</itunes:duration>
+      <itunes:summary>Murphy chats with Jonathan Fishbein about choosing Elm, getting started, and using Elm for the startup company Wonktonk.
+</itunes:summary>
+      <itunes:subtitle>Murphy chats with Jonathan Fishbein about choosing Elm, getting started, and using Elm for the startup company Wonktonk.
+</itunes:subtitle>
+      <itunes:keywords>elm, wonktonk, fishbein, jonathan, getting started</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>24</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 23 - The Evolution of an API</title>
+      <guid isPermaLink="false">b1c166cb-db76-4e9a-9ea5-895728a7327f</guid>
+      <link>http://elmtown.audio/elm-town-23-the-evolution-of-an-api</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Matthew Griffith</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:05:57) <a href="https://github.com/mdgriffith/elm-style-animation">elm-style-animation</a></li>
+<li>(0:06:12) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/latest">style-elements</a></li>
+<li>(0:12:03) <a href="http://elmtown.audio/2017/01/02/2017-1-02-Testing-in-Elm-Town-Ep-8.html">Elm Town Episode 8 with Max Goldstien</a></li>
+<li>(0:16:10) <a href="https://github.com/avh4/elm-format">elm-format</a></li>
+<li>(0:19:24) <a href="https://groups.google.com/forum/#!forum/elm-discuss">elm-discuss</a></li>
+<li>(0:44:20) <a href="https://terezka.github.io/elm-plot/">elm-plot</a></li>
+<li>(0:45:53) <a href="https://www.youtube.com/watch?v=G-GhUxeYc1U">Teaching Elm to Beginners</a></li>
+<li>(0:46:32) <a href="https://en.wikipedia.org/wiki/If_You_Give_a_Mouse_a_Cookie">Book: If you Give a Mouse a Cookie</a></li>
+<li>(0:48:56) <a href="https://www.codenewbie.org/basecs">Matt : Base CS Podcast</a></li>
+<li>(0:49:41) <a href="eg:%20%22SVG%20Can%20Do%20That%22%20https://www.youtube.com/watch?v=jLgb3CVVTRw">Matt : Sarah Drasner's assorted works</a></li>
+<li>(0:50:30) <a href="https://medium.com/@ckoster22/advanced-types-in-elm-phantom-types-808044c5946d">Murphy: Charlie K on Phantom Types</a></li>
+<li>(0:51:28) <a href="http://package.elm-lang.org/packages/joneshf/elm-tagged/latest">Murphy: elm-tagged</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Sun, 17 Dec 2017 05:37:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/8205b055.mp3" length="54201347" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101026/1513489594-artwork.jpg"/>
+      <itunes:duration>00:56:24</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>23</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 22 - How Do I Write JS in Elm?</title>
+      <guid isPermaLink="false">26Z01S6X-HLG14I</guid>
+      <link>http://elmtown.audio/99e18f41</link>
+      <description>A conversation with Evan about how Elm is designed to interact with Javascript, and other topics.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li><a href="https://twitter.com/splodingsocks">Murphy Randle</a></li>
+<li><a href="https://twitter.com/czaplic">Evan Czaplicki</a></li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:11:15) <a href="http://mlton.org/">MLton - Language</a></li>
+<li>(1:00:28) Murphy: <a href="https://elmseeds.thaterikperson.com/">Elm Seeds</a></li>
+<li>(1:00:58) Evan: <a href="https://www.youtube.com/watch?v=P3pL85n9_5s">Murphy's elm-conf talk: The Importance of Ports</a></li>
+<li>(1:01:46) Evan: <a href="https://en.wikipedia.org/wiki/Adam_Curtis">Adam Curtis documentaries (century of self &amp; hyper-normalization)</a></li>
+</ul>
+
+
+<a name="Sponsors"></a>
+<h1>Sponsors</h1>
+
+<ul>
+<li><a href="https://dayoneapp.com">Day One</a></li>
+<li><a href="https://www.dailydrip.com/">Daily Drip</a></li>
+<li><a href="http://futurice.com/">Futurice</a></li>
+<li><a href="https://ellie-app.com/new">Ellie App</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Tue, 21 Nov 2017 18:06:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/99e18f41.mp3" length="60607407" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101014/1513463543-artwork.jpg"/>
+      <itunes:duration>01:03:05</itunes:duration>
+      <itunes:summary>A conversation with Evan about how Elm is designed to interact with Javascript, and other topics.
+</itunes:summary>
+      <itunes:subtitle>A conversation with Evan about how Elm is designed to interact with Javascript, and other topics.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>22</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 21 - Ellie!</title>
+      <guid isPermaLink="false">F7L77YTF-E4S4I</guid>
+      <link>http://elmtown.audio/3bdfc092</link>
+      <description>Murphy and Luke discuss Luke's community contribution, brilliant side-project, and our sponsor, Ellie.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li><a href="https://twitter.com/splodingsocks">Murphy Randle</a></li>
+<li>Luke Westby</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:21:00) Luke: <a href="https://github.com/prozacchiwawa/elm-basic-compile">Elm-Basic-Compile</a></li>
+<li>(0:44:16) Luke: <a href="https://glitch.com/">Glitch</a></li>
+<li>(0:46:08) Luke: <a href="http://knarf.english.upenn.edu/PShelley/anarchy.html">The Mask of Anarchy (Poem, content warning, historic and artistic descriptions of violence</a></li>
+<li>(0:46:29) Luke: <a href="http://www.codecommit.com/blog/java/understanding-and-applying-operational-transformation">Operational Transformations</a></li>
+<li>(0:47:23) Murphy: <a href="https://www.manning.com/books/elm-in-action">Elm in Action</a></li>
+<li>(0:47:52) Murphy: <a href="https://egghead.io/lessons/make-an-http-request-in-elm">Egghead.io lesson, Making an HTTP Request in Elm</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 25 Sep 2017 16:13:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/3bdfc092.mp3" length="48728171" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101012/1513463516-artwork.jpg"/>
+      <itunes:duration>00:50:42</itunes:duration>
+      <itunes:summary>Murphy and Luke discuss Luke's community contribution, brilliant side-project, and our sponsor, Ellie.
+</itunes:summary>
+      <itunes:subtitle>Murphy and Luke discuss Luke's community contribution, brilliant side-project, and our sponsor, Ellie.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>21</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 20 - Spotlight on Ossi Hanhinen</title>
+      <guid isPermaLink="false">FBBJVRRF-9LIK9</guid>
+      <link>http://elmtown.audio/a77cdef6</link>
+      <description>An insight into Ossi H's life, his projects, and his contributions to the Elm community.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle (on elm-slack as @splodingsocks)</li>
+<li>Ossi Hanhinen (on elm-slack as @ohanhi)</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:00:53) Elm Remote Meetup. (#remote-meetup on the Elm Slack)</li>
+<li>(0:32:17) <a href="https://www.youtube.com/watch?v=vpc80c5iC6k&amp;list=PLglJM3BYAMPH2zuz1nbKHQyeawE4SN0Cd&amp;index=2">Ossi's Elm Conf US Talk</a></li>
+<li>(0:44:45) Ossi: Watch Evan's conf talks, every one of them</li>
+<li>(0:45:11) Ossi: Learning by Teaching</li>
+<li>(0:46:59) <a href="https://github.com/Tradenomiliitto/tradenomiitti">Tradenomiitti</a></li>
+<li>(0:47:09) <a href="https://github.com/futurice/mibit">Mothers in business</a></li>
+<li>(0:49:27) Ossi: Foraging! Picking mushrooms</li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Tue, 19 Sep 2017 17:01:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/a77cdef6.mp3" length="49588331" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101013/1513463576-artwork.jpg"/>
+      <itunes:duration>00:51:36</itunes:duration>
+      <itunes:summary>An insight into Ossi H's life, his projects, and his contributions to the Elm community.
+</itunes:summary>
+      <itunes:subtitle>An insight into Ossi H's life, his projects, and his contributions to the Elm community.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>20</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 19 - Learning with Josh Robertson</title>
+      <guid isPermaLink="false">B9LJ4SUI-PA54S4I</guid>
+      <link>http://elmtown.audio/6b5eb2ca</link>
+      <description>Murphy and Josh Robertson talk about what it's like getting hired to an Elm job with no prior Elm knowledge.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Guests"></a>
+<h1>Guests</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Josh Robertson</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:13:08) <a href="https://frontendmasters.com/workshops/elm/">Elm front-end masters</a></li>
+<li>(0:30:16) <a href="https://www.brianthicks.com/post/2017/01/06/announcing-the-json-survival-kit/">JSON Survival Kit</a></li>
+<li>(0:38:00) <a href="http://package.elm-lang.org/packages/krisajenkins/remotedata/latest">Remote Data</a></li>
+<li>(0:40:28) <a href="https://youtu.be/HRJ_VjkmyiE?t=4853">Evan's React Rally Talk</a></li>
+<li>(0:40:50) <a href="https://frontendmasters.com/workshops/elm/">Elm front-end masters</a></li>
+<li>(0:41:13) <a href="https://nanobox.io/">Nanobox</a></li>
+<li>(0:43:24) <a href="https://twitter.com/hossman333">Josh twitter - @Hossman333</a></li>
+<li>(0:44:09) <a href="https://twitter.com/splodingsocks">@splodingsocks</a></li>
+<li>(0:44:20) <a href="http://www.elm-conf.us/">elm-conf US 2017</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 11 Sep 2017 16:28:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/6b5eb2ca.mp3" length="43461050" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101011/1513463498-artwork.jpg"/>
+      <itunes:duration>00:45:13</itunes:duration>
+      <itunes:summary>Murphy and Josh Robertson talk about what it's like getting hired to an Elm job with no prior Elm knowledge.
+</itunes:summary>
+      <itunes:subtitle>Murphy and Josh Robertson talk about what it's like getting hired to an Elm job with no prior Elm knowledge.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>19</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 18 - Spotlight on Mario Rogic</title>
+      <guid isPermaLink="false">H375UKHJ-YAATT9</guid>
+      <link>http://elmtown.audio/02549ea8</link>
+      <description>A personal chat with Mari Rogic about his work with Elm, and his path to becoming the developer he is today.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Mario Rogic</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:54:42) <a href="https://www.youtube.com/watch?v=IcgmSRJHu_8">Making Impossible States Impossible</a></li>
+<li>(0:57:18) <a href="https://elmlang.herokuapp.com/">#conferences</a></li>
+<li>(0:57:39) Mario is <code>@supermario</code> on Elm slack</li>
+<li>(0:57:50) The elm-export package (<a href="https://hackage.haskell.org/package/elm-export">https://hackage.haskell.org/package/elm-export</a>)</li>
+<li>(0:58:57) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/latest">mdgriffith/style-elements</a></li>
+<li>(0:59:24) <a href="http://chimera.labs.oreilly.com/books/1230000000929">Parallel and Concurrent Programming in Haskell</a></li>
+<li>(0:00:43) <a href="https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555">Thinking Fast &amp; Slow</a></li>
+<li>(1:01:58) <a href="https://www.amazon.com/How-Draw-Almost-Everything-Illustrated/dp/1631591401">How to draw almost everything</a></li>
+<li>(1:03:34) Mario is @supermario on elm-lang Slack, <a href="https://twitter.com/realmario">@realmario</a> on Twitter, and <a href="https://github.com/supermario">@supermario</a> on GitHub</li>
+<li>(1:04:19) Murphy is @splodingsocks everywhere, including <a href="https://twitter.com/splodingsocks">Twitter</a>, <a href="https://github.com/splodingsocks">GitHub</a>, and Elm slack.</li>
+<li>Mario’s Talk at Elm Europe: <a href="https://youtu.be/EyBtz8xZz7U">https://youtu.be/EyBtz8xZz7U</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 28 Aug 2017 22:41:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/02549ea8.mp3" length="62264197" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101010/1513463555-artwork.jpg"/>
+      <itunes:duration>01:04:48</itunes:duration>
+      <itunes:summary>A personal chat with Mari Rogic about his work with Elm, and his path to becoming the developer he is today.
+</itunes:summary>
+      <itunes:subtitle>A personal chat with Mari Rogic about his work with Elm, and his path to becoming the developer he is today.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>18</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 17 - elm-style-elements with Matthew Griffith</title>
+      <guid isPermaLink="false">GHQ5TEFK-27QFR</guid>
+      <link>http://elmtown.audio/04a52588</link>
+      <description>A chat with Matthew Griffith about his library, Elm Style Elements.
+</description>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Matthew Griffith</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:45:34) Matt: <a href="https://www.youtube.com/watch?v=kk0WRHV_vt8&amp;list=PL850qmLJBqCsgG53TS6-kc7v-7FhaCXZL">We like it here by Snarky Puppy</a></li>
+<li>(0:46:49) Scala <a href="http://underscore.io/books/">Underscore.io</a></li>
+<li>Elm Europe talk: <a href="https://www.youtube.com/watch?v=NYb2GDWMIm0">https://www.youtube.com/watch?v=NYb2GDWMIm0</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 31 Jul 2017 21:40:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/04a52588.mp3" length="47501461" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101009/1513463482-artwork.jpg"/>
+      <itunes:duration>00:49:26</itunes:duration>
+      <itunes:summary>A chat with Matthew Griffith about his library, Elm Style Elements.
+</itunes:summary>
+      <itunes:subtitle>A chat with Matthew Griffith about his library, Elm Style Elements.
+</itunes:subtitle>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>19</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 16 - Elm Conf US with Brian Hicks and Luke Westby</title>
+      <guid isPermaLink="false">7B8V0VBK-CMOBT9</guid>
+      <link>http://elmtown.audio/4cdc1e70</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Brian Hicks</li>
+<li>Luke Westby</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:10:58) <a href="https://elm-conf.us">elm-conf.us</a></li>
+<li>(0:14:09) <a href="http://stl-tech.github.io/">STL Tech Slack</a></li>
+<li>(0:14:13) <a href="https://slack.utahjs.com/">Utah JS Slack</a></li>
+<li>(0:14:24) <a href="http://chicagotech.herokuapp.com/">Chicago Slack</a></li>
+<li>(0:36:12) <a href="https://www.youtube.com/watch?v=YuGVC8VqXz0">Ravi Chugh</a></li>
+<li>(0:42:20) <a href="webcal://www.elm-conf.us/talks/index.ics">Calendar for Elm Conf US</a></li>
+<li>(0:43:07) <a href="https://www.amazon.com/October-Russian-Revolution-China-Mi%C3%A9ville/dp/1784782777">Luke: October - The story of the Russian Revolution</a></li>
+<li>(0:43:28) <a href="https://twitter.com/eeue56">Luke: Noah Hall</a></li>
+<li>(0:44:04) <a href="http://www.revolutionspodcast.com/">Brian: Revolutions Podcast</a></li>
+<li>(0:44:12) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/latest">Brian: mdgriffith/style-elements</a></li>
+<li>(0:45:33) <a href="https://github.com/jiaweihli/monapt">Monapt &amp; Typescript</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 07 Jul 2017 15:25:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/4cdc1e70.mp3" length="45543740" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101008/1513463528-artwork.jpg"/>
+      <itunes:duration>00:47:23</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>16</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 15 - Spotlight on Hardy Jones</title>
+      <guid isPermaLink="false">94ZINYSO-1EB3XR</guid>
+      <link>http://elmtown.audio/6ca07961</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Hardy Jones</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:04:01) <a href="https://github.com/fantasyland/fantasy-land">Fantasyland</a></li>
+<li>(0:08:12) <a href="http://www.magicreadalong.com">Magic Read Along</a></li>
+<li>(0:13:24) <a href="http://www.internethistorypodcast.com/">Internet History Podcast</a></li>
+<li>(0:42:17) <a href="http://ramdajs.com/">Ramda</a></li>
+<li>(0:42:30) <a href="https://github.com/sanctuary-js/sanctuary">Sanctuary</a></li>
+<li>(0:42:36) <a href="https://github.com/fantasyland/fantasy-land">Fantasyland</a></li>
+<li>(0:44:33) <a href="https://forwardjs.com/">Forward.js</a></li>
+<li>(1:01:35) Hardy: <a href="http://www.magicreadalong.com/episode/53">Magic Read Along  - Like a Parent at a Beauty Pageant</a></li>
+<li>(1:03:09) Murphy : <a href="https://www.elm-conf.us/">Elm Conf US</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Thu, 15 Jun 2017 19:33:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/6ca07961.mp3" length="61448759" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101007/1513463456-artwork.jpg"/>
+      <itunes:duration>01:03:57</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>15</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 15 - Preroll and Correction</title>
+      <guid isPermaLink="false">C90OWHHW-3D0WWMI</guid>
+      <link>http://elmtown.audio/14e4da79</link>
+      <content:encoded>
+        <![CDATA[<p>Hi, everyone! Elm Town 15 will be released in a few minutes. I wanted to apologize for the accidentally horrid sound quality on my microphone, and to let you know that the coupon code for Daily Drip is now "elmtown-2017". Enjoy!</p>
+]]>
+      </content:encoded>
+      <pubDate>Thu, 15 Jun 2017 19:27:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/14e4da79.mp3" length="1484988" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101006/1513463505-artwork.jpg"/>
+      <itunes:duration>00:01:30</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>trailer</itunes:episodeType>
+      <itunes:episode>15</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 14 - Spotlight on Kevin Yank</title>
+      <guid isPermaLink="false">5KUCXL3B-40CZ0K9</guid>
+      <link>http://elmtown.audio/e9dd3aad</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Kevin Yank</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(59:15:05) <a href="https://www.youtube.com/watch?v=kuOCx0QeQ5c">Developer Happiness on the Front End with Elm</a></li>
+<li>(1:00:03) <a href="https://www.youtube.com/watch?v=a0039_JRAQo">Putting the fun in functional with Elm - Tereza Sokol</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 05 Jun 2017 19:46:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/e9dd3aad.mp3" length="60270114" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101005/1513463434-artwork.jpg"/>
+      <itunes:duration>01:02:44</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>14</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 13 - History of Ports</title>
+      <guid isPermaLink="false">1R7EN85M-SJUG14I</guid>
+      <link>http://elmtown.audio/b06499a6</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Evan Czaplicki</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:02:04) <a href="https://twitter.com/ohanhi/status/859664021150158849">Futurice app</a></li>
+<li>(0:35:52) <a href="http://www.di.ens.fr/~pouzet/bib/chap_lucid_synchrone_english_iste08.pdf">Lucid Synchron</a></li>
+<li>(1:00:06) <a href="http://www.mlton.org/">MLton</a></li>
+<li>(1:04:06) <a href="https://t.co/pt9WgUYHJP">Noodle salad with a peanut sauce</a></li>
+<li>(1:04:25) <a href="https://www.youtube.com/watch?v=-v-rIWUAQuI&amp;feature=youtu.be">The Coup</a></li>
+<li>(1:04:56) <a href="https://www.vive.com/us/">HTC Vive</a></li>
+<li><a href="https://www.youtube.com/watch?v=2egL4y_VpYg&amp;feature=youtu.be">Stories from the C++ Creator</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Tue, 09 May 2017 19:16:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/b06499a6.mp3" length="63435319" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101004/1513463488-artwork.jpg"/>
+      <itunes:duration>01:06:01</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>13</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 12 - History of Records</title>
+      <guid isPermaLink="false">H6D8OTOF-OTUIK9</guid>
+      <link>http://elmtown.audio/5bb8e022</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Evan Czaplicki</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:00:15) <a href="http://softskills.audio/">Soft Skills Engineering Podcast</a></li>
+<li>(0:00:50) <a href="https://osloelmday.no/">Oslo Elm Day &amp; Elm Conf Europe</a></li>
+<li>(0:01:21) <a href="https://www.elm-conf.us/">Elm Conf USA</a></li>
+<li>(0:02:13) <a href="https://ellie-app.com/new">Ellie</a></li>
+<li>(0:12:52) <a href="https://www.microsoft.com/en-us/research/publication/extensible-records-with-scoped-labels/">Extensible records with scoped labels by Daan Leijen</a></li>
+<li>(0:46:36) <a href="https://www.infoq.com/presentations/Simple-Made-Easy">Simple made easy</a></li>
+<li>(1:00:11) <a href="http://www.goodreads.com/book/show/920442.Public_Opinion">Public Opinion - Lipman</a></li>
+<li>(1:01:06) Body weight exercise</li>
+<li>(1:06:13) <a href="https://www.kinesis-ergo.com/shop/advantage2/">Kinesis Advantage Keyboard - use coupon code <code>elmtown</code></a></li>
+<li>(1:11:50) <a href="https://www.brianthicks.com/post/2017/01/06/announcing-the-json-survival-kit/">json survival kit - use coupon code <code>elmtown</code></a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Wed, 26 Apr 2017 18:05:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/5bb8e022.mp3" length="72139319" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101003/1513463414-artwork.jpg"/>
+      <itunes:duration>01:15:05</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>12</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 11 - History of Signals</title>
+      <guid isPermaLink="false">IYSEN88S-85MI</guid>
+      <link>http://elmtown.audio/364731d3</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Evan Czaplicki</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:10:37) <a href="http://haskell.cs.yale.edu/?post_type=publication&amp;p=215">Functional Reactive Animation</a></li>
+<li>(0:37:06) <a href="http://slawrence.github.io/vessel/">Vessel</a></li>
+<li>(1:08:26) <a href="http://rise4fun.com/Koka/tutorial/guide">Koka</a></li>
+<li>(1:11:10) <a href="https://en.wikipedia.org/wiki/Let's_Get_Free">Let's get free : Dead Pres</a></li>
+<li>(1:13:16) <a href="http://package.elm-lang.org/packages/krisajenkins/remotedata/latest">Remote Data</a></li>
+<li>(1:13:42) <a href="http://blog.jenkster.com/2016/06/how-elm-slays-a-ui-antipattern.html">How Elm Slays a UI Anti-Pattern</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 03 Apr 2017 13:31:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/364731d3.mp3" length="73740521" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101001/1513463391-artwork.jpg"/>
+      <itunes:duration>01:16:46</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>11</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 10 - About being "in production"</title>
+      <guid isPermaLink="false">DWGSOAGX-03SOR</guid>
+      <link>http://elmtown.audio/8b3a2b12</link>
+      <content:encoded>
+        <![CDATA[<a name="Guests"></a>
+<h1>Guests</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Richard Feldman</li>
+<li>Kevin Yank</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:04:31) <a href="https://www.cultureamp.com/">Culture Amp</a></li>
+<li>(0:17:26) <a href="https://github.com/avh4/elm-format">elm-format</a></li>
+<li>(0:54:09 ) <a href="https://www.youtube.com/watch?v=3FNKaGm3gk0">Elm and React in Production</a></li>
+<li>(0:55:49) kevin: <a href="Elm%20search%20http://klaftertief.github.io/package.elm-lang.org/">Elm-search</a></li>
+<li>(0:57:07) Kevin: <a href="The%20Basics%20https://www.lynda.com/Sublime-Text-tutorials/Learn-Sublime-Text-3-Basics/513594-2.html">Learn Sublime Text 3</a></li>
+<li>(0:58:54) Kevin: <a href="http://jlongster.com/A-Prettier-Formatter">Prettier JavaScript Formatter</a></li>
+<li>(0:59:46) Kevin: <a href="http://elm-tutorial.org">Elm Tutorial by Sebastian Porto</a></li>
+<li>(1:01:47) Kevin: <a href="http://www.audible.com.au/pd/Biographies-Memoirs/The-Fifty-Year-Mission-The-Complete-Uncensored-Unauthorized-Oral-History-of-Star-Trek-The-First-25-Years-Audiobook/B01HTYLMWY">The Fifty-Year Mission: The Complete, Uncensored, Unauthorized Oral History of Star Trek (Audiobook)</a></li>
+<li>(1:03:14) Richard: <a href="https://www.youtube.com/watch?v=uEFrE6cgVNY">Evidence-Oriented Programming by Andreas Stefik</a></li>
+<li>(1:04:17) Richard: <a href="https://en.wikipedia.org/wiki/Public_Opinion_(book">Public Opinion by Walter Lippmann</a>)</li>
+<li>(1:05:27) Richard: <a href="https://frontendmasters.com/live-event/elm-live/">Frontend Masters 2-day Elm Workshop Recording</a></li>
+<li>(1:06:25) Murphy: <a href="https://www.autonomous.ai/office-chair">The ErgoChair from Autonomous</a></li>
+<li>(1:07:15) Murphy: <a href="https://www.omscs.gatech.edu/">Georgia Tech OMSCS</a></li>
+<li>(1:10:18) Murphy: <a href="https://atom.io/packages/elmjutsu">Elmjutsu by Ervin Ola</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 17 Feb 2017 03:43:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/8b3a2b12.mp3" length="70447838" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101002/1513463461-artwork.jpg"/>
+      <itunes:duration>01:13:20</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>10</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 9 - Getting Started</title>
+      <guid isPermaLink="false">FU3HXAJY-8LRF6R</guid>
+      <link>http://elmtown.audio/c457bb88</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Tessa Kelly</li>
+<li>Terezka Sokol</li>
+<li>Richard Feldman</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:05:18) <a href="https://www.manning.com/books/elm-in-action">Elm in Action</a></li>
+<li>(0:05:23) <a href="https://github.com/rtfeldman/elm-css">elm-css</a></li>
+<li>(0:05:35) <a href="http://package.elm-lang.org/packages/elm-community/elm-test/latest">elm-test</a></li>
+<li>(0:06:28) <a href="https://www.noredink.com/">No Red Ink</a></li>
+<li>(0:07:39) <a href="https://opbeat.com/">Opbeat</a></li>
+<li>(0:07:49) <a href="https://github.com/terezka/elm-plot">elm-plot</a></li>
+<li>(0:11:35) <a href="https://www.youtube.com/watch?v=txxKx_I39a8">Rethinking All Practices</a></li>
+<li>(0:19:25) <a href="http://todomvc.com/">todo-mvc</a></li>
+<li>(0:31:44) <a href="http://tech.noredink.com/post/146963432518/writing-friendly-elm-code">Writing Friendly Elm Code</a></li>
+<li>(0:33:35) <a href="https://github.com/NoRedInk/elm-decode-pipeline">json-decode-pipeline</a></li>
+<li>(0:44:58) <a href="https://guide.elm-lang.org/">Elm Official Guide</a></li>
+<li>(0:45:38) Tessa: <a href="https://github.com/elmbridge">Elm-bridge</a></li>
+<li>(0:46:30) Richard: <a href="https://www.manning.com/books/elm-in-action?a_aid=elm_in_action&amp;a_bid=b15edc5c">Elm in Action</a></li>
+<li>(0:46:38) Richard: <a href="https://frontendmasters.com/workshops/elm/">Elm on Frontend Masters</a></li>
+<li>(0:47:04) Murphy: <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">Egghead Elm Course</a></li>
+<li>(0:47:13) Murphy: <a href="https://egghead.io/technologies/elm">Egghead Elm Videos</a></li>
+<li>(0:47:40) Murphy: <a href="https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript">Professor Frisbee's Functional JS Introduction</a></li>
+<li>(0:48:22) Murphy: <a href="https://github.com/MostlyAdequate/mostly-adequate-guide">The Mostly Adequate Guide</a></li>
+<li>(0:49:14) terezka: <a href="http://www.inf.fu-berlin.de/lehre/WS03/alpi/lambda.pdf">Excellent Paper</a></li>
+<li>(0:49:53) Tessa: <a href="http://www.goodreads.com/author/show/1265.Jane_Austen">Jane Austen</a></li>
+<li>(0:49:59) Tessa: <a href="http://www.goodreads.com/author/show/32699.Greg_Egan">Greg Egan</a></li>
+<li>(0:50:27) Richard: <a href="https://www.amazon.com/Dont-Make-Think-Revisited-Usability/dp/0321965515">Don't Make me Think</a></li>
+<li>(0:50:43) Richard: <a href="https://www.amazon.com/Starting-Strength-Basic-Barbell-Training/dp/0982522738/ref=sr_1_1?ie=UTF8&amp;qid=1483484327&amp;sr=8-1&amp;keywords=starting+strength">Starting Strength</a></li>
+<li>(0:51:20) Terezka: <a href="http://www.goodreads.com/book/show/26854453-second-hand-time?from_search=true">Second hand time</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Tue, 24 Jan 2017 16:44:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/c457bb88.mp3" length="50485692" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/101000/1513463437-artwork.jpg"/>
+      <itunes:duration>00:52:32</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>9</itunes:episode>
+    </item>
+    <item>
+      <title>An Excerpt Cut from Episode 8 - Talking about Haskell</title>
+      <guid isPermaLink="false">5OHXOMLZ-6QADCXR</guid>
+      <link>http://elmtown.audio/6ca2292c</link>
+      <content:encoded>
+        <![CDATA[<p>We cut about 10 minutes of Episode 8 that were focused mostly on Haskell. Here are those 10 minutes to listen to, if you're interested.</p>
+]]>
+      </content:encoded>
+      <pubDate>Thu, 05 Jan 2017 18:05:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/6ca2292c.mp3" length="9683260" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100999/1513463416-artwork.jpg"/>
+      <itunes:duration>00:10:02</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>bonus</itunes:episodeType>
+    </item>
+    <item>
+      <title>Elm Town 8 - Testing</title>
+      <guid isPermaLink="false">WBAUH2P-L7HKT9</guid>
+      <link>http://elmtown.audio/a8d4be8a</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Max Goldstein</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:28:26) <a href="http://package.elm-lang.org/packages/elm-community/elm-test/latest">elm-test</a></li>
+<li>(0:29:20) <a href="https://hackage.haskell.org/package/QuickCheck">Quick Check</a></li>
+<li>(0:42:19) <a href="http://package.elm-lang.org/packages/mgold/elm-nonempty-list/3.0.0/List-Nonempty">nonempty-list</a></li>
+<li>(0:50:57) <a href="http://jsonapi.org/">json:api</a></li>
+<li>(0:57:42) <a href="https://github.com/krisajenkins/elm-export">elm-export</a></li>
+<li>(0:58:06) <a href="http://purescript.org/">purescript</a></li>
+<li>(0:58:16) <a href="http://gitscout.com/">gitscout</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Thu, 05 Jan 2017 18:03:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/a8d4be8a.mp3" length="57063531" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100998/1513463369-artwork.jpg"/>
+      <itunes:duration>00:59:23</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>8</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 7 - Remote Data with Kris A. Jenkins</title>
+      <guid isPermaLink="false">7PJGKKEX-U6P3NMI</guid>
+      <link>http://elmtown.audio/8405ac7a</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Luke Westby</li>
+<li>Kris Jenkins</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:28:58) <a href="http://learnyouahaskell.com/">Learn You a Haskell</a></li>
+<li>(0:40:50) <a href="https://hackage.haskell.org/package/formatting">formatting</a></li>
+<li>(0:41:35) <a href="http://package.elm-lang.org/packages/evancz/url-parser">evancz/url-parser</a></li>
+<li>(0:49:33) Kris: <a href="http://www.doctoroctoroc.com/8-bit-jesus/">8 Bit Christmas Album</a></li>
+<li>(0:50:24) Kris: <a href="http://package.elm-lang.org/packages/arturopala/elm-monocle/latest/Monocle-Prism">arturopala/elm-monocle</a></li>
+<li>(0:51:00) Kris: <a href="http://haskell-distributed.github.io/">Haskell Distributed</a></li>
+<li>(0:52:11) Kris: <a href="http://package.elm-lang.org/packages/etaque/elm-response/latest">etaque/elm-response</a></li>
+<li>(0:52:32) Luke: <a href="https://github.com/rtfeldman/elm-css/blob/master/src/Css/File.elm#L61-L67">Platform.program</a></li>
+<li>(0:55:15 ) Luke: <a href="https://www.crowdcast.io/e/sketchingfordevelopers/register">Sketching for Developers</a></li>
+<li>Luke: <a href="https://twitter.com/rizwanjavaid">Author of Sketching for Developers</a></li>
+<li>(0:56:10) Luke: <a href="https://www.youtube.com/watch?v=wewAC5X_CZ8">Jenn Schiffer, Engineer/Artist</a></li>
+<li>(0:56:58) Murphy: <a href="https://thepianoguys.com/shop/albums/piano-guys-family-christmas-cd/">The Piano Guys : A family Christmas album</a></li>
+<li>(0:57:19) Murphy: <a href="https://www.amazon.com/GIR-Premium-Silicone-Ultimate-Spatula/dp/B00BJT651O">GIR: Get It Right Premium Silicone Ultimate Spatula</a></li>
+<li>(0:58:27) Murphy: <a href="https://www.amazon.com/When-Marnie-Was-There-Blu-ray/dp/B00ZAZEEDY/ref=sr_1_1?s=movies-tv&amp;ie=UTF8&amp;qid=1482169070&amp;sr=1-1&amp;keywords=when+marnie+was+there">When Marnie Was There</a></li>
+<li>(0:59:03) Murphy: <a href="http://flirtyaprons.com/">Flirty Aprons</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 19 Dec 2016 17:39:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/8405ac7a.mp3" length="57646166" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100997/1513463343-artwork.jpg"/>
+      <itunes:duration>01:00:00</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>7</itunes:episode>
+    </item>
+    <item>
+      <title> Elm Town 6 - The Founding Story</title>
+      <guid isPermaLink="false">E8Z85C9Y-6Z85MI</guid>
+      <link>http://elmtown.audio/ada8c6ca</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Evan Czaplicki</li>
+<li>Tessa Kelly</li>
+<li>Matthew Griffith</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<p>(Times are only roughly correct. Noted pre-editing.)</p>
+
+<ul>
+<li>(0:07:59) <a href="http://www.benjerry.com/flavors/americone-dream-ice-cream">Americone Dream</a></li>
+<li>(0:14:52) <a href="http://package.elm-lang.org/packages/mdgriffith/style-elements/latest">style-elements</a></li>
+<li>(0:31:09) <a href="https://angularjs.org/">Angular.js</a></li>
+<li>(0:35:35) <a href="https://github.com/ghcjs/ghcjs">GHC JS</a></li>
+<li>(0:35:39) <a href="https://github.com/ocsigen/js_of_ocaml">Js_of_ocaml</a></li>
+<li>(1:16:22) <a href="https://en.wikipedia.org/wiki/Hiroshima_(book">Evan: Hiroshima (book)</a>)</li>
+<li>(1:17:20) <a href="https://en.wikipedia.org/wiki/Mythologies_(book">Evan: Mythologies (book)</a>)</li>
+<li>(1:17:41) <a href="http://poorlydrawnlines.com/comic/shapes-club/">Evan: Poorly Drawn Lines</a></li>
+<li>(1:18:21) <a href="http://www.goodreads.com/book/show/38447.The_Handmaid_s_Tale">Tessa: The Handmaid's Tale</a></li>
+<li>(1:18:29) <a href="http://www.goodreads.com/book/show/991197.The_Complete_Persepolis">Tessa: Perseplis</a></li>
+<li>(1:18:53) <a href="https://github.com/rluiten/elm-date-extra">Tessa: rluiten/elm-date-extra</a></li>
+<li>(1:20:29) <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">Murphy: Start Using Elm to Build Web Applications</a></li>
+<li>(1:21:01) <a href="https://www.amazon.com/dp/B000FC1LPG/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1">Murphy: Brothers In Arms</a></li>
+<li>(1:21:10) <a href="http://shop.oreilly.com/product/0636920047391.do">Murphy: Programming Beyond Practices</a></li>
+<li>(1:22:05) <a href="http://package.elm-lang.org/packages/sporto/erl/latest">Murphy: sporto/erl</a></li>
+<li>(1:22:21) <a href="https://www.youtube.com/watch?v=IcgmSRJHu_8">Murphy: Making Impossible States Impossible</a></li>
+<li>(1:22:54) <a href="http://wiki.c2.com/?TeachYourselfProgrammingInTenYears">Evan: Teach Yourself Programming in 10 Years</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 05 Dec 2016 16:22:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/ada8c6ca.mp3" length="75029089" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100996/1513463400-artwork.jpg"/>
+      <itunes:duration>01:18:06</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>6</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 5 - Version 0.18 is released!</title>
+      <guid isPermaLink="false">13X52OFH-3A7TLNM</guid>
+      <link>http://elmtown.audio/1ab14e48</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy</li>
+<li>Noah</li>
+<li>Aaron V</li>
+<li>Luke</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<p>(Times are only roughly correct. Noted pre-editing.)</p>
+
+<ul>
+<li>(0:43:20) <a href="">Upgrade guide</a></li>
+<li>(0:46:39) <a href="https://github.com/NoRedInk/elm-ops-tooling">elm-ops-tooling</a></li>
+<li>(0:51:16) <a href="http://package.elm-lang.org/packages/elm-community/random-extra/latest">elm-community/random-extra</a></li>
+<li>(0:52:23) <a href="https://twitter.com/theferocity/status/796372295908519937">Twitter thread about diversity</a></li>
+<li>(0:52:55) <a href="http://geekfeminism.wikia.com/wiki/Allies_training">Ally skills workshop</a></li>
+<li>(0:53:58) <a href="https://github.com/mmckegg/ferment">ferment.audio</a></li>
+<li>(0:54:40) <a href="http://www.greenteapress.com/thinkbayes/html/index.html">Think Bayes</a></li>
+<li>(0:55:07) <a href="https://github.com/tshm/elm-doctest">Elm doctest</a></li>
+<li>(0:55:50) <a href="https://github.com/elmbridge/curriculum">Elm Bridge Curriculum</a></li>
+<li>(0:56:37) <a href="https://docs.python.org/3.6/whatsnew/3.6.html">Python gradual typing</a></li>
+<li>(0:57:22) <a href="https://github.com/NoRedInk/slack-today-i-did">slack-today-i-did</a></li>
+<li>(0:58:02) <a href="http://blog.jenkster.com/2016/11/type-bombs-in-elm.html">Blog post - Type Bombs in Elm</a></li>
+<li>(1:00:32) <a href="http://www.gizra.com/content/elm-business-perspective/">Elm from a Business Perspective</a></li>
+<li>(1:00:32) <a href="http://www.yesodweb.com/book">Yesod</a></li>
+<li>(1:00:37) <a href="http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#|>">(|>)</a></li>
+<li>Bonus: <a href="https://twitter.com/avh4/status/796938203152281600">Slimy Broccoli</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 14 Nov 2016 14:32:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/1ab14e48.mp3" length="52994281" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100995/1513463319-artwork.jpg"/>
+      <itunes:duration>00:55:09</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>5</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 4 - Javascript interoperability</title>
+      <guid isPermaLink="false">827QE1RZ-JFW29</guid>
+      <link>http://elmtown.audio/70754ac1</link>
+      <content:encoded>
+        <![CDATA[<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li><a href="http://elm-lang.org:1234/guide/interop">JavaScript Interop</a></li>
+<li><a href="http://elm-lang.org:1234/guide/interop#ports">Ports</a></li>
+<li><a href="https://www.youtube.com/watch?v=lPXVfqwYmEA&amp;list=PLglJM3BYAMPH2zuz1nbKHQyeawE4SN0Cd&amp;index=10">Buuilding Nightingale Space</a></li>
+<li><a href="https://github.com/elm-lang/dom">elm-lang/dom</a></li>
+<li><a href="https://github.com/NoRedInk/take-home/wiki/Writing-your-first-Elm-Native-module">Native Modules</a></li>
+<li><a href="https://github.com/NoRedInk/elm-rollbar">elm-rollbar</a></li>
+<li><a href="https://terezka.github.io/elm-plot/">elm-plot</a></li>
+<li><a href="http://hanselminutes.com/551/should-developers-design-with-iheanyi-ekechukwu">Should Developers Design?</a></li>
+<li><a href="http://m.mlb.com/news/article/207938228/chicago-cubs-win-2016-world-series/">Chicago Cubs</a></li>
+<li><a href="https://github.com/krisajenkins/remotedata">krisajenkins/remotedata</a></li>
+<li><a href="https://en.wikipedia.org/wiki/The_Lord_of_the_Rings">Lord of the Rings</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Mon, 07 Nov 2016 16:30:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/70754ac1.mp3" length="51790558" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100994/1513463364-artwork.jpg"/>
+      <itunes:duration>00:53:54</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>4</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 3 - JSON decoders</title>
+      <guid isPermaLink="false">1F1I18RT-9T1SV2T</guid>
+      <link>http://elmtown.audio/8da2a5e8</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Brian Hicks</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<p>(Times only very roughly accurate, noted pre-editing)</p>
+
+<ul>
+<li>(0:16:27) <a href="https://www.brianthicks.com/">Brian's blog posts</a></li>
+<li>(0:46:17) <a href="https://noredink.github.io/json-to-elm/">json-to-elm</a></li>
+<li>(0:54:43) <a href="https://linkerd.io/">linkerd</a></li>
+<li>(0:55:02) <a href="http://elm-lang.org/community">elm-lang.org community page</a></li>
+<li>(0:56:03) <a href="http://sscce.org">SSCCE</a></li>
+<li>(0:57:39) <a href="https://www.npmjs.com/package/elm-test">elm-test on NPM</a>, <a href="http://package.elm-lang.org/packages/elm-community/elm-test/latest">elm-test elm package</a></li>
+<li>(0:59:00) <a href="https://www.youneedabudget.com/">YNAB</a></li>
+<li>(1:02:19) <a href="https://github.com/danneu/generator-elm#readme">Yeoman Elm generator</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 21 Oct 2016 11:02:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/8da2a5e8.mp3" length="58558153" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100993/1513463297-artwork.jpg"/>
+      <itunes:duration>01:00:57</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>3</itunes:episode>
+    </item>
+    <item>
+      <title>Episode 2 - The Update Function</title>
+      <guid isPermaLink="false">IB4CEXHB-KSM7VI</guid>
+      <link>http://elmtown.audio/a3e2133b</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li>Murphy Randle</li>
+<li>Brian Hicks</li>
+<li>Luke Westby</li>
+</ul>
+
+
+<a name="Links"></a>
+<h1>Links</h1>
+
+<ul>
+<li>(0:02:13) <a href="http://humblespark.com">Humblespark</a></li>
+<li>(0:11:33) <a href="http://converge.aster.is">Converge</a></li>
+<li>(0:11:37) <a href="http://www.brianthicks.com">Brian's blog</a></li>
+<li>(0:12:22) <a href="https://gotocon.com/cph-2016/speaker/Luke+Westby">Luke's speaker page</a></li>
+<li>(0:37:37) <a href="https://www.youtube.com/watch?v=gvVpSezT5_M&amp;index=15&amp;list=PLUD4kD-wL_zYSfU3tIYsb4WqfFQzO_EjQ">jlongster's React Rally Talk</a></li>
+<li>(0:38:23) <a href="http://package.elm-lang.org/packages/Fresheyeball/elm-return/latest">elm-return</a></li>
+<li>(0:42:16) <a href="http://lukewestby.com/post/chainable-apis-with-forward-apply/">Luke's blog post</a></li>
+<li>(0:46:35) Brian's blog posts: <a href="https://www.brianthicks.com/post/2016/08/08/values-pipes-and-arrows/">Value Pipes and Arrows</a> and <a href="https://www.brianthicks.com/post/2016/08/15/welding-functional-pipes/">Welding Functional Pipes</a></li>
+<li>(0:54:32) <a href="https://en.wikipedia.org/wiki/Picts">Picts</a></li>
+<li>(0:54:53) <a href="http://tinyletter.com/pome">Pome</a></li>
+<li>(0:55:05) <a href="http://contributor-covenant.org/">Contributor covenant</a></li>
+<li>(0:56:29) <a href="https://30x500.com/academy/">30x500</a></li>
+<li>(0:57:12) <a href="http://package.elm-lang.org/packages/Bogdanp/elm-combine/latest">elm-combine</a></li>
+<li>(0:58:07) <a href="http://staltz.com/everywhereness-as-a-foundation.html">Everywhereness as a Fondation</a></li>
+<li>(0:59:05) <a href="https://twitter.com/SoftSkillsEng">Soft Skills Engineering</a></li>
+<li>(0:59:19) <a href="http://thunderplainsconf.com/">Thunder Plains Conf</a></li>
+<li>(0:59:45) <a href="https://github.com/elmlive">Elm Live</a></li>
+<li>(1:00:04) <a href="https://www.hackedpodcast.com/">Hacked</a></li>
+<li>(1:01:25) <a href="http://www.gizra.com/content/elm-inbox-simulation/">Gizra post</a></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Fri, 07 Oct 2016 16:41:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/a3e2133b.mp3" length="59774268" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100992/1513463340-artwork.jpg"/>
+      <itunes:duration>01:02:13</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>2</itunes:episode>
+    </item>
+    <item>
+      <title>Elm Town 1 - Editors</title>
+      <guid isPermaLink="false">ALVPJLAA-2273NMI</guid>
+      <link>http://elmtown.audio/d09a946b</link>
+      <content:encoded>
+        <![CDATA[<a name="Voices"></a>
+<h1>Voices</h1>
+
+<ul>
+<li><a href="https://www.youtube.com/channel/UCOpGiN9AkczVjlpGDaBwQrQ">Elm Conf Talks</a></li>
+<li><a href="https://plugins.jetbrains.com/plugin/8192">IntelliJ Plugin</a></li>
+<li><a href="https://medium.com/the-composition/software-that-writes-and-evolves-software-953578a6fc36#.s6540aoft">The post about Atomist</a></li>
+<li><a href="https://github.com/rundis/elm-light">Light Table Plugin</a></li>
+<li><a href="https://atom.io/packages/linter-elm-make">Atom Linter Plugin</a></li>
+<li><a href="https://atom.io/packages/elm-format">Atom Format Plugin</a></li>
+<li><a href="https://atom.io/packages/elmjutsu">Atom Refactoring Plugin</a></li>
+<li><a href="https://www.youtube.com/watch?v=EK4qctJOMaU">Chris Ford's talk</a></li>
+<li><a href="http://seriouspony.com/badass-users-the-book/">Kathy's book</a></li>
+<li><a href="http://package.elm-lang.org/packages/Fresheyeball/elm-return/latest">elm-return</a></li>
+<li><a href="http://haskellbook.com/">Haskell Book</a></li>
+</ul>
+
+
+<a name="Acknowledgements"></a>
+<h1>Acknowledgements</h1>
+
+<ul>
+<li><strong>Big thanks to Egghead.io for sharing their Elm logo with us.</strong></li>
+<li><strong>And big thanks to Day One for making this podcast possible.</strong></li>
+</ul>
+
+]]>
+      </content:encoded>
+      <pubDate>Sat, 24 Sep 2016 14:00:00 +0000</pubDate>
+      <author>murphyrandle@gmail.com (Murphy Randle)</author>
+      <enclosure url="https://audio.simplecast.com/d09a946b.mp3" length="39277269" type="audio/mpeg"/>
+      <itunes:author>Murphy Randle</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/100991/1513463278-artwork.jpg"/>
+      <itunes:duration>00:54:29</itunes:duration>
+      <itunes:keywords></itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>1</itunes:episode>
+    </item>
+  </channel>
+</rss>
