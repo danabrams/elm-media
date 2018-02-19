@@ -14,7 +14,6 @@ import Array exposing (fromList, get)
 import Html exposing (Attribute)
 import Html.Events exposing (on)
 import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, map, map2, map3, map4, string, succeed, value)
-import Json.Decode.Extra exposing (collection, optionalField)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
 import Media
 import Media.State exposing (MediaError(..), MediaType(..), NetworkState(..), Playback(..), PlaybackGroup, ReadyState(..), State, TimeGroup, TimeRange, VideoSize)

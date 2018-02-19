@@ -1,106 +1,95 @@
 
-var _danabrams$elm_media$Native_Media = function(){
+var _danabrams$elm_media$Native_Media = function() {
 
-
-
-
-    var rAF = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : function(callback) { callback(); };
+    var fakeNode = {
+        getElementById: function() { return null; },
+        addEventListener: function() {},
+        removeEventListener: function() {}
+    };
     
-    function fail(value){
-        return _elm_lang$core$Native_Scheduler.fail(value);
-    }
-
-    function succeed(value){
-        return _elm_lang$core$Native_Scheduler.succeed(value);
-    }
-
+    var doc = (typeof document !== 'undefined') ? document : fakeNode;
 
     function withMediaNode(id, doStuff)
     {
         return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
         {
-            rAF(function()
+            var media = doc.getElementById(id);
+            if (media === null)
             {
-                var media = document.getElementById(id);
-                if (media === null)
-                {
-                    callback(fail({ ctor: 'NotFound', _0: id }));
-                    console.log("Not Found" + id);
-                    return;
-                } else if (!(media instanceof HTMLMediaElement))
-                {
-                    callback(fail({ctor: 'NotMediaElement', _0: id, _1: media.tagName}));
-                    console.log("Not a MediaElement" + id + media.tagName);
-                    return;
-                }
-                callback(doStuff(media));
-            });
+                console.log("Not Found" + id);
+                callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'NotFound', _0: id }));
+                return;
+            } else if (!(media instanceof HTMLMediaElement))
+            {
+                console.log("Not a MediaElement" + id + media.tagName);
+                callback(_elm_lang$core$Native_Scheduler.fail({ctor: 'NotMediaElement', _0: id, _1: media.tagName}));
+                return;
+            }
+            callback(_elm_lang$core$Native_Scheduler.succeed(doStuff(media)));
         });
     }
 
-
     function getStateWithId(id){
-        return withMediaNode(id, function(media) {
-            return succeed(media);
+        withMediaNode(id, function(media){
+            media.pause();
+            return _elm_lang$core$Native_Utils.Tuple0;
         });
     }
 
     function pause(id){
-        return withMediaNode(id, function(media) {
+        withMediaNode(id, function(media){
             media.pause();
-            return succeed(_elm_lang$core$Native_Utils.Tuple0);
         });
+        succeed(_elm_lang$core$Native_Utils.Tuple0);
+        return;
     }
 
     function play(id){
-        return withMediaNode(id, function(media) {
+        withMediaNode(id, function(media){
             var playPromise = media.play();
             if (playPromise !== undefined) {
                 playPromise.then(function(){
-                    return succeed(_elm_lang$core$Native_Utils.Tuple0);
+                    callback(succeed(_elm_lang$core$Native_Utils.Tuple0));
+                    return
                 }).catch(function(error){
                     console.log("PlayPromiseFailure")
-                    return fail({ctor: "PlayPromiseFailure", _0: error});
+                    callback(_elm_lang$core$Native_Scheduler.fail({ctor: "PlayPromiseFailure", _0: error}));
+                    return;
                 });
-            } else {
-            return succeed(_elm_lang$core$Native_Utils.Tuple0);
             }
+            return _elm_lang$core$Native_Utils.Tuple0;
         });
     }
 
 
     function seek(id, time){
-        return withMediaNode(id, function(media) {
-            media.currentTime = time;
-            return succeed(_elm_lang$core$Native_Utils.Tuple0);
-        });
+        var media = getMediaNode(id);            
+        media.currentTime = time;
+        return _elm_lang$core$Native_Utils.Tuple0;
     }
 
     function fastSeek(id, time){
-        return withMediaNode(id, function(media) {
-            media.fastSeek(time);
-            return succeed(_elm_lang$core$Native_Utils.Tuple0);
-        });
+        var media = getMediaNode(id);
+        media.fastSeek(time);
+        return _elm_lang$core$Native_Utils.Tuple0;
     }
 
     function load(id){
-        return withMediaNode(id, function(media) {
-            media.load();
-            return succeed(_elm_lang$core$Native_Utils.Tuple0);
-        }); 
+        var media = getMediaNode(id);
+        media.load();
+        return _elm_lang$core$Native_Utils.Tuple0;
     }
 
     function canPlayType(id, type){
-        return withMediaNode(id, function(media) {
-            switch (media.canPlayType(type)){
-                case "probably":
-                   return success({ ctor: "Probably" });
-                case "maybe":
-                    return success({ ctor: "Maybe" });
-                case "":
-                    return success({ ctor: "No" });
-            }
-        }); 
+        var media = getMediaNode(id);
+        switch (media.canPlayType(type)){
+            case "probably":
+                return { ctor: "Probably" };
+            case "maybe":
+                return { ctor: "Maybe" };
+            case "":
+                return { ctor: "No" };
+        } 
     }
 
     function nothing(){
