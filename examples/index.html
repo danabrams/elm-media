@@ -12830,8 +12830,8 @@ var _danabrams$elm_media$Media_State$everyFrame = F2(
 		return _elm_lang$core$Native_Utils.crash(
 			'Media.State',
 			{
-				start: {line: 197, column: 5},
-				end: {line: 197, column: 16}
+				start: {line: 220, column: 5},
+				end: {line: 220, column: 16}
 			})('Not Implemented Yet');
 	});
 var _danabrams$elm_media$Media_State$nowRaw = _danabrams$elm_media$Native_Media.getMediaById;
@@ -13211,50 +13211,32 @@ var _danabrams$elm_media$Media$timeToString = function (time) {
 		3600) / 60) | 0;
 	var h = (_elm_lang$core$Basics$floor(time) / 3600) | 0;
 	var timeDigits = function (v) {
-		var _p1 = _elm_lang$core$Native_Utils.cmp(v, 9) < 1;
-		if (_p1 === true) {
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				'0',
-				_elm_lang$core$Basics$toString(v));
-		} else {
-			return _elm_lang$core$Basics$toString(v);
-		}
+		return (_elm_lang$core$Native_Utils.cmp(v, 9) < 1) ? A2(
+			_elm_lang$core$Basics_ops['++'],
+			'0',
+			_elm_lang$core$Basics$toString(v)) : _elm_lang$core$Basics$toString(v);
 	};
-	if (_elm_lang$core$Basics$isNaN(time)) {
-		return '0:00';
-	} else {
-		if (_elm_lang$core$Basics$isInfinite(time)) {
-			return '0:00';
-		} else {
-			var _p2 = _elm_lang$core$Native_Utils.cmp(h, 0) < 1;
-			if (_p2 === false) {
-				return A2(
+	return _elm_lang$core$Basics$isNaN(time) ? '0:00' : (_elm_lang$core$Basics$isInfinite(time) ? '0:00' : ((_elm_lang$core$Native_Utils.cmp(h, 0) < 1) ? A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(m),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			':',
+			timeDigits(s))) : A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(h),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			':',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				timeDigits(m),
+				A2(
 					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(h),
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						':',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							timeDigits(m),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								':',
-								timeDigits(s)))));
-			} else {
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(m),
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						':',
-						timeDigits(s)));
-			}
-		}
-	}
+					':',
+					timeDigits(s)))))));
 };
-var _danabrams$elm_media$Media$canPlayMedia = _danabrams$elm_media$Native_Media.canPlayType;
+var _danabrams$elm_media$Media$canPlayType = _danabrams$elm_media$Native_Media.canPlayType;
 var _danabrams$elm_media$Media$fastSeek = _danabrams$elm_media$Native_Media.fastSeek;
 var _danabrams$elm_media$Media$seek = _danabrams$elm_media$Native_Media.seek;
 var _danabrams$elm_media$Media$load = _danabrams$elm_media$Native_Media.load;
@@ -13354,6 +13336,12 @@ var _danabrams$elm_media$Media_Events$onAbort = function (tagger) {
 		'abort',
 		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
 };
+var _danabrams$elm_media$Media_Events$onEnded = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'ended',
+		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
+};
 var _danabrams$elm_media$Media_Events$onDurationChange = function (tagger) {
 	return A2(
 		_elm_lang$html$Html_Events$on,
@@ -13376,12 +13364,6 @@ var _danabrams$elm_media$Media_Events$onPlaying = function (tagger) {
 	return A2(
 		_elm_lang$html$Html_Events$on,
 		'playing',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onPlay = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'play',
 		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
 };
 var _danabrams$elm_media$Media_Events$onSeeking = function (tagger) {
@@ -13435,6 +13417,36 @@ var _danabrams$elm_media$Audio$update = F2(
 						_danabrams$elm_media$Audio$ErrorHandler,
 						A2(_danabrams$elm_media$Media$seek, model.id, _p0._0))
 				};
+			case 'Reload':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: A2(
+						_elm_lang$core$Task$attempt,
+						_danabrams$elm_media$Audio$ErrorHandler,
+						_danabrams$elm_media$Media$load(model.id))
+				};
+			case 'Restart':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Task$attempt,
+								_danabrams$elm_media$Audio$ErrorHandler,
+								A2(_danabrams$elm_media$Media$seek, model.id, 0)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$core$Task$attempt,
+									_danabrams$elm_media$Audio$ErrorHandler,
+									_danabrams$elm_media$Media$play(model.id)),
+								_1: {ctor: '[]'}
+							}
+						})
+				};
 			case 'MediaUpdate':
 				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
 			default:
@@ -13447,23 +13459,35 @@ var _danabrams$elm_media$Audio$MediaUpdate = function (a) {
 var _danabrams$elm_media$Audio$Seek = function (a) {
 	return {ctor: 'Seek', _0: a};
 };
+var _danabrams$elm_media$Audio$Restart = {ctor: 'Restart'};
+var _danabrams$elm_media$Audio$Reload = {ctor: 'Reload'};
 var _danabrams$elm_media$Audio$Pause = {ctor: 'Pause'};
 var _danabrams$elm_media$Audio$Play = {ctor: 'Play'};
 var _danabrams$elm_media$Audio$view = function (model) {
 	var buttonMsg = function () {
 		var _p1 = model.playback;
-		if (_p1.ctor === 'Playing') {
-			return _danabrams$elm_media$Audio$Pause;
-		} else {
-			return _danabrams$elm_media$Audio$Play;
+		switch (_p1.ctor) {
+			case 'Playing':
+				return _danabrams$elm_media$Audio$Pause;
+			case 'Ended':
+				return _danabrams$elm_media$Audio$Restart;
+			case 'Problem':
+				return _danabrams$elm_media$Audio$Reload;
+			default:
+				return _danabrams$elm_media$Audio$Play;
 		}
 	}();
 	var buttonText = function () {
 		var _p2 = model.playback;
-		if (_p2.ctor === 'Playing') {
-			return 'Pause';
-		} else {
-			return 'Play';
+		switch (_p2.ctor) {
+			case 'Playing':
+				return 'Pause';
+			case 'Paused':
+				return 'Play';
+			case 'Ended':
+				return 'Restart';
+			default:
+				return _danabrams$elm_media$Media$playbackToString(model.playback);
 		}
 	}();
 	return A2(
@@ -13491,7 +13515,31 @@ var _danabrams$elm_media$Audio$view = function (model) {
 									_1: {
 										ctor: '::',
 										_0: _danabrams$elm_media$Media_Events$onPaused(_danabrams$elm_media$Audio$MediaUpdate),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: _danabrams$elm_media$Media_Events$onLoadedData(_danabrams$elm_media$Audio$MediaUpdate),
+											_1: {
+												ctor: '::',
+												_0: _danabrams$elm_media$Media_Events$onLoadStart(_danabrams$elm_media$Audio$MediaUpdate),
+												_1: {
+													ctor: '::',
+													_0: _danabrams$elm_media$Media_Events$onLoadedMetadata(_danabrams$elm_media$Audio$MediaUpdate),
+													_1: {
+														ctor: '::',
+														_0: _danabrams$elm_media$Media_Events$onProgress(_danabrams$elm_media$Audio$MediaUpdate),
+														_1: {
+															ctor: '::',
+															_0: _danabrams$elm_media$Media_Events$onError(_danabrams$elm_media$Audio$MediaUpdate),
+															_1: {
+																ctor: '::',
+																_0: _danabrams$elm_media$Media_Events$onStalled(_danabrams$elm_media$Audio$MediaUpdate),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										}
 									}
 								}
 							}
@@ -13586,7 +13634,7 @@ var _danabrams$elm_media$Audio$main = _elm_lang$html$Html$program(
 var Elm = {};
 Elm['Audio'] = Elm['Audio'] || {};
 if (typeof _danabrams$elm_media$Audio$main !== 'undefined') {
-    _danabrams$elm_media$Audio$main(Elm['Audio'], 'Audio', {"types":{"unions":{"Media.State.ReadyState":{"args":[],"tags":{"HaveEnoughData":[],"HaveCurrentData":[],"HaveNothing":[],"HaveMetadata":[],"HaveFutureData":[]}},"Media.State.Playback":{"args":[],"tags":{"Playing":[],"Loading":[],"Buffering":[],"Problem":["Media.State.MediaError"],"Paused":[],"Ended":[]}},"Media.State.MediaError":{"args":[],"tags":{"Network":["String"],"Decode":["String"],"Unsupported":["String"],"Aborted":["String"]}},"Media.State.MediaType":{"args":[],"tags":{"Video":[],"Audio":[]}},"Media.State.NetworkState":{"args":[],"tags":{"Idle":[],"Empty":[],"DataLoading":[],"NoSource":[]}},"Media.State.Error":{"args":[],"tags":{"NotFound":["String"],"NotTimeRanges":["String"],"DecodeError":["String"],"NotMediaElement":["String","String"],"PlayPromiseFailure":["String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Audio.Msg":{"args":[],"tags":{"Play":[],"MediaUpdate":["Media.State.State"],"Pause":[],"ErrorHandler":["Result.Result Media.Error ()"],"Seek":["Float"]}}},"aliases":{"Media.Error":{"args":[],"type":"Media.State.Error"},"Media.State.Id":{"args":[],"type":"String"},"Media.State.TimeGroup":{"args":[],"type":"{ buffered : List Media.State.TimeRange , seekable : List Media.State.TimeRange , played : List Media.State.TimeRange }"},"Media.State.DataGroup":{"args":[],"type":"{ ready : Media.State.ReadyState , network : Media.State.NetworkState }"},"Media.State.State":{"args":[],"type":"{ id : Media.State.Id , mediaType : Media.State.MediaType , playback : Media.State.Playback , source : String , currentTime : Time.Time , duration : Time.Time , data : Media.State.DataGroup , timeRanges : Media.State.TimeGroup , videoSize : { width : Int, height : Int } }"},"Time.Time":{"args":[],"type":"Float"},"Media.State.TimeRange":{"args":[],"type":"{ start : Time.Time, end : Time.Time }"}},"message":"Audio.Msg"},"versions":{"elm":"0.18.0"}});
+    _danabrams$elm_media$Audio$main(Elm['Audio'], 'Audio', {"types":{"unions":{"Media.State.ReadyState":{"args":[],"tags":{"HaveEnoughData":[],"HaveCurrentData":[],"HaveNothing":[],"HaveMetadata":[],"HaveFutureData":[]}},"Media.State.Playback":{"args":[],"tags":{"Playing":[],"Loading":[],"Buffering":[],"Problem":["Media.State.MediaError"],"Paused":[],"Ended":[]}},"Media.State.MediaError":{"args":[],"tags":{"Network":["String"],"Decode":["String"],"Unsupported":["String"],"Aborted":["String"]}},"Media.State.MediaType":{"args":[],"tags":{"Video":[],"Audio":[]}},"Media.State.NetworkState":{"args":[],"tags":{"Idle":[],"Empty":[],"DataLoading":[],"NoSource":[]}},"Media.State.Error":{"args":[],"tags":{"NotFound":["String"],"NotTimeRanges":["String"],"DecodeError":["String"],"NotMediaElement":["String","String"],"PlayPromiseFailure":["String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Audio.Msg":{"args":[],"tags":{"Play":[],"MediaUpdate":["Media.State.State"],"Restart":[],"Pause":[],"ErrorHandler":["Result.Result Media.Error ()"],"Seek":["Float"],"Reload":[]}}},"aliases":{"Media.Error":{"args":[],"type":"Media.State.Error"},"Media.State.Id":{"args":[],"type":"String"},"Media.State.TimeGroup":{"args":[],"type":"{ buffered : List Media.State.TimeRange , seekable : List Media.State.TimeRange , played : List Media.State.TimeRange }"},"Media.State.DataGroup":{"args":[],"type":"{ ready : Media.State.ReadyState , network : Media.State.NetworkState }"},"Media.State.State":{"args":[],"type":"{ id : Media.State.Id , mediaType : Media.State.MediaType , playback : Media.State.Playback , source : String , currentTime : Time.Time , duration : Time.Time , data : Media.State.DataGroup , timeRanges : Media.State.TimeGroup , videoSize : { width : Int, height : Int } }"},"Time.Time":{"args":[],"type":"Float"},"Media.State.TimeRange":{"args":[],"type":"{ start : Time.Time, end : Time.Time }"}},"message":"Audio.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

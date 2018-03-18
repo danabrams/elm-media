@@ -3,7 +3,7 @@ module Audio exposing (..)
 import Html exposing (Html, audio, button, div, text)
 import Html.Attributes exposing (controls, id, src, style)
 import Html.Events exposing (onClick)
-import Media exposing (Error, load, pause, play, seek, timeToString)
+import Media exposing (Error, load, pause, play, playbackToString, seek, timeToString)
 import Media.Events exposing (onDurationChange, onError, onLoadStart, onLoadedData, onLoadedMetadata, onPaused, onPlaying, onProgress, onStalled, onTimeUpdate)
 import Media.State exposing (Playback(..), State, defaultAudio)
 import Task
@@ -77,17 +77,11 @@ view model =
                 Paused ->
                     "Play"
 
-                Loading ->
-                    "Loading"
-
-                Buffering ->
-                    "Buffering"
-
                 Ended ->
                     "Restart"
 
-                Problem err ->
-                    "Error"
+                _ ->
+                    playbackToString model.playback
 
         buttonMsg =
             case model.playback of

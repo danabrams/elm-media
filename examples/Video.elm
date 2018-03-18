@@ -3,8 +3,8 @@ module Video exposing (..)
 import Html exposing (Html, button, div, text, video)
 import Html.Attributes exposing (controls, id, src, style)
 import Html.Events exposing (onClick)
-import Media exposing (Error, load, pause, play, seek, timeToString)
-import Media.Events exposing (onDurationChange, onError, onLoadStart, onLoadedData, onLoadedMetadata, onPaused, onPlay, onPlaying, onProgress, onStalled, onTimeUpdate)
+import Media exposing (Error, load, pause, play, playbackToString, seek, timeToString)
+import Media.Events exposing (onDurationChange, onError, onLoadStart, onLoadedData, onLoadedMetadata, onPaused, onPlaying, onProgress, onStalled, onTimeUpdate)
 import Media.State exposing (Playback(..), State, defaultVideo)
 import Task
 
@@ -77,17 +77,11 @@ view model =
                 Paused ->
                     "Play"
 
-                Loading ->
-                    "Loading"
-
-                Buffering ->
-                    "Buffering"
-
                 Ended ->
                     "Restart"
 
-                Problem err ->
-                    "Error"
+                _ ->
+                    playbackToString model.playback
 
         buttonMsg =
             case model.playback of
@@ -109,7 +103,6 @@ view model =
             , src "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
             , onDurationChange MediaUpdate
             , onTimeUpdate MediaUpdate
-            , onPlay MediaUpdate
             , onPlaying MediaUpdate
             , onPaused MediaUpdate
             , onLoadedData MediaUpdate
@@ -122,6 +115,8 @@ view model =
             []
         , div [ style [ ( "display", "block" ) ] ]
             [ text <| timeToString model.currentTime ++ "/" ++ timeToString model.duration ]
+        , div [ style [ ( "display", "block" ) ] ]
+            [ text <| "Video Dimensions: " ++ toString model.videoSize.width ++ "x" ++ toString model.videoSize.height ]
         , div [ style [ ( "display", "block" ) ] ]
             [ button [ onClick <| Seek <| model.currentTime - 15 ] [ text "Back 15s" ]
             , button [ onClick buttonMsg ] [ text buttonText ]

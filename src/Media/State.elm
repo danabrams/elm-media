@@ -1,7 +1,6 @@
 module Media.State
     exposing
-        ( DataGroup
-        , Error(..)
+        ( Error(..)
         , Id
         , MediaError(..)
         , MediaType(..)
@@ -9,7 +8,6 @@ module Media.State
         , Playback(..)
         , ReadyState(..)
         , State
-        , TimeGroup
         , TimeRange
         , VideoSize
         , default
@@ -28,7 +26,7 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 ###State
 
-@docs State
+@docs State, default, defaultAudio, defaultVideo
 
 ###Getting and Decoding State
 
@@ -36,14 +34,15 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 ###State Types
 
-@docs Id, MediaType, PlaybackGroup, Playback
+@docs Id, MediaType, Playback
 @docs MediaError, ReadyState, NetworkState
-@docs TimeGroup, TimeRange, Error, VideoSize
+@docs TimeRange, Error, VideoSize
 
 -}
 
-import Array exposing (Array)
-import Dict
+--import Array exposing (Array)
+--import Dict
+
 import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, map, map2, map3, map4, string, succeed, value)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
 import Native.Media
@@ -57,7 +56,7 @@ import Time exposing (Time)
 
 {-| The core record of the media library. This represents the state of an HTMLMediaElement at a given moment. getState and subscribe both return a state record. In other words, this is a record representing the current state of side effects on a media object.
 
-You probably don't need this in your model. Instead, create a simpler abstraction with just the fields you need, such as:
+You can put this in your model or create a simpler abstraction with just the fields you need, such as:
 
 type alias Model =
 { id: String
@@ -80,6 +79,8 @@ Cmd.none )
 
 **Important:** Please make sure to give your audio and video elements a unique Id.
 
+**NOTE: Most browsers will not return a duration of infinity during a live stream, use the "seekable" TimeRange instead.
+
 -}
 type alias State =
     { id : Id
@@ -94,7 +95,10 @@ type alias State =
     }
 
 
-{-| -}
+{-| Returns a default state, given an id, a mediaType (Audio or Video),
+and a Maybe source. This can be thought of as empty player state, for
+putting in your init, if the media isn't loaded.
+-}
 default :
     { id : Id
     , mediaType : MediaType
@@ -121,13 +125,17 @@ default options =
     }
 
 
-{-| -}
+{-| Returns a default state for an Audio player, with source "".
+Just give it an id.
+-}
 defaultAudio : Id -> State
 defaultAudio id =
     default { id = id, mediaType = Audio, source = Nothing }
 
 
-{-| -}
+{-| Returns a default state for a Video player, with source "".
+Just give it an id.
+-}
 defaultVideo : Id -> State
 defaultVideo id =
     default { id = id, mediaType = Video, source = Nothing }
@@ -139,14 +147,27 @@ type MediaType
     | Video
 
 
-{-| -}
+{-| "ready" represents how much data the player has loaded from the meida file.
+"network" represents the current network usage in loading the media file.
+-}
 type alias DataGroup =
     { ready : ReadyState
     , network : NetworkState
     }
 
 
-{-| -}
+{-| Represents three TimeRange lists:
+
+"buffered": which parts of the media file have been loaded and are available
+for immediately playback.
+
+"seekable": what parts of the media can be seeked to by the user (useful for
+determining duration in a live stream, for instance).
+
+"played": what portions of the media have been played, so you can write a more
+specific played indicator.
+
+-}
 type alias TimeGroup =
     { buffered : List TimeRange
     , seekable : List TimeRange
@@ -159,7 +180,9 @@ nowRaw =
     Native.Media.getMediaById
 
 
-{-| Takes an Id, and returns a State of it. Can result in Error if the Id is not found, or the element found by that Id isn't an HTMLMediaElement.
+{-| Takes an Id, and returns the State of a mediaElement with that id.
+Can result in Error if the Id is not found, or the element found by that
+id isn't an HTMLMediaElement.
 -}
 now : Id -> Task Error State
 now id =
@@ -197,7 +220,7 @@ everyFrame id tagger =
     Debug.crash "Not Implemented Yet"
 
 
-{-| String representing the Dom Id of your media element.
+{-| String representing the Dom id of your media element.
 
 **Important:** Please, please, please use unique Id's for your media elements. We use the Id to find the element to run Tasks like play, load, and getState. Media.Events events also currently return an Id. Please let them be unique.
 
@@ -276,7 +299,9 @@ type Playback
     | Problem MediaError
 
 
-{-| -}
+{-| These are the errors of this library, that may be returned when calling a task
+or decoding a state.
+-}
 type Error
     = NotFound String
     | NotMediaElement String String
@@ -285,7 +310,8 @@ type Error
     | DecodeError String
 
 
-{-| -}
+{-| Represents the size of video media
+-}
 type alias VideoSize =
     { width : Int
     , height : Int
@@ -296,7 +322,8 @@ type alias VideoSize =
 --DECODERS
 
 
-{-| -}
+{-| Decodes the current state of an HtmlMediaElement
+-}
 state : Decoder State
 state =
     decode State
@@ -311,7 +338,6 @@ state =
         |> custom videoSize
 
 
-{-| -}
 mediaType : Decoder MediaType
 mediaType =
     let
@@ -332,7 +358,6 @@ mediaType =
         |> resolve
 
 
-{-| -}
 dataGroup : Decoder DataGroup
 dataGroup =
     decode DataGroup
@@ -340,7 +365,6 @@ dataGroup =
         |> custom networkState
 
 
-{-| -}
 playback : Decoder Playback
 playback =
     let
@@ -385,7 +409,6 @@ playback =
         |> resolve
 
 
-{-| -}
 networkState : Decoder NetworkState
 networkState =
     let
@@ -412,7 +435,6 @@ networkState =
         |> resolve
 
 
-{-| -}
 readyState : Decoder ReadyState
 readyState =
     let
@@ -442,7 +464,6 @@ readyState =
         |> resolve
 
 
-{-| -}
 mediaError : Decoder (Maybe MediaError)
 mediaError =
     let
@@ -477,7 +498,6 @@ mediaError =
         |> resolve
 
 
-{-| -}
 timeGroup : Decoder TimeGroup
 timeGroup =
     let
@@ -496,7 +516,6 @@ timeGroup =
         |> resolve
 
 
-{-| -}
 videoSize : Decoder VideoSize
 videoSize =
     decode VideoSize
@@ -504,7 +523,6 @@ videoSize =
         |> optional "videoHeight" int 0
 
 
-{-| -}
 timeRanges : Value -> List TimeRange
 timeRanges =
     Native.Media.decodeTimeRanges

@@ -53,7 +53,7 @@ This is a 1.0.0, and I'd love your feedback.
 
 ### Helpers
 
-@docs muted
+@docs muted, playbackRate, timeToString, playbackToString
 
 
 ### Media Control
@@ -63,7 +63,7 @@ This is a 1.0.0, and I'd love your feedback.
 
 ### canPlayMedia
 
-@docs canPlayMedia, CanPlay
+@docs canPlayType, CanPlay
 
 
 ### Elm-Media Errors
@@ -179,18 +179,22 @@ type CanPlay
     | No
 
 
-{-| -}
+{-| Converts a time value, such as a currentTime or duration, and returns a nicely
+formatted string. Values of NaN or infinity will return 0:00.
+
+It will always return a single-digit minute place and double-digit second place.
+It will automatically format the minutes to two digits when necessary
+
+-}
 timeToString : Float -> String
 timeToString time =
     let
         timeDigits : Int -> String
         timeDigits v =
-            case v <= 9 of
-                True ->
-                    "0" ++ toString v
-
-                False ->
-                    toString v
+            if v <= 9 then
+                "0" ++ toString v
+            else
+                toString v
 
         h =
             floor time // 3600
@@ -205,15 +209,14 @@ timeToString time =
         "0:00"
     else if isInfinite time then
         "0:00"
+    else if h <= 0 then
+        toString m ++ ":" ++ timeDigits s
     else
-        case h <= 0 of
-            False ->
-                toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
-
-            True ->
-                toString m ++ ":" ++ timeDigits s
+        toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
 
 
+{-| Takes a Playback type and returns a nicely formatted string
+-}
 playbackToString : Playback -> String
 playbackToString status =
     case status of
