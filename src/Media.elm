@@ -1,37 +1,54 @@
 module Media exposing (..)
 
-{-| This is a very experimental attempt to wrap the HTML5 Media API,
+{-| This is an experimental attempt to wrap the HTML5 Media API,
 making it possible to write more sophisticated audio and video players
-in elm. Let me reiterate, this is experiemental, and not nearly ready
+in Elm. Let me reiterate, this is experiemental, and not ready
 for production. Use at your peril.
 
-This library is helpful if you want to add some basic commands to an
-audio or video player, or if you want be an abstration, such as a
-reusable view, to provide more functionality than the browser's built-in
-media player.
+This package is a fairly direct layer over the Media API. I'm all for higher
+level abstractions, but when dealing with media, a player _is_ the abstraction.
+This package will hopefully allow myself and others to write great players that
+abstract away the annoying details of dealing with audio & video. I've also
+published an example of such a player here: (INSERT LINK ONCE PUBLISHED)
 
-Media is an interesting element to wrap in elm, because it inherently has
-state. If the player is playing, its currentTime and duration, and other
-properties may change regardless of user interaction. I tried to follow
-the elm guidelines and believe this should be a subscription, returning
-state every returnAnimationFrame, but honestly, Effect Managers are beyond
-me at this point, and I need some help to implement this. For the time being
-I'm using the getState function as a workaround.
+This package uses native code for a set of tasks that control playback
+of media (Play, Pause, Load, Seek, etc) and to get the current state of
+the media (Media.State.now) and also to check if a the browser supports
+a given filetype (canPlayType).
 
-It uses native code to return the record State which is a pretty close
-mapping to the properties of the HTMLMediaElement. (I would love to
-replace this with a JSON decoder, and originally prototyped this way, but
-cannot figure out how to bring TimeRanges objects into elm without
-writing a native TimeRanges decoder--which may happen in the future).
+It also uses native code to decode TimeRanges objects (which cannot be accessed
+via an array syntax and therefore cannot be decoded currently in pure Elm).
 
-It also uses native code to wrap the basic HTMLMediaElement methods:
-play, pause, load, fastSeek, and canPlayType. This is
-unavoidable. It also uses native code for the function seek. There might
-be an alternative way to do this using Html.Attributes.property, but I
-haven't figured it out yet.
+Aside from the basic playback tasks, the heart of this library is a Json decoder that
+takes an HtmlMediaElement's state and decodes it to an Elm record, as well as a set
+of events that return a (Media.State.State -> Msg) so you can update your model
+whenever these events fire. Also, there's a subscription for getting the state every
+animation frame, in case you need a more frame accurate result, but this comes
+with a performance penalty, and most great javascript media players simply rely on the
+events, so I don't recommend.
 
-All of these functions are Tasks, and perform checks in the native code
-to try to catch errors.
+Four important parts of writing players are not wrapped by this library:
+
+1.  Subtitles - These are very important and are the next thing on my list to implement,
+    I just need to figure out the cross-browser issues first. I'm very sensitive to the needs
+    of hearing impaired users, so this is a top priority.
+
+2.  Media Source Extensions - This is a portion of the Media API that allows us to do live
+    streaming and adaptibe bitrate media. I think I have a good design for it, but it's a big
+    challenge, and I want to make sure people like the API design of the basic Media API first.
+
+3.  Web Audio - Web Audio API is often used to calculate the waveforms of audio files in
+    audio players. However, wrapping that part of the Web API is beyond the scope of this package.
+    Use ports for now. If this package gains acceptance and use, I'll commit to doing Web Audio
+    as well.
+
+4.  Fullscreen API - This is a pretty necessary Web API for writing a proper video player,
+    but it beyond the scope of this package (besides, smarter people are working on this).
+
+But as long as you're not planning to display subtitles, do live streaming (or Adaptive Bitrate),
+generate waveforms or make a video fullscreen, this package should be ready to go.
+
+This is a 1.0.0, and I'd love your feedback.
 
 
 ### Helpers
@@ -58,7 +75,7 @@ to try to catch errors.
 import Html exposing (Attribute)
 import Html.Attributes exposing (property)
 import Json.Encode as Encode exposing (bool)
-import Media.State exposing (Id, State)
+import Media.State exposing (Id, Playback(..), State)
 import Native.Media
 import Task exposing (Task)
 import Time exposing (Time)
@@ -91,6 +108,18 @@ muted muted =
     property "muted" (Encode.bool muted)
 
 
+{-| A helper function for easily setting the muted property on a media element.
+
+    player =
+        audio [ id "player1", controls True, muted False, src "audiofile.mp3" ]
+            []
+
+-}
+playbackRate : Float -> Attribute msg
+playbackRate rate =
+    property "playbackRate" (Encode.float rate)
+
+
 
 -- TASKS
 
@@ -98,42 +127,42 @@ muted muted =
 {-| Tries to take an Id and switch it to a Playing state of Playback. Can fail if the Id isn't found, isn't an HTMLMediaElement, or fails to play.
 -}
 play : Id -> Task Error ()
-play id =
+play =
     Native.Media.play
 
 
 {-| Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 pause : Id -> Task Error ()
-pause id =
+pause =
     Native.Media.pause
 
 
 {-| Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 load : Id -> Task Error ()
-load id =
+load =
     Native.Media.load
 
 
 {-| Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 seek : Id -> Time -> Task Error ()
-seek id time =
+seek =
     Native.Media.seek
 
 
 {-| Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 fastSeek : Id -> Time -> Task Error ()
-fastSeek id time =
+fastSeek =
     Native.Media.fastSeek
 
 
 {-| Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.
 -}
-canPlayMedia : Id -> String -> Task Error CanPlay
-canPlayMedia id mediaType =
+canPlayType : Id -> String -> Task Error CanPlay
+canPlayType =
     Native.Media.canPlayType
 
 
@@ -148,3 +177,60 @@ type CanPlay
     = Probably
     | Maybe
     | No
+
+
+{-| -}
+timeToString : Float -> String
+timeToString time =
+    let
+        timeDigits : Int -> String
+        timeDigits v =
+            case v <= 9 of
+                True ->
+                    "0" ++ toString v
+
+                False ->
+                    toString v
+
+        h =
+            floor time // 3600
+
+        m =
+            rem (floor time) 3600 // 60
+
+        s =
+            rem (rem (floor time) 3600) 60
+    in
+    if isNaN time then
+        "0:00"
+    else if isInfinite time then
+        "0:00"
+    else
+        case h <= 0 of
+            False ->
+                toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
+
+            True ->
+                toString m ++ ":" ++ timeDigits s
+
+
+playbackToString : Playback -> String
+playbackToString status =
+    case status of
+        Paused ->
+            "Paused"
+
+        Playing ->
+            "Playing"
+
+        Loading ->
+            "Loading"
+
+        Buffering ->
+            "Buffering"
+
+        Ended ->
+            "End"
+
+        Problem err ->
+            "Problem"

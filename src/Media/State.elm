@@ -1,4 +1,24 @@
-module Media.State exposing (..)
+module Media.State
+    exposing
+        ( DataGroup
+        , Error(..)
+        , Id
+        , MediaError(..)
+        , MediaType(..)
+        , NetworkState(..)
+        , Playback(..)
+        , ReadyState(..)
+        , State
+        , TimeGroup
+        , TimeRange
+        , VideoSize
+        , default
+        , defaultAudio
+        , defaultVideo
+        , everyFrame
+        , now
+        , state
+        )
 
 {-| This module provides definitions for types representing the state of an HTMLMediaElement. I provided as few details as I could, and figure out as much for a user as possible, but players are complicated, and require a lot of information to do different things. It's likely that no player will need to simultaneously use all the fields I've exposed, and it's likely that most will never need more than a few, like duration, volume, currentTime, etc.
 
@@ -12,7 +32,7 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 ###Getting and Decoding State
 
-@docs now, everyFrame
+@docs everyFrame, now, state
 
 ###State Types
 
@@ -24,7 +44,8 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 import Array exposing (Array)
 import Dict
-import Json.Decode exposing (Value)
+import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, map, map2, map3, map4, string, succeed, value)
+import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
 import Native.Media
 import Process
 import Task exposing (Task)
@@ -63,46 +84,95 @@ Cmd.none )
 type alias State =
     { id : Id
     , mediaType : MediaType
-    , playback : PlaybackGroup
-    , volume : Float
-    , muted : Bool
-    , time : TimeGroup
+    , playback : Playback
+    , source : String
+    , currentTime : Time
+    , duration : Time
+    , data : DataGroup
+    , timeRanges : TimeGroup
     , videoSize : { width : Int, height : Int }
     }
 
 
 {-| -}
-type MediaType
-    = Audio
-    | Video { width : Int, height : Int }
+default :
+    { id : Id
+    , mediaType : MediaType
+    , source : Maybe String
+    }
+    -> State
+default options =
+    { id = options.id
+    , mediaType = options.mediaType
+    , playback = Paused
+    , source = Maybe.withDefault "" options.source
+    , currentTime = 0.0
+    , duration = 0.0
+    , data =
+        { ready = HaveNothing
+        , network = Idle
+        }
+    , timeRanges =
+        { seekable = []
+        , buffered = []
+        , played = []
+        }
+    , videoSize = { width = 0, height = 0 }
+    }
 
 
 {-| -}
-type alias PlaybackGroup =
-    { status : Playback
-    , loop : Bool
-    , rate : Float
-    , source : String
-    , ready : ReadyState
+defaultAudio : Id -> State
+defaultAudio id =
+    default { id = id, mediaType = Audio, source = Nothing }
+
+
+{-| -}
+defaultVideo : Id -> State
+defaultVideo id =
+    default { id = id, mediaType = Video, source = Nothing }
+
+
+{-| -}
+type MediaType
+    = Audio
+    | Video
+
+
+{-| -}
+type alias DataGroup =
+    { ready : ReadyState
     , network : NetworkState
     }
 
 
 {-| -}
 type alias TimeGroup =
-    { current : Time
-    , duration : Time
-    , buffered : List TimeRange
+    { buffered : List TimeRange
     , seekable : List TimeRange
     , played : List TimeRange
     }
 
 
+nowRaw : Id -> Task Error Value
+nowRaw =
+    Native.Media.getMediaById
+
+
 {-| Takes an Id, and returns a State of it. Can result in Error if the Id is not found, or the element found by that Id isn't an HTMLMediaElement.
 -}
 now : Id -> Task Error State
-now =
-    Native.Media.getStateWithId
+now id =
+    nowRaw id
+        |> Task.andThen
+            (\value ->
+                case Json.Decode.decodeValue state value of
+                    Ok media ->
+                        Task.succeed media
+
+                    Err e ->
+                        Task.fail (NotFound e)
+            )
 
 
 {-| **Very Important -- Not Yet Implemented -- Do Not Use**
@@ -198,12 +268,12 @@ type MediaError
 {-| Current Playback state of the media player. Error represents a MediaError, thrown by the browser, not an Error thrown by the tasks in this module.
 -}
 type Playback
-    = Playing
-    | Paused
+    = Paused
+    | Playing
     | Loading
     | Buffering
     | Ended
-    | Error MediaError
+    | Problem MediaError
 
 
 {-| -}
@@ -212,6 +282,7 @@ type Error
     | NotMediaElement String String
     | PlayPromiseFailure String
     | NotTimeRanges String
+    | DecodeError String
 
 
 {-| -}
@@ -219,3 +290,221 @@ type alias VideoSize =
     { width : Int
     , height : Int
     }
+
+
+
+--DECODERS
+
+
+{-| -}
+state : Decoder State
+state =
+    decode State
+        |> required "id" string
+        |> custom mediaType
+        |> custom playback
+        |> required "src" string
+        |> required "currentTime" float
+        |> required "duration" float
+        |> custom dataGroup
+        |> custom timeGroup
+        |> custom videoSize
+
+
+{-| -}
+mediaType : Decoder MediaType
+mediaType =
+    let
+        toMediaType : String -> Decoder MediaType
+        toMediaType element =
+            case element of
+                "AUDIO" ->
+                    succeed Audio
+
+                "VIDEO" ->
+                    succeed Audio
+
+                _ ->
+                    fail <| "This decoder only knows how to decode the state of Audio and Video elements, but was given an element of type " ++ element
+    in
+    decode toMediaType
+        |> required "tagName" string
+        |> resolve
+
+
+{-| -}
+dataGroup : Decoder DataGroup
+dataGroup =
+    decode DataGroup
+        |> custom readyState
+        |> custom networkState
+
+
+{-| -}
+playback : Decoder Playback
+playback =
+    let
+        toPlayback : Maybe MediaError -> ReadyState -> Bool -> Bool -> Decoder Playback
+        toPlayback error ready ended paused =
+            case error of
+                Just err ->
+                    succeed <| Problem err
+
+                Nothing ->
+                    case ready of
+                        HaveNothing ->
+                            succeed Loading
+
+                        HaveMetadata ->
+                            succeed Loading
+
+                        HaveCurrentData ->
+                            succeed Buffering
+
+                        HaveFutureData ->
+                            succeed Buffering
+
+                        HaveEnoughData ->
+                            case ended of
+                                True ->
+                                    succeed Ended
+
+                                False ->
+                                    case paused of
+                                        True ->
+                                            succeed Paused
+
+                                        False ->
+                                            succeed Playing
+    in
+    decode toPlayback
+        |> custom mediaError
+        |> custom readyState
+        |> required "ended" bool
+        |> required "paused" bool
+        |> resolve
+
+
+{-| -}
+networkState : Decoder NetworkState
+networkState =
+    let
+        toNetworkState : Int -> Decoder NetworkState
+        toNetworkState code =
+            case code of
+                0 ->
+                    succeed Empty
+
+                1 ->
+                    succeed Idle
+
+                2 ->
+                    succeed DataLoading
+
+                3 ->
+                    succeed NoSource
+
+                _ ->
+                    fail <| "Unexpect Network State Index: " ++ toString code
+    in
+    decode toNetworkState
+        |> required "networkState" int
+        |> resolve
+
+
+{-| -}
+readyState : Decoder ReadyState
+readyState =
+    let
+        toReadyState : Int -> Decoder ReadyState
+        toReadyState code =
+            case code of
+                0 ->
+                    succeed HaveNothing
+
+                1 ->
+                    succeed HaveMetadata
+
+                2 ->
+                    succeed HaveCurrentData
+
+                3 ->
+                    succeed HaveFutureData
+
+                4 ->
+                    succeed HaveEnoughData
+
+                _ ->
+                    fail <| "Unexpect Ready State Index: " ++ toString code
+    in
+    decode toReadyState
+        |> required "readyState" int
+        |> resolve
+
+
+{-| -}
+mediaError : Decoder (Maybe MediaError)
+mediaError =
+    let
+        toMediaError : Int -> String -> Decoder (Maybe MediaError)
+        toMediaError code message =
+            case code of
+                0 ->
+                    succeed Nothing
+
+                1 ->
+                    succeed <| Just (Aborted message)
+
+                2 ->
+                    succeed <| Just (Network message)
+
+                3 ->
+                    succeed <| Just (Decode message)
+
+                4 ->
+                    succeed <| Just (Unsupported message)
+
+                _ ->
+                    fail <|
+                        "Unexpected HTML5MediaError code: "
+                            ++ toString code
+                            ++ ": "
+                            ++ message
+    in
+    decode toMediaError
+        |> optionalAt [ "error", "code" ] int 0
+        |> optionalAt [ "error", "message" ] string ""
+        |> resolve
+
+
+{-| -}
+timeGroup : Decoder TimeGroup
+timeGroup =
+    let
+        toTimeGroup : Value -> Value -> Value -> Decoder TimeGroup
+        toTimeGroup bufferedValue seekableValue playedValue =
+            decode
+                { buffered = timeRanges bufferedValue
+                , seekable = timeRanges seekableValue
+                , played = timeRanges playedValue
+                }
+    in
+    decode toTimeGroup
+        |> required "buffered" value
+        |> required "seekable" value
+        |> required "played" value
+        |> resolve
+
+
+{-| -}
+videoSize : Decoder VideoSize
+videoSize =
+    decode VideoSize
+        |> optional "videoWidth" int 0
+        |> optional "videoHeight" int 0
+
+
+{-| -}
+timeRanges : Value -> List TimeRange
+timeRanges =
+    Native.Media.decodeTimeRanges
