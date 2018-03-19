@@ -8,18 +8,4 @@ This project includes native code, so unless it gets white-listed by the powers 
 
 ### Installing manually
 
-Copy this repo to the directory of your choice.
-
-In your elm-package.json file, make the following changes:
-
-1) Add the directory to which you copied this repo to the "source-directories" field. For instance, if you saved this directory at "~/elm-media/", your elm-package.json might have a field that looks like this:
-
-```"source-directories": [
-        ".",
-        "~/elm-media"
-    ],```
-
-2) add a line allowing native modules, like so: ```"native-modules": true,```
-
-There are several other ways to do this, but this is probably the simplest. 
-
+Instructions for installing an unpublished module can be found [here](http://faq.elm-community.org/#how-do-i-install-an-elm-package-that-has-not-been-published-to-packageselm-langorg-for-use-in-my-project)
