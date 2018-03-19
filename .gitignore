@@ -12,3 +12,9 @@ node_modules
 
 # Desktop Services Store on macOS
 .DS_Store
+
+# assets used for local development
+assets/
+
+# VS Code settings
+.vscode/
