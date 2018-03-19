@@ -5,7 +5,8 @@
     "license": "BSD3",
     "source-directories": [
         ".",
-        "../src",  "../src/Native"
+        "../src",  
+        "../src/Native"
     ],
     "exposed-modules": [],
     "native-modules": true,

@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
+    "summary": "A simple elm wrapper over the HTML5 Media API",
     "repository": "https://github.com/danabrams/elm-media.git",
     "license": "BSD3",
     "source-directories": [
@@ -17,7 +17,7 @@
         "NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0",
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
         "elm-lang/html": "2.0.0 <= v < 3.0.0",
-        "elm-lang/http": "1.0.0 <= v < 2.0.0",
+        "elm-lang/http": "1.0.0 <= v < 2.0.0"
     },
     "elm-version": "0.18.0 <= v < 0.19.0"
 }
