@@ -9,7 +9,7 @@ This package is a fairly direct layer over the Media API. I'm all for higher
 level abstractions, but when dealing with media, a player _is_ the abstraction.
 This package will hopefully allow myself and others to write great players that
 abstract away the annoying details of dealing with audio & video. I've also
-published an example of such a player here: (INSERT LINK ONCE PUBLISHED)
+published an example of such a player [here](https://github.com/danabrams/elm-audio-player-example).
 
 This package uses native code for a set of tasks that control playback
 of media (Play, Pause, Load, Seek, etc) and to get the current state of
