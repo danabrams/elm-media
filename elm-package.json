@@ -1,9 +1,10 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "summary": "A simple elm wrapper over the HTML5 Media API",
     "repository": "https://github.com/danabrams/elm-media.git",
     "license": "BSD3",
     "source-directories": [
+        ".",
         "src",
         "examples"
     ],
