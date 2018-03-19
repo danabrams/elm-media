@@ -1,6 +1,6 @@
 {
-    "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
+    "version": "1.0.1",
+    "summary": "A simple Elm wrapper for the HTML5 Media API",
     "repository": "https://github.com/danabrams/elm-media.git",
     "license": "BSD3",
     "source-directories": [
