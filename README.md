@@ -21,3 +21,5 @@ In your elm-package.json file, make the following changes:
 
 2) add a line allowing native modules, like so: ```"native-modules": true,```
 
+There are several other ways to do this, but this is probably the simplest. 
+
