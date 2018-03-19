@@ -14,7 +14,7 @@ node_modules
 .DS_Store
 
 # assets used for local development
-assets/
+assets
 
 # VS Code settings
-.vscode/
+.vscode
