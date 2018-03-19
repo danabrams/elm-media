@@ -1,5 +1,91 @@
 [
   {
+    "name": "Media",
+    "comment": " This is an experimental attempt to wrap the HTML5 Media API,\nmaking it possible to write more sophisticated audio and video players\nin Elm. Let me reiterate, this is experiemental, and not ready\nfor production. Use at your peril.\n\nThis package is a fairly direct layer over the Media API. I'm all for higher\nlevel abstractions, but when dealing with media, a player _is_ the abstraction.\nThis package will hopefully allow myself and others to write great players that\nabstract away the annoying details of dealing with audio & video. I've also\npublished an example of such a player [here](https://github.com/danabrams/elm-audio-player-example).\n\nThis package uses native code for a set of tasks that control playback\nof media (Play, Pause, Load, Seek, etc) and to get the current state of\nthe media (Media.State.now) and also to check if a the browser supports\na given filetype (canPlayType).\n\nIt also uses native code to decode TimeRanges objects (which cannot be accessed\nvia an array syntax and therefore cannot be decoded currently in pure Elm).\n\nAside from the basic playback tasks, the heart of this library is a Json decoder that\ntakes an HtmlMediaElement's state and decodes it to an Elm record, as well as a set\nof events that return a (Media.State.State -> Msg) so you can update your model\nwhenever these events fire. Also, there's a subscription for getting the state every\nanimation frame, in case you need a more frame accurate result, but this comes\nwith a performance penalty, and most great javascript media players simply rely on the\nevents, so I don't recommend.\n\nFour important parts of writing players are not wrapped by this library:\n\n1.  Subtitles - These are very important and are the next thing on my list to implement,\n    I just need to figure out the cross-browser issues first. I'm very sensitive to the needs\n    of hearing impaired users, so this is a top priority.\n\n2.  Media Source Extensions - This is a portion of the Media API that allows us to do live\n    streaming and adaptibe bitrate media. I think I have a good design for it, but it's a big\n    challenge, and I want to make sure people like the API design of the basic Media API first.\n\n3.  Web Audio - Web Audio API is often used to calculate the waveforms of audio files in\n    audio players. However, wrapping that part of the Web API is beyond the scope of this package.\n    Use ports for now. If this package gains acceptance and use, I'll commit to doing Web Audio\n    as well.\n\n4.  Fullscreen API - This is a pretty necessary Web API for writing a proper video player,\n    but it beyond the scope of this package (besides, smarter people are working on this).\n\nBut as long as you're not planning to display subtitles, do live streaming (or Adaptive Bitrate),\ngenerate waveforms or make a video fullscreen, this package should be ready to go.\n\nThis is a 1.0.0, and I'd love your feedback.\n\n\n### Helpers\n\n@docs muted, playbackRate, timeToString, playbackToString\n\n\n### Media Control\n\n@docs play, pause, load, fastSeek, seek\n\n\n### canPlayMedia\n\n@docs canPlayType, CanPlay\n\n\n### Elm-Media Errors\n\n@docs Error\n\n",
+    "aliases": [
+      {
+        "name": "Error",
+        "comment": " These are errors thrown by the tasks defined in this module.\n\nNotFound: No element with that Id was found. Returns the Id provided\nNotMediaElement: The element found with that Id was not an HTMLMediaElement. Returns the Id provided and the constructor of the element found with that id\nPlayPromiseFailure: On modern browsers, Play() returns a promise.\n\n",
+        "args": [],
+        "type": "Media.State.Error"
+      }
+    ],
+    "types": [
+      {
+        "name": "CanPlay",
+        "comment": " These are the three possible results of canPlayType.\n\nProbably: This source is probably a playable type (probably because media can have all sorts of problem and browser support is all over the place)\nMaybe: The player can try to play the media, but until it does, it has no idea where it will play or not\nNo: The media definitely cannot be played\n\n",
+        "args": [],
+        "cases": [
+          [
+            "Probably",
+            []
+          ],
+          [
+            "Maybe",
+            []
+          ],
+          [
+            "No",
+            []
+          ]
+        ]
+      }
+    ],
+    "values": [
+      {
+        "name": "canPlayType",
+        "comment": " Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.\n",
+        "type": "Media.State.Id -> String -> Task.Task Media.Error Media.CanPlay"
+      },
+      {
+        "name": "fastSeek",
+        "comment": " Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.State.Id -> Time.Time -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "load",
+        "comment": " Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.State.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "muted",
+        "comment": " A helper function for easily setting the muted property on a media element.\n\n    player =\n        audio [ id \"player1\", controls True, muted False, src \"audiofile.mp3\" ]\n            []\n\n",
+        "type": "Bool -> Html.Attribute msg"
+      },
+      {
+        "name": "pause",
+        "comment": " Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.State.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "play",
+        "comment": " Tries to take an Id and switch it to a Playing state of Playback. Can fail if the Id isn't found, isn't an HTMLMediaElement, or fails to play.\n",
+        "type": "Media.State.Id -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "playbackRate",
+        "comment": " A helper function for easily setting the muted property on a media element.\n\n    player =\n        audio [ id \"player1\", controls True, muted False, src \"audiofile.mp3\" ]\n            []\n\n",
+        "type": "Float -> Html.Attribute msg"
+      },
+      {
+        "name": "playbackToString",
+        "comment": " Takes a Playback type and returns a nicely formatted string\n",
+        "type": "Media.State.Playback -> String"
+      },
+      {
+        "name": "seek",
+        "comment": " Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
+        "type": "Media.State.Id -> Time.Time -> Task.Task Media.Error ()"
+      },
+      {
+        "name": "timeToString",
+        "comment": " Converts a time value, such as a currentTime or duration, and returns a nicely\nformatted string. Values of NaN or infinity will return 0:00.\n\nIt will always return a single-digit minute place and double-digit second place.\nIt will automatically format the minutes to two digits when necessary\n\n",
+        "type": "Float -> String"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  },
+  {
     "name": "Media.Events",
     "comment": " ###Events\n\n@docs onPlaying, onPaused, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError\n\n",
     "aliases": [],
@@ -99,92 +185,6 @@
         "name": "onWaiting",
         "comment": " Sent when a task is waiting on the completion of another task (such as Play having\nto wait until Seek is complete).\n",
         "type": "(Media.State.State -> msg) -> Html.Attribute msg"
-      }
-    ],
-    "generated-with-elm-version": "0.18.0"
-  },
-  {
-    "name": "Media",
-    "comment": " This is an experimental attempt to wrap the HTML5 Media API,\nmaking it possible to write more sophisticated audio and video players\nin Elm. Let me reiterate, this is experiemental, and not ready\nfor production. Use at your peril.\n\nThis package is a fairly direct layer over the Media API. I'm all for higher\nlevel abstractions, but when dealing with media, a player _is_ the abstraction.\nThis package will hopefully allow myself and others to write great players that\nabstract away the annoying details of dealing with audio & video. I've also\npublished an example of such a player here: (INSERT LINK ONCE PUBLISHED)\n\nThis package uses native code for a set of tasks that control playback\nof media (Play, Pause, Load, Seek, etc) and to get the current state of\nthe media (Media.State.now) and also to check if a the browser supports\na given filetype (canPlayType).\n\nIt also uses native code to decode TimeRanges objects (which cannot be accessed\nvia an array syntax and therefore cannot be decoded currently in pure Elm).\n\nAside from the basic playback tasks, the heart of this library is a Json decoder that\ntakes an HtmlMediaElement's state and decodes it to an Elm record, as well as a set\nof events that return a (Media.State.State -> Msg) so you can update your model\nwhenever these events fire. Also, there's a subscription for getting the state every\nanimation frame, in case you need a more frame accurate result, but this comes\nwith a performance penalty, and most great javascript media players simply rely on the\nevents, so I don't recommend.\n\nFour important parts of writing players are not wrapped by this library:\n\n1.  Subtitles - These are very important and are the next thing on my list to implement,\n    I just need to figure out the cross-browser issues first. I'm very sensitive to the needs\n    of hearing impaired users, so this is a top priority.\n\n2.  Media Source Extensions - This is a portion of the Media API that allows us to do live\n    streaming and adaptibe bitrate media. I think I have a good design for it, but it's a big\n    challenge, and I want to make sure people like the API design of the basic Media API first.\n\n3.  Web Audio - Web Audio API is often used to calculate the waveforms of audio files in\n    audio players. However, wrapping that part of the Web API is beyond the scope of this package.\n    Use ports for now. If this package gains acceptance and use, I'll commit to doing Web Audio\n    as well.\n\n4.  Fullscreen API - This is a pretty necessary Web API for writing a proper video player,\n    but it beyond the scope of this package (besides, smarter people are working on this).\n\nBut as long as you're not planning to display subtitles, do live streaming (or Adaptive Bitrate),\ngenerate waveforms or make a video fullscreen, this package should be ready to go.\n\nThis is a 1.0.0, and I'd love your feedback.\n\n\n### Helpers\n\n@docs muted, playbackRate, timeToString, playbackToString\n\n\n### Media Control\n\n@docs play, pause, load, fastSeek, seek\n\n\n### canPlayMedia\n\n@docs canPlayType, CanPlay\n\n\n### Elm-Media Errors\n\n@docs Error\n\n",
-    "aliases": [
-      {
-        "name": "Error",
-        "comment": " These are errors thrown by the tasks defined in this module.\n\nNotFound: No element with that Id was found. Returns the Id provided\nNotMediaElement: The element found with that Id was not an HTMLMediaElement. Returns the Id provided and the constructor of the element found with that id\nPlayPromiseFailure: On modern browsers, Play() returns a promise.\n\n",
-        "args": [],
-        "type": "Media.State.Error"
-      }
-    ],
-    "types": [
-      {
-        "name": "CanPlay",
-        "comment": " These are the three possible results of canPlayType.\n\nProbably: This source is probably a playable type (probably because media can have all sorts of problem and browser support is all over the place)\nMaybe: The player can try to play the media, but until it does, it has no idea where it will play or not\nNo: The media definitely cannot be played\n\n",
-        "args": [],
-        "cases": [
-          [
-            "Probably",
-            []
-          ],
-          [
-            "Maybe",
-            []
-          ],
-          [
-            "No",
-            []
-          ]
-        ]
-      }
-    ],
-    "values": [
-      {
-        "name": "canPlayType",
-        "comment": " Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.\n",
-        "type": "Media.State.Id -> String -> Task.Task Media.Error Media.CanPlay"
-      },
-      {
-        "name": "fastSeek",
-        "comment": " Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
-        "type": "Media.State.Id -> Time.Time -> Task.Task Media.Error ()"
-      },
-      {
-        "name": "load",
-        "comment": " Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
-        "type": "Media.State.Id -> Task.Task Media.Error ()"
-      },
-      {
-        "name": "muted",
-        "comment": " A helper function for easily setting the muted property on a media element.\n\n    player =\n        audio [ id \"player1\", controls True, muted False, src \"audiofile.mp3\" ]\n            []\n\n",
-        "type": "Bool -> Html.Attribute msg"
-      },
-      {
-        "name": "pause",
-        "comment": " Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
-        "type": "Media.State.Id -> Task.Task Media.Error ()"
-      },
-      {
-        "name": "play",
-        "comment": " Tries to take an Id and switch it to a Playing state of Playback. Can fail if the Id isn't found, isn't an HTMLMediaElement, or fails to play.\n",
-        "type": "Media.State.Id -> Task.Task Media.Error ()"
-      },
-      {
-        "name": "playbackRate",
-        "comment": " A helper function for easily setting the muted property on a media element.\n\n    player =\n        audio [ id \"player1\", controls True, muted False, src \"audiofile.mp3\" ]\n            []\n\n",
-        "type": "Float -> Html.Attribute msg"
-      },
-      {
-        "name": "playbackToString",
-        "comment": " Takes a Playback type and returns a nicely formatted string\n",
-        "type": "Media.State.Playback -> String"
-      },
-      {
-        "name": "seek",
-        "comment": " Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.\n",
-        "type": "Media.State.Id -> Time.Time -> Task.Task Media.Error ()"
-      },
-      {
-        "name": "timeToString",
-        "comment": " Converts a time value, such as a currentTime or duration, and returns a nicely\nformatted string. Values of NaN or infinity will return 0:00.\n\nIt will always return a single-digit minute place and double-digit second place.\nIt will automatically format the minutes to two digits when necessary\n\n",
-        "type": "Float -> String"
       }
     ],
     "generated-with-elm-version": "0.18.0"
