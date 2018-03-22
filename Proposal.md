@@ -26,7 +26,9 @@ For this initial phase of API design, I just want to focus on the core fucntions
 
 ## Use Cases
 
-Honestly, for almost all media playback, a more sophisticated player than the built in audio and video tag. There is a lot of inconsistency among browsers on what the player controls look like when rendered, what functions controls they expose, what download policies they operate under. These players have different autoplay policies, which can cause broken pages. It's just a mess. A custom player can overcome these 
+Honestly, for almost all media playback, a more sophisticated player than the built in audio and video tag. There is a lot of inconsistency among browsers on what the player controls look like when rendered, what functions controls they expose, what download policies they operate under. These players have different autoplay policies, which can cause broken pages. It's just a mess. A custom player can overcome these with a better abstraction.
+
+The only case that the built in browser audio and video players should be used in when you're only targeting a single browser, with known capabilities, as Apple used to do with their [live stream events](https://www.apple.com/apple-events/september-2017/). Otherwise, you should be using a custom player (And to my point, Apple now does. This link has never worked on Chrome before).
 
 Even worse, different browsers support completely different media file formats and codecs. The formats they agree on are s lowest-common demoninator, often the least efficient, and relying solely on them leads to a worse end user experience. Ideally, a developer would be able to specify a great sounding, 128kbps AAC file for Safari, a great sounding 128kbps Ogg for Firefox, and a less great sounding, but more compatible 128kbps MP3 for browsers that don't support AAC or Ogg. The situation is even more drastic on the video side of things, where you might be able to save several gigabytes by serving an H.265 MP4 to Safari or Edge over the very compatible H.264 MP4. You might also want to serve a somewhat more efficient, but not as efficient WebM to Firefox and Chrome, and an H.264 MP4 to browsers that don't support either (mostly older browsers).
 
@@ -37,6 +39,13 @@ The Media API is also a crucial foundation for other APIs, such as Web Audio, wh
 / But the biggest benefit, I think, is the ability to write reusable media players (as reusable views) that abstract away a lot of the boilerplate wiring that go into making a media player. / I imagine that a company like NoRedInk, for instance, could use a video player based on this library to add video tooltips to their application, and make it even easier to learn.
 
 I'm sure there are other use-cases, and I'd love to hear them, and lend my expertise in any way I can.
+
+## Resources for understanding the Media API
+
+* MDN's [documentation](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) is excellent. Only a few things are missing, mostly from AudioTracks, VideoTracks, TextTracks.
+
+* [this tutorial](https://developer.mozilla.org/en-US/Apps/Fundamentals/Audio_and_video_delivery/cross_browser_video_player) from Mozilla is also great.
+
 
 ## Design Challenges
 
