@@ -46,7 +46,6 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, map, map2, map3, map4, string, succeed, value)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
 import Native.Media
-import Process
 import Task exposing (Task)
 import Time exposing (Time)
 
@@ -89,8 +88,13 @@ type alias State =
     , source : String
     , currentTime : Time
     , duration : Time
-    , data : DataGroup
-    , timeRanges : {TimeGroup}
+    , ready : ReadyState
+    , network : NetworkState
+    , timeRanges :
+        { buffered : List TimeRange
+        , seekable : List TimeRange
+        , played : List TimeRange
+        }
     , videoSize : { width : Int, height : Int }
     }
 
@@ -112,10 +116,8 @@ default options =
     , source = Maybe.withDefault "" options.source
     , currentTime = 0.0
     , duration = 0.0
-    , data =
-        { ready = HaveNothing
-        , network = Idle
-        }
+    , ready = HaveNothing
+    , network = Idle
     , timeRanges =
         { seekable = []
         , buffered = []
@@ -333,7 +335,8 @@ state =
         |> required "src" string
         |> required "currentTime" float
         |> required "duration" float
-        |> custom dataGroup
+        |> custom readyState
+        |> custom networkState
         |> custom timeGroup
         |> custom videoSize
 
@@ -356,13 +359,6 @@ mediaType =
     decode toMediaType
         |> required "tagName" string
         |> resolve
-
-
-dataGroup : Decoder DataGroup
-dataGroup =
-    decode DataGroup
-        |> custom readyState
-        |> custom networkState
 
 
 playback : Decoder Playback
