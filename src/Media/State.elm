@@ -90,7 +90,7 @@ type alias State =
     , currentTime : Time
     , duration : Time
     , data : DataGroup
-    , timeRanges : TimeGroup
+    , timeRanges : {TimeGroup}
     , videoSize : { width : Int, height : Int }
     }
 
