@@ -16,7 +16,7 @@ Richard Feldman very helpfully suggested I mock up the API by writing the functi
 
 I did this quickly, but then noticed some problems. I decided I needed to prototype a few things, and it quickly got out of control. My justification for this is that even if this whole implementation and design gets thrown out, this was an EXCELLENT learning exercise for me, and I think my design of the API is much better for it. Certainly my knowledge of Elm is better for it, and even if it's all tossed and problematic, I don't regret it for a second.
 
-**That said, for the next API I design, I definitely will do it the way Richard Suggested first. I know much more than I did six months ago.**
+**That said, for the next API I design, I definitely will do it the way Richard suggested first. I know much more than I did six months ago.**
 
 ## Defining the Media API
 
@@ -200,7 +200,7 @@ The goal of this library is to wrap the API precisely so that I, and others, can
 
 * Refinement - My end goal is for this to be white-listed some day, so I want to aggressively refine to get it up to Elm-lang's high standards.
 
-* Related API's - once we're in agreement that this package is fully baked, and he we have a good player or two, I'd like to start this process over to wrap some related API's. For my purposed, MediaSource Elements is the most pressing, although it involves some big challenges (I do have some ideas though). Web Audio is another that I think would be helpful to any number of people, and to me for some of the long term stuff I want to do.
+* Related API's - once we're in agreement that this package is fully baked, and he we have a good player or two, I'd like to start this process over to wrap some related API's. For my purposed, MediaSource Elements is the most pressing, although it involves some big challenges (I do have some ideas though). Web Audio is another that I think would be helpful to any number of people, and to me for some of the long term stuff I want to do. I'll definitely do one of these before I write much code, though. Lesson learned.
 
 ## Lingering Questions
 
