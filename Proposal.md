@@ -16,13 +16,13 @@ Richard Feldman very helpfully suggested I mock up the API by writing the functi
 
 I did this quickly, but then noticed some problems. I decided I needed to prototype a few things, and it quickly got out of control. My justification for this is that even if this whole implementation and design gets thrown out, this was an EXCELLENT learning exercise for me, and I think my design of the API is much better for it. Certainly my knowledge of Elm is better for it, and even if it's all tossed and problematic, I don't regret it for a second.
 
-*That said, for the next API I design, I definitely will do it the way Richard Suggested first. I know much more than I did six months ago.*
+**That said, for the next API I design, I definitely will do it the way Richard Suggested first. I know much more than I did six months ago.**
 
 ## Defining the Media API
 
 For this initial phase of API design, I just want to focus on the core fucntions of the Media API: managing the state of an HTML5 MediaElement (a player represented by an <audio> or <video> tag). This design has to do with the pieces necessary to build an audio or video player, like Video.js or JW Player, not doing interactive audio or video processing with related API's like Web Audio API or live streaming with Media Source Elements. / I do intend to work on those once this portion is complete, and all of them require this foundation. /
 
-*GOAL:* An elm developer should be able to use this library to write a cross-browser compatible audio or video player, with subtitle support (for accessibility).
+**GOAL:** An elm developer should be able to use this library to write a cross-browser compatible audio or video player, with subtitle support (for accessibility).
 
 ## Use Cases
 
@@ -36,7 +36,7 @@ Having the basic parts of the Media API wrapped will also allow us to write medi
 
 The Media API is also a crucial foundation for other APIs, such as Web Audio, which can be used for writing things like synthesizers and drum machines, but also for things like a sound effects library for game engines.
 
-/ But the biggest benefit, I think, is the ability to write reusable media players (as reusable views) that abstract away a lot of the boilerplate wiring that go into making a media player. / I imagine that a company like NoRedInk, for instance, could use a video player based on this library to add video tooltips to their application, and make it even easier to learn.
+**But the biggest benefit, I think, is the ability to write reusable media players (as reusable views) that abstract away a lot of the boilerplate wiring that go into making a media player.** I imagine that a company like NoRedInk, for instance, could use a video player based on this library to add video tooltips to their application, and make it even easier to learn.
 
 I'm sure there are other use-cases, and I'd love to hear them, and lend my expertise in any way I can.
 
@@ -69,11 +69,11 @@ I want to provide the user three opportunities to decode the record:
 
 2) By using the handy Html5 Media Events, mostly listed [here](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events). We can create a custom event in Elm using Html.Events.on, decode the event target (which is the MediaElement), and grab it's state as a Json Value, then send it to the State decoder.
 
-*QUESTION: Do you think I should be separating out just parts of the state relevant to the called event...That is, only return duration and seekable when the "durationchange" event is triggered or currentTime and played on a "timeupdate"? I'd like to discuss this choice in particular.*
+**QUESTION: Do you think I should be separating out just parts of the state relevant to the called event...That is, only return duration and seekable when the "durationchange" event is triggered or currentTime and played on a "timeupdate"? I'd like to discuss this choice in particular.**
 
 3) For 90% of applications, the events are the way to go. However, on most browsers, "timeupdate" is not fired every single frame, but rather at least once every 250ms during playback, for performance reasons. But some applications require per frame accuracy, such as one of my most used tools, [Frame.io](http://frame.io). I'd like to provide a subscription for these applications, Media.State.everyFrame, which operates like Media.State.now, but on every requestAnimationFrame.
 
-Another place for enhanced discussion - how should this be implemented? Should we write an effect manager? Should we write a Sub.map involving AnimationFrame. Or is including Media.State.now enough, and players that need this option can use it on their own subscription to AnimationFrame?*
+**Another place for enhanced discussion - how should this be implemented? Should we write an effect manager? Should we write a Sub.map involving AnimationFrame. Or is including Media.State.now enough, and players that need this option can use it on their own subscription to AnimationFrame?**
 
 ## State
 
@@ -149,13 +149,13 @@ PlaybackError is another ADT representing the errors a player might generate:
 
 With the exception of one type, all of this can be done with a standard Json Decode Pipeline. That's awesome, and I really want to thank Richard Feldman for helping me understand these pipelines better, as well as Brian Hicks excellent book, which would be really well thumb-marked if it weren't a PDF on my desktop.
 
-*However,* TimeRange gives us an issue. It's a crucial field for more advanced players and live streaming, but in javascript, it returns an object looks like this: 
+**However,** TimeRange gives us an issue. It's a crucial field for more advanced players and live streaming, but in javascript, it returns an object looks like this: 
 
 `{ length: index, start(index), end(index)}`
 
 Ugh. It doesn't have a collection or array syntax either, you can't do start[1] or buffered[1].start. This was a real blocker for me, and I had to write a native decoder in Javascript to do so. *I also think this is tough to do through ports, as by the time the Json value is returned to the elm runtime, the information may well be out of date, and being up to date matters for the use case of this info).
 
-This right here might be a fairly niche case, but it could be a blocker for which ports is not a viable option. I'm not sure.* 
+This right here might be a fairly niche case, but it could be a blocker for which ports is not a viable option. I'm not sure. 
 
 ## Playback Control
 
@@ -212,7 +212,7 @@ There's been a major change in the format of subtitling done in browsers over th
 
 Alternatively, this is probably and area where we could implement a parser in pure Elm, and manage subtitles ourselves. This lets us support more than one format and have excellent cross-broswer compatibility, but it doesn't let us use subtitles on media containers that have embedded VTT.
 
-*I'd really love to hear thoughts on this issue*
+**I'd really love to hear thoughts on this issue**
 
 ## Thanks
 
