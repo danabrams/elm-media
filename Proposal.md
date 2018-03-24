@@ -49,7 +49,7 @@ I'm sure there are other use-cases, and I'd love to hear them, and lend my exper
 
 ## Design Challenges
 
-The primary challenge is that an Html5 MediaElement is a component that to a great degree, manages its own state. Once it is given a source, it automatically makes the necessary HTTP requests and manages downloading the media file. As it loads, the duration of the mediaPlayer may change. Once it begins playing, the currentTime will play. Eventually the media will end, and may change from the paused state to the play state.
+The primary challenge is that an Html5 MediaElement is a component that to a great degree, manages its own state. Once it is given a source, it automatically makes the necessary HTTP requests and manages downloading the media file. As it loads, the duration of the mediaPlayer may change. Once it begins playing, the currentTime will play. Eventually the media will end, and may change from the playing state to the paused state.
 
 Some attributes should be managed by the user as declaritive attributes on the audio or video function: volume, muted, playbackRate, loop, controls, autoplay. Some of these are already included in Html.Attributes. Some are not and should be included here. Some have weird quirks that need to be understood.
 
@@ -63,23 +63,21 @@ Obviously this object-oriented approach is a non-starter in Elm.
 
 Luckily, a MediaElement is a standard JavaScript object, and can be passed into Elm using Json. The heart of my proposal and my current implementation is just a Json decoder, using a Pipeline decoder, to decode this value into an Elm record.
 
-I want to provide the user three opportunities to decode the record:
+I want to provide the user two opportunities to decode the record:
 
-1) By using the Media.State.now id task, which under the hood will look for a tag with that id, make sure it's an audio or video element, and return a result with either it or an Error to the decoder.
+1) **Get the state right now** By using the Media.State.now id task, which under the hood will look for a tag with that id, make sure it's an audio or video element, and return a result with either it or an Error to the decoder. The main use-case for this, so far as I can see, is for initialization (instead of using a default state, essentially blank)
 
-2) By using the handy Html5 Media Events, mostly listed [here](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events). We can create a custom event in Elm using Html.Events.on, decode the event target (which is the MediaElement), and grab it's state as a Json Value, then send it to the State decoder.
+2) **Using the Media API events** By using the handy Html5 Media Events, mostly listed [here](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events). We can create a custom event in Elm using Html.Events.on, decode the event target (which is the MediaElement), and grab it's state as a Json Value, then send it to the State decoder.
 
 **QUESTION: Do you think I should be separating out just parts of the state relevant to the called event...That is, only return duration and seekable when the "durationchange" event is triggered or currentTime and played on a "timeupdate"? I'd like to discuss this choice in particular.**
 
-3) For 90% of applications, the events are the way to go. However, on most browsers, "timeupdate" is not fired every single frame, but rather at least once every 250ms during playback, for performance reasons. But some applications require per frame accuracy, such as one of my most used tools, [Frame.io](http://frame.io). I'd like to provide a subscription for these applications, Media.State.everyFrame, which operates like Media.State.now, but on every requestAnimationFrame.
-
-**Another place for enhanced discussion - how should this be implemented? Should we write an effect manager? Should we write a Sub.map involving AnimationFrame. Or is including Media.State.now enough, and players that need this option can use it on their own subscription to AnimationFrame?**
+**Note, originally had a third way, but have determined it unnecessary**
 
 ## State
 
 The Record in question is the Media.State type. It looks like this:
 
-`type alias State =
+```type alias State =
     { id : Id
     , mediaType : MediaType
     , playback : Playback
@@ -92,7 +90,7 @@ The Record in question is the Media.State type. It looks like this:
     , seekable : List TimeRange
     , played : List TimeRange
     , videoSize : { width : Int, height : Int }
-    }`
+    }```
 
 I'll go through it line by line:
 
@@ -216,4 +214,4 @@ Alternatively, this is probably and area where we could implement a parser in pu
 
 ## Thanks
 
-Thanks for reading this monster document. I'm sorry for writing such a long proposal, I didn't have to time to write a short one. I appreciate that you got to this place. Since you did make it to the end, here's the secret code: 04 80 FE 57. Use it responsibly. The first one to send me the above code privately gets a free slice of pizza, or cappucino, or beer from me when I next see them in person.
+Thanks for reading this monster document. I'm sorry for writing such a long proposal, I didn't have to time to write a short one. I appreciate that you got to this place. ~~Since you did make it to the end, here's the secret code: 04 80 FE 57. Use it responsibly. The first one to send me the above code privately gets a free slice of pizza, or cappucino, or beer from me when I next see them in person.~~ Sorry, we already had a winner!

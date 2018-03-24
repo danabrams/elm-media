@@ -1,0 +1,23 @@
+<html><head></head>
+<body>
+<div id="main"></div>
+<script src="portsTest.js"></script>
+<script>
+    var node = document.getElementById('main');
+    var app = Elm.Main.embed(node);
+    // Note: if your Elm module is named "MyThing.Root" you
+    // would call "Elm.MyThing.Root.embed(node)" instead.
+
+    app.ports.updateButton.subscribe(function(id) {
+      console.log(id);
+      currentState(document.getElementById(id));
+    });
+
+    function currentState(state) {
+      app.ports.currentState.send(state);
+      return false;
+    }
+    
+</script>
+</body>
+</html>

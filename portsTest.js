@@ -1,6 +1,4 @@
-<!DOCTYPE HTML>
-<html><head><meta charset="UTF-8"><title>Audio</title><style>html,head,body { padding:0; margin:0; }
-body { font-family: calibri, helvetica, arial, sans-serif; }</style><script type="text/javascript">
+
 (function() {
 'use strict';
 
@@ -136,6 +134,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i)
     ? fun.func(a, b, c, d, e, f, g, h, i)
     : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_Basics = function() {
@@ -276,7 +275,8 @@ return {
 	isInfinite: isInfinite
 };
 
-}();//import //
+}();
+//import //
 
 var _elm_lang$core$Native_Utils = function() {
 
@@ -763,7 +763,8 @@ return {
 	toString: toString
 };
 
-}();var _elm_lang$core$Basics$never = function (_p0) {
+}();
+var _elm_lang$core$Basics$never = function (_p0) {
 	never:
 	while (true) {
 		var _p1 = _p0;
@@ -888,6 +889,7 @@ var _elm_lang$core$Basics$LT = {ctor: 'LT'};
 var _elm_lang$core$Basics$JustOneMore = function (a) {
 	return {ctor: 'JustOneMore', _0: a};
 };
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_Debug = function() {
@@ -917,8 +919,10 @@ return {
 	log: F2(log)
 };
 
-}();var _elm_lang$core$Debug$crash = _elm_lang$core$Native_Debug.crash;
+}();
+var _elm_lang$core$Debug$crash = _elm_lang$core$Native_Debug.crash;
 var _elm_lang$core$Debug$log = _elm_lang$core$Native_Debug.log;
+
 var _elm_lang$core$Maybe$withDefault = F2(
 	function ($default, maybe) {
 		var _p0 = maybe;
@@ -991,6 +995,7 @@ var _elm_lang$core$Maybe$map5 = F6(
 			return _elm_lang$core$Maybe$Nothing;
 		}
 	});
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_List = function() {
@@ -1127,7 +1132,8 @@ return {
 	sortWith: F2(sortWith)
 };
 
-}();var _elm_lang$core$List$sortWith = _elm_lang$core$Native_List.sortWith;
+}();
+var _elm_lang$core$List$sortWith = _elm_lang$core$Native_List.sortWith;
 var _elm_lang$core$List$sortBy = _elm_lang$core$Native_List.sortBy;
 var _elm_lang$core$List$sort = function (xs) {
 	return A2(_elm_lang$core$List$sortBy, _elm_lang$core$Basics$identity, xs);
@@ -1679,6 +1685,7 @@ var _elm_lang$core$List$indexedMap = F2(
 				_elm_lang$core$List$length(xs) - 1),
 			xs);
 	});
+
 var _elm_lang$core$Result$toMaybe = function (result) {
 	var _p0 = result;
 	if (_p0.ctor === 'Ok') {
@@ -1820,6 +1827,7 @@ var _elm_lang$core$Result$fromMaybe = F2(
 			return _elm_lang$core$Result$Err(err);
 		}
 	});
+
 //import Maybe, Native.List, Native.Utils, Result //
 
 var _elm_lang$core$Native_String = function() {
@@ -2159,6 +2167,7 @@ return {
 };
 
 }();
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_Char = function() {
@@ -2172,7 +2181,8 @@ return {
 	toLocaleLower: function(c) { return _elm_lang$core$Native_Utils.chr(c.toLocaleLowerCase()); }
 };
 
-}();var _elm_lang$core$Char$fromCode = _elm_lang$core$Native_Char.fromCode;
+}();
+var _elm_lang$core$Char$fromCode = _elm_lang$core$Native_Char.fromCode;
 var _elm_lang$core$Char$toCode = _elm_lang$core$Native_Char.toCode;
 var _elm_lang$core$Char$toLocaleLower = _elm_lang$core$Native_Char.toLocaleLower;
 var _elm_lang$core$Char$toLocaleUpper = _elm_lang$core$Native_Char.toLocaleUpper;
@@ -2214,6 +2224,7 @@ var _elm_lang$core$Char$isHexDigit = function ($char) {
 		_elm_lang$core$Native_Utils.chr('F'),
 		$char));
 };
+
 var _elm_lang$core$String$fromList = _elm_lang$core$Native_String.fromList;
 var _elm_lang$core$String$toList = _elm_lang$core$Native_String.toList;
 var _elm_lang$core$String$toFloat = _elm_lang$core$Native_String.toFloat;
@@ -2257,6 +2268,7 @@ var _elm_lang$core$String$fromChar = function ($char) {
 	return A2(_elm_lang$core$String$cons, $char, '');
 };
 var _elm_lang$core$String$isEmpty = _elm_lang$core$Native_String.isEmpty;
+
 var _elm_lang$core$Tuple$mapSecond = F2(
 	function (func, _p0) {
 		var _p1 = _p0;
@@ -2283,6 +2295,7 @@ var _elm_lang$core$Tuple$first = function (_p6) {
 	var _p7 = _p6;
 	return _p7._0;
 };
+
 //import //
 
 var _elm_lang$core$Native_Platform = function() {
@@ -2842,6 +2855,7 @@ return {
 };
 
 }();
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_Scheduler = function() {
@@ -3122,7 +3136,8 @@ return {
 	rawSend: rawSend
 };
 
-}();var _elm_lang$core$Platform_Cmd$batch = _elm_lang$core$Native_Platform.batch;
+}();
+var _elm_lang$core$Platform_Cmd$batch = _elm_lang$core$Native_Platform.batch;
 var _elm_lang$core$Platform_Cmd$none = _elm_lang$core$Platform_Cmd$batch(
 	{ctor: '[]'});
 var _elm_lang$core$Platform_Cmd_ops = _elm_lang$core$Platform_Cmd_ops || {};
@@ -3136,11 +3151,13 @@ _elm_lang$core$Platform_Cmd_ops['!'] = F2(
 	});
 var _elm_lang$core$Platform_Cmd$map = _elm_lang$core$Native_Platform.map;
 var _elm_lang$core$Platform_Cmd$Cmd = {ctor: 'Cmd'};
+
 var _elm_lang$core$Platform_Sub$batch = _elm_lang$core$Native_Platform.batch;
 var _elm_lang$core$Platform_Sub$none = _elm_lang$core$Platform_Sub$batch(
 	{ctor: '[]'});
 var _elm_lang$core$Platform_Sub$map = _elm_lang$core$Native_Platform.map;
 var _elm_lang$core$Platform_Sub$Sub = {ctor: 'Sub'};
+
 var _elm_lang$core$Platform$hack = _elm_lang$core$Native_Scheduler.succeed;
 var _elm_lang$core$Platform$sendToSelf = _elm_lang$core$Native_Platform.sendToSelf;
 var _elm_lang$core$Platform$sendToApp = _elm_lang$core$Native_Platform.sendToApp;
@@ -3150,6 +3167,7 @@ var _elm_lang$core$Platform$Program = {ctor: 'Program'};
 var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
+
 //import Native.List //
 
 var _elm_lang$core$Native_Array = function() {
@@ -4116,7 +4134,8 @@ return {
 	fromJSArray: fromJSArray
 };
 
-}();var _elm_lang$core$Array$append = _elm_lang$core$Native_Array.append;
+}();
+var _elm_lang$core$Array$append = _elm_lang$core$Native_Array.append;
 var _elm_lang$core$Array$length = _elm_lang$core$Native_Array.length;
 var _elm_lang$core$Array$isEmpty = function (array) {
 	return _elm_lang$core$Native_Utils.eq(
@@ -4170,6 +4189,7 @@ var _elm_lang$core$Array$repeat = F2(
 			_elm_lang$core$Basics$always(e));
 	});
 var _elm_lang$core$Array$Array = {ctor: 'Array'};
+
 var _elm_lang$core$Dict$foldr = F3(
 	function (f, acc, t) {
 		foldr:
@@ -5086,6 +5106,7 @@ var _elm_lang$core$Dict$diff = F2(
 			t1,
 			t2);
 	});
+
 //import Maybe, Native.Array, Native.List, Native.Utils, Result //
 
 var _elm_lang$core$Native_Json = function() {
@@ -5661,6 +5682,7 @@ return {
 };
 
 }();
+
 var _elm_lang$core$Json_Encode$list = _elm_lang$core$Native_Json.encodeList;
 var _elm_lang$core$Json_Encode$array = _elm_lang$core$Native_Json.encodeArray;
 var _elm_lang$core$Json_Encode$object = _elm_lang$core$Native_Json.encodeObject;
@@ -5671,6 +5693,7 @@ var _elm_lang$core$Json_Encode$int = _elm_lang$core$Native_Json.identity;
 var _elm_lang$core$Json_Encode$string = _elm_lang$core$Native_Json.identity;
 var _elm_lang$core$Json_Encode$encode = _elm_lang$core$Native_Json.encode;
 var _elm_lang$core$Json_Encode$Value = {ctor: 'Value'};
+
 var _elm_lang$core$Json_Decode$null = _elm_lang$core$Native_Json.decodeNull;
 var _elm_lang$core$Json_Decode$value = _elm_lang$core$Native_Json.decodePrimitive('value');
 var _elm_lang$core$Json_Decode$andThen = _elm_lang$core$Native_Json.andThen;
@@ -5733,6 +5756,7 @@ var _elm_lang$core$Json_Decode$int = _elm_lang$core$Native_Json.decodePrimitive(
 var _elm_lang$core$Json_Decode$bool = _elm_lang$core$Native_Json.decodePrimitive('bool');
 var _elm_lang$core$Json_Decode$string = _elm_lang$core$Native_Json.decodePrimitive('string');
 var _elm_lang$core$Json_Decode$Decoder = {ctor: 'Decoder'};
+
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode = _elm_lang$core$Json_Decode$succeed;
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$resolve = _elm_lang$core$Json_Decode$andThen(_elm_lang$core$Basics$identity);
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom = _elm_lang$core$Json_Decode$map2(
@@ -5812,6 +5836,7 @@ var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required = F3(
 			A2(_elm_lang$core$Json_Decode$field, key, valDecoder),
 			decoder);
 	});
+
 var _elm_lang$virtual_dom$VirtualDom_Debug$wrap;
 var _elm_lang$virtual_dom$VirtualDom_Debug$wrapWithFlags;
 
@@ -7693,6 +7718,7 @@ return {
 };
 
 }();
+
 var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
 var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
 var _elm_lang$core$Task$spawnCmd = F2(
@@ -7889,6 +7915,7 @@ var _elm_lang$core$Task$cmdMap = F2(
 			A2(_elm_lang$core$Task$map, tagger, _p11._0));
 	});
 _elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
+
 var _elm_lang$virtual_dom$Native_Debug = function() {
 
 
@@ -8169,6 +8196,7 @@ return {
 }
 
 }();
+
 var _elm_lang$virtual_dom$VirtualDom_Helpers$keyedNode = _elm_lang$virtual_dom$Native_VirtualDom.keyedNode;
 var _elm_lang$virtual_dom$VirtualDom_Helpers$lazy3 = _elm_lang$virtual_dom$Native_VirtualDom.lazy3;
 var _elm_lang$virtual_dom$VirtualDom_Helpers$lazy2 = _elm_lang$virtual_dom$Native_VirtualDom.lazy2;
@@ -8214,6 +8242,7 @@ var _elm_lang$virtual_dom$VirtualDom_Helpers$Options = F2(
 	});
 var _elm_lang$virtual_dom$VirtualDom_Helpers$Node = {ctor: 'Node'};
 var _elm_lang$virtual_dom$VirtualDom_Helpers$Property = {ctor: 'Property'};
+
 var _elm_lang$virtual_dom$VirtualDom_Expando$purple = _elm_lang$virtual_dom$VirtualDom_Helpers$style(
 	{
 		ctor: '::',
@@ -9567,6 +9596,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$viewSequence = F4(
 				}
 			});
 	});
+
 var _elm_lang$virtual_dom$VirtualDom_Report$some = function (list) {
 	return !_elm_lang$core$List$isEmpty(list);
 };
@@ -9665,6 +9695,7 @@ var _elm_lang$virtual_dom$VirtualDom_Report$evaluate = function (report) {
 				A2(_elm_lang$core$List$map, _elm_lang$virtual_dom$VirtualDom_Report$evaluateChange, _p2._0));
 	}
 };
+
 var _elm_lang$virtual_dom$VirtualDom_Metadata$encodeDict = F2(
 	function (f, dict) {
 		return _elm_lang$core$Json_Encode$object(
@@ -10058,6 +10089,7 @@ var _elm_lang$virtual_dom$VirtualDom_Metadata$decode = function (value) {
 		}
 	}
 };
+
 var _elm_lang$virtual_dom$VirtualDom_History$viewMessage = F3(
 	function (currentIndex, index, msg) {
 		var messageName = _elm_lang$virtual_dom$Native_Debug.messageToString(msg);
@@ -10425,6 +10457,7 @@ var _elm_lang$virtual_dom$VirtualDom_History$get = F3(
 			}
 		}
 	});
+
 var _elm_lang$virtual_dom$VirtualDom_Overlay$styles = A3(
 	_elm_lang$virtual_dom$VirtualDom_Helpers$node,
 	'style',
@@ -11218,6 +11251,7 @@ var _elm_lang$virtual_dom$VirtualDom_Overlay$view = F5(
 				{ctor: '::', _0: _elm_lang$virtual_dom$VirtualDom_Overlay$styles, _1: nodes})
 		};
 	});
+
 var _elm_lang$virtual_dom$VirtualDom_Debug$styles = A3(
 	_elm_lang$virtual_dom$VirtualDom_Helpers$node,
 	'style',
@@ -11840,6 +11874,7 @@ var _elm_lang$virtual_dom$VirtualDom_Debug$wrapWithFlags = F2(
 			subscriptions: _elm_lang$virtual_dom$VirtualDom_Debug$wrapSubs(_p40.subscriptions)
 		};
 	});
+
 var _elm_lang$virtual_dom$VirtualDom$programWithFlags = function (impl) {
 	return A2(_elm_lang$virtual_dom$Native_VirtualDom.programWithFlags, _elm_lang$virtual_dom$VirtualDom_Debug$wrapWithFlags, impl);
 };
@@ -11870,6 +11905,7 @@ var _elm_lang$virtual_dom$VirtualDom$Options = F2(
 	});
 var _elm_lang$virtual_dom$VirtualDom$Node = {ctor: 'Node'};
 var _elm_lang$virtual_dom$VirtualDom$Property = {ctor: 'Property'};
+
 var _elm_lang$html$Html$programWithFlags = _elm_lang$virtual_dom$VirtualDom$programWithFlags;
 var _elm_lang$html$Html$program = _elm_lang$virtual_dom$VirtualDom$program;
 var _elm_lang$html$Html$beginnerProgram = function (_p0) {
@@ -11994,6 +12030,7 @@ var _elm_lang$html$Html$details = _elm_lang$html$Html$node('details');
 var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
+
 var _elm_lang$html$Html_Attributes$map = _elm_lang$virtual_dom$VirtualDom$mapProperty;
 var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
 var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
@@ -12343,6 +12380,7 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+
 var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
 var _elm_lang$html$Html_Events$targetChecked = A2(
 	_elm_lang$core$Json_Decode$at,
@@ -12457,6 +12495,7 @@ var _elm_lang$html$Html_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
 	});
+
 var _danabrams$elm_media$Native_Media = function() {
 
 var fakeNode = {
@@ -12583,7 +12622,8 @@ return {
     decodeTimeRanges: decodeTimeRanges
 };
 
-}();//import Native.Scheduler //
+}();
+//import Native.Scheduler //
 
 var _elm_lang$core$Native_Time = function() {
 
@@ -12609,7 +12649,8 @@ return {
 	setInterval_: F2(setInterval_)
 };
 
-}();var _elm_lang$core$Time$setInterval = _elm_lang$core$Native_Time.setInterval_;
+}();
+var _elm_lang$core$Time$setInterval = _elm_lang$core$Native_Time.setInterval_;
 var _elm_lang$core$Time$spawnHelp = F3(
 	function (router, intervals, processes) {
 		var _p0 = intervals;
@@ -12796,6 +12837,7 @@ var _elm_lang$core$Time$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
+
 var _danabrams$elm_media$Media_State$timeRanges = _danabrams$elm_media$Native_Media.decodeTimeRanges;
 var _danabrams$elm_media$Media_State$timeGroup = function () {
 	var toTimeGroup = F3(
@@ -13191,302 +13233,54 @@ var _danabrams$elm_media$Media_State$now = function (id) {
 		},
 		_danabrams$elm_media$Media_State$nowRaw(id));
 };
-var _danabrams$elm_media$Media$playbackToString = function (status) {
-	var _p0 = status;
-	switch (_p0.ctor) {
-		case 'Paused':
-			return 'Paused';
-		case 'Playing':
-			return 'Playing';
-		case 'Loading':
-			return 'Loading';
-		case 'Buffering':
-			return 'Buffering';
-		case 'Ended':
-			return 'End';
-		default:
-			return 'Problem';
-	}
-};
-var _danabrams$elm_media$Media$timeToString = function (time) {
-	var s = A2(
-		_elm_lang$core$Basics$rem,
-		A2(
-			_elm_lang$core$Basics$rem,
-			_elm_lang$core$Basics$floor(time),
-			3600),
-		60);
-	var m = (A2(
-		_elm_lang$core$Basics$rem,
-		_elm_lang$core$Basics$floor(time),
-		3600) / 60) | 0;
-	var h = (_elm_lang$core$Basics$floor(time) / 3600) | 0;
-	var timeDigits = function (v) {
-		return (_elm_lang$core$Native_Utils.cmp(v, 9) < 1) ? A2(
-			_elm_lang$core$Basics_ops['++'],
-			'0',
-			_elm_lang$core$Basics$toString(v)) : _elm_lang$core$Basics$toString(v);
-	};
-	return _elm_lang$core$Basics$isNaN(time) ? '0:00' : (_elm_lang$core$Basics$isInfinite(time) ? '0:00' : ((_elm_lang$core$Native_Utils.cmp(h, 0) < 1) ? A2(
-		_elm_lang$core$Basics_ops['++'],
-		_elm_lang$core$Basics$toString(m),
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			':',
-			timeDigits(s))) : A2(
-		_elm_lang$core$Basics_ops['++'],
-		_elm_lang$core$Basics$toString(h),
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			':',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				timeDigits(m),
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					':',
-					timeDigits(s)))))));
-};
-var _danabrams$elm_media$Media$canPlayType = _danabrams$elm_media$Native_Media.canPlayType;
-var _danabrams$elm_media$Media$fastSeek = _danabrams$elm_media$Native_Media.fastSeek;
-var _danabrams$elm_media$Media$seek = _danabrams$elm_media$Native_Media.seek;
-var _danabrams$elm_media$Media$load = _danabrams$elm_media$Native_Media.load;
-var _danabrams$elm_media$Media$pause = _danabrams$elm_media$Native_Media.pause;
-var _danabrams$elm_media$Media$play = _danabrams$elm_media$Native_Media.play;
-var _danabrams$elm_media$Media$playbackRate = function (rate) {
-	return A2(
-		_elm_lang$html$Html_Attributes$property,
-		'playbackRate',
-		_elm_lang$core$Json_Encode$float(rate));
-};
-var _danabrams$elm_media$Media$muted = function (muted) {
-	return A2(
-		_elm_lang$html$Html_Attributes$property,
-		'muted',
-		_elm_lang$core$Json_Encode$bool(muted));
-};
-var _danabrams$elm_media$Media$No = {ctor: 'No'};
-var _danabrams$elm_media$Media$Maybe = {ctor: 'Maybe'};
-var _danabrams$elm_media$Media$Probably = {ctor: 'Probably'};
-var _danabrams$elm_media$Media_Events$target = F2(
-	function (tagger, decoder) {
-		return A2(
-			_elm_lang$core$Json_Decode$map,
-			tagger,
-			A2(_elm_lang$core$Json_Decode$field, 'target', decoder));
-	});
-var _danabrams$elm_media$Media_Events$onProgress = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'progress',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onWaiting = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'waiting',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onLoadSuspend = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'suspend',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onLoadStart = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'loadstart',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onLoadedMetadata = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'loadedmetadata',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onLoadedData = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'loadeddata',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onError = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'error',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onStalled = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'stalled',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onEmptied = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'emptied',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onCanPlayThrough = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'canplaythrough',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onCanPlay = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'canplay',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onAbort = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'abort',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onEnded = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'ended',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onDurationChange = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'durationchange',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onTimeUpdate = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'timeupdate',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onPaused = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'pause',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onPlaying = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'playing',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onSeeking = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'seeking',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Media_Events$onSeeked = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'seeked',
-		A2(_danabrams$elm_media$Media_Events$target, tagger, _danabrams$elm_media$Media_State$state));
-};
-var _danabrams$elm_media$Audio$init = {
+
+var _danabrams$elm_media$Main$frameRate = 1 / 59.94;
+var _danabrams$elm_media$Main$init = {
 	ctor: '_Tuple2',
-	_0: _danabrams$elm_media$Media_State$defaultAudio('AudioPlayer'),
+	_0: {
+		ports: _danabrams$elm_media$Media_State$defaultVideo('VideoPlayer'),
+		$native: _danabrams$elm_media$Media_State$defaultVideo('VideoPlayer')
+	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _danabrams$elm_media$Audio$ErrorHandler = function (a) {
-	return {ctor: 'ErrorHandler', _0: a};
-};
-var _danabrams$elm_media$Audio$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'Play':
-				return {
-					ctor: '_Tuple2',
-					_0: model,
-					_1: A2(
-						_elm_lang$core$Task$attempt,
-						_danabrams$elm_media$Audio$ErrorHandler,
-						_danabrams$elm_media$Media$play(model.id))
-				};
-			case 'Pause':
-				return {
-					ctor: '_Tuple2',
-					_0: model,
-					_1: A2(
-						_elm_lang$core$Task$attempt,
-						_danabrams$elm_media$Audio$ErrorHandler,
-						_danabrams$elm_media$Media$pause(model.id))
-				};
-			case 'Seek':
-				return {
-					ctor: '_Tuple2',
-					_0: model,
-					_1: A2(
-						_elm_lang$core$Task$attempt,
-						_danabrams$elm_media$Audio$ErrorHandler,
-						A2(_danabrams$elm_media$Media$seek, model.id, _p0._0))
-				};
-			case 'MediaUpdate':
-				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
-			default:
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-		}
+var _danabrams$elm_media$Main$updateButton = _elm_lang$core$Native_Platform.outgoingPort(
+	'updateButton',
+	function (v) {
+		return v;
 	});
-var _danabrams$elm_media$Audio$MediaUpdate = function (a) {
-	return {ctor: 'MediaUpdate', _0: a};
+var _danabrams$elm_media$Main$currentState = _elm_lang$core$Native_Platform.incomingPort('currentState', _elm_lang$core$Json_Decode$value);
+var _danabrams$elm_media$Main$Model = F2(
+	function (a, b) {
+		return {ports: a, $native: b};
+	});
+var _danabrams$elm_media$Main$PortsUpdate = function (a) {
+	return {ctor: 'PortsUpdate', _0: a};
 };
-var _danabrams$elm_media$Audio$Seek = function (a) {
-	return {ctor: 'Seek', _0: a};
+var _danabrams$elm_media$Main$subscriptions = function (model) {
+	return _danabrams$elm_media$Main$currentState(_danabrams$elm_media$Main$PortsUpdate);
 };
-var _danabrams$elm_media$Audio$Pause = {ctor: 'Pause'};
-var _danabrams$elm_media$Audio$Play = {ctor: 'Play'};
-var _danabrams$elm_media$Audio$view = function (model) {
-	var buttonMsg = function () {
-		var _p1 = model.playback;
-		if (_p1.ctor === 'Playing') {
-			return _danabrams$elm_media$Audio$Pause;
-		} else {
-			return _danabrams$elm_media$Audio$Play;
-		}
-	}();
-	var buttonText = function () {
-		var _p2 = model.playback;
-		if (_p2.ctor === 'Playing') {
-			return 'Pause';
-		} else {
-			return 'Play';
-		}
-	}();
+var _danabrams$elm_media$Main$UpdateButton = {ctor: 'UpdateButton'};
+var _danabrams$elm_media$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$audio,
+				_elm_lang$html$Html$video,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$id(model.id),
+					_0: _elm_lang$html$Html_Attributes$id('VideoPlayer'),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('https://archive.org/download/gettysburg_johng_librivox/gettysburg_address_64kb.mp3'),
+						_0: _elm_lang$html$Html_Attributes$src('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
 						_1: {
 							ctor: '::',
-							_0: _danabrams$elm_media$Media_Events$onDurationChange(_danabrams$elm_media$Audio$MediaUpdate),
+							_0: _elm_lang$html$Html_Attributes$controls(true),
 							_1: {
 								ctor: '::',
-								_0: _danabrams$elm_media$Media_Events$onTimeUpdate(_danabrams$elm_media$Audio$MediaUpdate),
-								_1: {
-									ctor: '::',
-									_0: _danabrams$elm_media$Media_Events$onPlaying(_danabrams$elm_media$Audio$MediaUpdate),
-									_1: {
-										ctor: '::',
-										_0: _danabrams$elm_media$Media_Events$onPaused(_danabrams$elm_media$Audio$MediaUpdate),
-										_1: {ctor: '[]'}
-									}
-								}
+								_0: _elm_lang$html$Html_Attributes$loop(true),
+								_1: {ctor: '[]'}
 							}
 						}
 					}
@@ -13494,92 +13288,150 @@ var _danabrams$elm_media$Audio$view = function (model) {
 				{ctor: '[]'}),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html$text(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						_danabrams$elm_media$Media$timeToString(model.currentTime),
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'/',
-							_danabrams$elm_media$Media$timeToString(model.duration)))),
+				_0: A2(
+					_elm_lang$html$Html$p,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Current Time:\n'),
+						_1: {ctor: '[]'}
+					}),
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$div,
+						_elm_lang$html$Html$p,
+						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$style(
-								{
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'display', _1: 'block'},
-									_1: {ctor: '[]'}
-								}),
+							_0: _elm_lang$html$Html$text(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'via native: ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(model.$native.currentTime),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'    ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'via ports: ',
+												_elm_lang$core$Basics$toString(model.ports.currentTime)))))),
 							_1: {ctor: '[]'}
-						},
-						{
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$p,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'via native: ',
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(
+												_elm_lang$core$Basics$floor(model.$native.currentTime / _danabrams$elm_media$Main$frameRate)),
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' frames   ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'via ports: ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(
+															_elm_lang$core$Basics$floor(model.ports.currentTime / _danabrams$elm_media$Main$frameRate)),
+														' frames')))))),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(
-										_danabrams$elm_media$Audio$Seek(model.currentTime - 15)),
+									_0: _elm_lang$html$Html_Events$onClick(_danabrams$elm_media$Main$UpdateButton),
 									_1: {ctor: '[]'}
 								},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('Back 15s'),
+									_0: _elm_lang$html$Html$text('Update'),
 									_1: {ctor: '[]'}
 								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$button,
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(buttonMsg),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(buttonText),
-										_1: {ctor: '[]'}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$button,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												_danabrams$elm_media$Audio$Seek(model.currentTime + 15)),
-											_1: {ctor: '[]'}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Forward 15s'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}
-							}
-						}),
-					_1: {ctor: '[]'}
+							_1: {ctor: '[]'}
+						}
+					}
 				}
 			}
 		});
 };
-var _danabrams$elm_media$Audio$main = _elm_lang$html$Html$program(
-	{
-		init: _danabrams$elm_media$Audio$init,
-		view: _danabrams$elm_media$Audio$view,
-		update: _danabrams$elm_media$Audio$update,
-		subscriptions: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Sub$none)
-	})();
+var _danabrams$elm_media$Main$NativeUpdate = function (a) {
+	return {ctor: 'NativeUpdate', _0: a};
+};
+var _danabrams$elm_media$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'UpdateButton':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Task$attempt,
+								_danabrams$elm_media$Main$NativeUpdate,
+								_danabrams$elm_media$Media_State$now(model.$native.id)),
+							_1: {
+								ctor: '::',
+								_0: _danabrams$elm_media$Main$updateButton(model.ports.id),
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			case 'NativeUpdate':
+				var _p1 = _p0._0;
+				if (_p1.ctor === 'Err') {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{$native: _p1._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+			case 'PortsUpdate':
+				var result = A2(_elm_lang$core$Json_Decode$decodeValue, _danabrams$elm_media$Media_State$state, _p0._0);
+				var _p2 = result;
+				if (_p2.ctor === 'Err') {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{ports: _p2._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _danabrams$elm_media$Main$main = _elm_lang$html$Html$program(
+	{init: _danabrams$elm_media$Main$init, update: _danabrams$elm_media$Main$update, view: _danabrams$elm_media$Main$view, subscriptions: _danabrams$elm_media$Main$subscriptions})();
+var _danabrams$elm_media$Main$NoOp = {ctor: 'NoOp'};
+
 var Elm = {};
-Elm['Audio'] = Elm['Audio'] || {};
-if (typeof _danabrams$elm_media$Audio$main !== 'undefined') {
-    _danabrams$elm_media$Audio$main(Elm['Audio'], 'Audio', {"types":{"unions":{"Media.State.ReadyState":{"args":[],"tags":{"HaveEnoughData":[],"HaveCurrentData":[],"HaveNothing":[],"HaveMetadata":[],"HaveFutureData":[]}},"Media.State.Playback":{"args":[],"tags":{"Playing":[],"Loading":[],"Buffering":[],"Problem":["Media.State.MediaError"],"Paused":[],"Ended":[]}},"Media.State.MediaError":{"args":[],"tags":{"Network":["String"],"Decode":["String"],"Unsupported":["String"],"Aborted":["String"]}},"Media.State.MediaType":{"args":[],"tags":{"Video":[],"Audio":[]}},"Media.State.NetworkState":{"args":[],"tags":{"Idle":[],"Empty":[],"DataLoading":[],"NoSource":[]}},"Media.State.Error":{"args":[],"tags":{"NotFound":["String"],"NotTimeRanges":["String"],"DecodeError":["String"],"NotMediaElement":["String","String"],"PlayPromiseFailure":["String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Audio.Msg":{"args":[],"tags":{"Play":[],"MediaUpdate":["Media.State.State"],"Pause":[],"ErrorHandler":["Result.Result Media.Error ()"],"Seek":["Float"]}}},"aliases":{"Media.Error":{"args":[],"type":"Media.State.Error"},"Media.State.Id":{"args":[],"type":"String"},"Media.State.State":{"args":[],"type":"{ id : Media.State.Id , mediaType : Media.State.MediaType , playback : Media.State.Playback , source : String , currentTime : Time.Time , duration : Time.Time , ready : Media.State.ReadyState , network : Media.State.NetworkState , timeRanges : { buffered : List Media.State.TimeRange , seekable : List Media.State.TimeRange , played : List Media.State.TimeRange } , videoSize : { width : Int, height : Int } }"},"Time.Time":{"args":[],"type":"Float"},"Media.State.TimeRange":{"args":[],"type":"{ start : Time.Time, end : Time.Time }"}},"message":"Audio.Msg"},"versions":{"elm":"0.18.0"}});
+Elm['Main'] = Elm['Main'] || {};
+if (typeof _danabrams$elm_media$Main$main !== 'undefined') {
+    _danabrams$elm_media$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Media.State.ReadyState":{"args":[],"tags":{"HaveEnoughData":[],"HaveCurrentData":[],"HaveNothing":[],"HaveMetadata":[],"HaveFutureData":[]}},"Json.Encode.Value":{"args":[],"tags":{"Value":[]}},"Media.State.Playback":{"args":[],"tags":{"Playing":[],"Loading":[],"Buffering":[],"Problem":["Media.State.MediaError"],"Paused":[],"Ended":[]}},"Main.Msg":{"args":[],"tags":{"UpdateButton":[],"PortsUpdate":["Json.Encode.Value"],"NativeUpdate":["Result.Result Media.State.Error Media.State.State"],"NoOp":[]}},"Media.State.MediaError":{"args":[],"tags":{"Network":["String"],"Decode":["String"],"Unsupported":["String"],"Aborted":["String"]}},"Media.State.MediaType":{"args":[],"tags":{"Video":[],"Audio":[]}},"Media.State.NetworkState":{"args":[],"tags":{"Idle":[],"Empty":[],"DataLoading":[],"NoSource":[]}},"Media.State.Error":{"args":[],"tags":{"NotFound":["String"],"NotTimeRanges":["String"],"DecodeError":["String"],"NotMediaElement":["String","String"],"PlayPromiseFailure":["String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Media.State.Id":{"args":[],"type":"String"},"Media.State.State":{"args":[],"type":"{ id : Media.State.Id , mediaType : Media.State.MediaType , playback : Media.State.Playback , source : String , currentTime : Time.Time , duration : Time.Time , ready : Media.State.ReadyState , network : Media.State.NetworkState , timeRanges : { buffered : List Media.State.TimeRange , seekable : List Media.State.TimeRange , played : List Media.State.TimeRange } , videoSize : { width : Int, height : Int } }"},"Time.Time":{"args":[],"type":"Float"},"Media.State.TimeRange":{"args":[],"type":"{ start : Time.Time, end : Time.Time }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
@@ -13611,4 +13463,4 @@ for (var publicModule in Elm)
 }
 
 }).call(this);
-</script></head><body><script type="text/javascript">Elm.Audio.fullscreen()</script></body></html>
+
