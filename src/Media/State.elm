@@ -43,8 +43,9 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 --import Array exposing (Array)
 --import Dict
 
-import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, map, map2, map3, map4, string, succeed, value)
+import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, maybe, map, map2, map3, map4, string, succeed, value)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
+import Json.Decode.Extra exposing (collection)
 import Native.Media
 import Task exposing (Task)
 import Time exposing (Time)
@@ -96,6 +97,9 @@ type alias State =
         , played : List TimeRange
         }
     , videoSize : { width : Int, height : Int }
+    , audioTracks : List AudioTrack
+    , videoTracks : List VideoTrack
+    , textTracks : List TextTrack
     }
 
 
@@ -124,6 +128,9 @@ default options =
         , played = []
         }
     , videoSize = { width = 0, height = 0 }
+    , audioTracks = []
+    , videoTracks = []
+    , textTracks = []
     }
 
 
@@ -320,6 +327,76 @@ type alias VideoSize =
     }
 
 
+{-| Represents a single audio track
+-}
+type alias AudioTrack =
+    { id : Id
+    , kind : TrackKind
+    , label : String
+    , language : String
+    , enabled : Bool
+    }
+
+
+{-| Represents the possible kinds of audio, video or text track
+-}
+type TrackKind
+    = Alternative
+    | Captions
+    | Chapters
+    | Description
+    | Main
+    | Metadata
+    | Sign
+    | Subtitles
+    | Translation
+    | Commentary
+    | None
+
+
+{-| Represents a single video track
+-}
+type alias VideoTrack =
+    { id : Id
+    , kind : TrackKind
+    , label : String
+    , language : String
+    , selected : Bool
+    }
+
+
+{-| Represents a text track (such as synchronized subtitles or data
+-}
+type alias TextTrack =
+    { id : Id
+    , activeCues : List VTTCue
+    , cues : List VTTCue
+    , kind : TrackKind
+    , inBandMetadataTrackDispatchType : String
+    , label : String
+    , language : String
+    , mode : TextTrackMode
+    }
+
+
+{-| Represents the current mode of a text track. Disabled = ignored.
+Hidden = parsed, but not displayed. Showing = enabled and visible.
+-}
+type TextTrackMode
+    = Disabled
+    | Hidden
+    | Showing
+
+
+{-| A text track cue
+-}
+type alias VTTCue =
+    { text : String
+    , startTime : Float
+    , endTime : Float
+    }
+
+
 
 --DECODERS
 
@@ -339,6 +416,9 @@ state =
         |> custom networkState
         |> custom timeGroup
         |> custom videoSize
+        |> optional "audioTracks" (collection audioTrack) []
+        |> optional "videoTracks" (collection videoTrack) []
+        |> optional "textTracks" (collection textTrack) []
 
 
 mediaType : Decoder MediaType
@@ -356,9 +436,9 @@ mediaType =
                 _ ->
                     fail <| "This decoder only knows how to decode the state of Audio and Video elements, but was given an element of type " ++ element
     in
-    decode toMediaType
-        |> required "tagName" string
-        |> resolve
+        decode toMediaType
+            |> required "tagName" string
+            |> resolve
 
 
 playback : Decoder Playback
@@ -397,12 +477,12 @@ playback =
                                         False ->
                                             succeed Playing
     in
-    decode toPlayback
-        |> custom mediaError
-        |> custom readyState
-        |> required "ended" bool
-        |> required "paused" bool
-        |> resolve
+        decode toPlayback
+            |> custom mediaError
+            |> custom readyState
+            |> required "ended" bool
+            |> required "paused" bool
+            |> resolve
 
 
 networkState : Decoder NetworkState
@@ -426,9 +506,9 @@ networkState =
                 _ ->
                     fail <| "Unexpect Network State Index: " ++ toString code
     in
-    decode toNetworkState
-        |> required "networkState" int
-        |> resolve
+        decode toNetworkState
+            |> required "networkState" int
+            |> resolve
 
 
 readyState : Decoder ReadyState
@@ -455,9 +535,9 @@ readyState =
                 _ ->
                     fail <| "Unexpect Ready State Index: " ++ toString code
     in
-    decode toReadyState
-        |> required "readyState" int
-        |> resolve
+        decode toReadyState
+            |> required "readyState" int
+            |> resolve
 
 
 mediaError : Decoder (Maybe MediaError)
@@ -488,10 +568,10 @@ mediaError =
                             ++ ": "
                             ++ message
     in
-    decode toMediaError
-        |> optionalAt [ "error", "code" ] int 0
-        |> optionalAt [ "error", "message" ] string ""
-        |> resolve
+        decode toMediaError
+            |> optionalAt [ "error", "code" ] int 0
+            |> optionalAt [ "error", "message" ] string ""
+            |> resolve
 
 
 timeGroup : Decoder TimeGroup
@@ -505,11 +585,11 @@ timeGroup =
                 , played = timeRanges playedValue
                 }
     in
-    decode toTimeGroup
-        |> required "buffered" value
-        |> required "seekable" value
-        |> required "played" value
-        |> resolve
+        decode toTimeGroup
+            |> required "buffered" value
+            |> required "seekable" value
+            |> required "played" value
+            |> resolve
 
 
 videoSize : Decoder VideoSize
@@ -517,6 +597,114 @@ videoSize =
     decode VideoSize
         |> optional "videoWidth" int 0
         |> optional "videoHeight" int 0
+
+
+audioTrack : Decoder AudioTrack
+audioTrack =
+    decode AudioTrack
+        |> required "id" string
+        |> custom trackKind
+        |> required "label" string
+        |> required "language" string
+        |> required "enabled" bool
+
+
+videoTrack : Decoder VideoTrack
+videoTrack =
+    decode VideoTrack
+        |> required "id" string
+        |> custom trackKind
+        |> required "label" string
+        |> required "language" string
+        |> required "selected" bool
+
+
+textTrack : Decoder TextTrack
+textTrack =
+    decode TextTrack
+        |> required "id" string
+        |> optional "activeCues" (collection vttCue) []
+        |> optional "cues" (collection vttCue) []
+        |> custom trackKind
+        |> required "inBandMetadataTrackDispatchType" string
+        |> required "label" string
+        |> required "language" string
+        |> custom textTrackMode
+
+
+vttCue : Decoder VTTCue
+vttCue =
+    decode VTTCue
+        |> required "text" string
+        |> required "startTime" float
+        |> required "endTime" float
+
+
+textTrackMode : Decoder TextTrackMode
+textTrackMode =
+    let
+        toMode : String -> Decoder TextTrackMode
+        toMode mode =
+            case mode of
+                "hidden" ->
+                    succeed Hidden
+
+                "showing" ->
+                    succeed Showing
+
+                _ ->
+                    succeed Disabled
+    in
+        decode toMode
+            |> optional "mode" string ""
+            |> resolve
+
+
+trackKind : Decoder TrackKind
+trackKind =
+    let
+        toKind : String -> Decoder TrackKind
+        toKind kind =
+            case kind of
+                "alternative" ->
+                    succeed Alternative
+
+                "captions" ->
+                    succeed Captions
+
+                "chapters" ->
+                    succeed Chapters
+
+                "description" ->
+                    succeed Description
+
+                "descriptions" ->
+                    succeed Description
+
+                "main" ->
+                    succeed Main
+
+                "metadata" ->
+                    succeed Metadata
+
+                "sign" ->
+                    succeed Sign
+
+                "subtitles" ->
+                    succeed Subtitles
+
+                "translation" ->
+                    succeed Translation
+
+                "commentary" ->
+                    succeed Commentary
+
+                _ ->
+                    succeed None
+    in
+        decode toKind
+            |> optional "kind" string ""
+            |> resolve
 
 
 timeRanges : Value -> List TimeRange
