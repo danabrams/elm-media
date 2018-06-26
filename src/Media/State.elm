@@ -45,8 +45,7 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, maybe, map, map2, map3, map4, string, succeed, value)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
-import Json.Decode.Extra exposing (collection)
-import Native.Media
+import Elm.Kernel.Media
 import Task exposing (Task)
 import Time exposing (Time)
 
@@ -186,7 +185,7 @@ type alias TimeGroup =
 
 nowRaw : Id -> Task Error Value
 nowRaw =
-    Native.Media.getMediaById
+    Elm.Kernel.Media.getMediaById
 
 
 {-| Takes an Id, and returns the State of a mediaElement with that id.
@@ -290,7 +289,7 @@ Decode: The browser is unable to decode the media, despite it previously having 
 Unsupported: The resource or media provider object is not supported or is otherwise unsuitable
 
 -}
-type MediaError
+type PlaybackError
     = Aborted String
     | Network String
     | Decode String
@@ -311,11 +310,8 @@ type Playback
 {-| These are the errors of this library, that may be returned when calling a task
 or decoding a state.
 -}
-type Error
-    = NotFound String
-    | NotMediaElement String String
-    | PlayPromiseFailure String
-    | NotTimeRanges String
+type DecodeError
+    = NotTimeRanges String
     | DecodeError String
 
 
@@ -709,4 +705,15 @@ trackKind =
 
 timeRanges : Value -> List TimeRange
 timeRanges =
-    Native.Media.decodeTimeRanges
+    Elm.Kernel.Media.decodeTimeRanges
+
+
+collection : Decoder a -> Decoder (List a)
+collection decoder =
+    field "length" int
+        |> andThen
+            (\length ->
+                List.range 0 (length - 1)
+                    |> List.map (\index -> field (toString index) decoder)
+                    |> combine
+            )

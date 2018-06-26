@@ -6,17 +6,17 @@ in Elm. Let me reiterate, this is experiemental, and not ready
 for production. Use at your peril.
 
 This package is a fairly direct layer over the Media API. I'm all for higher
-level abstractions, but when dealing with media, a player _is_ the abstraction.
+level abstractions, but when dealing with media, a player *is* the abstraction.
 This package will hopefully allow myself and others to write great players that
 abstract away the annoying details of dealing with audio & video. I've also
 published an example of such a player [here](https://github.com/danabrams/elm-audio-player-example).
 
-This package uses native code for a set of tasks that control playback
+This package uses kernel code for a set of tasks that control playback
 of media (Play, Pause, Load, Seek, etc) and to get the current state of
 the media (Media.State.now) and also to check if a the browser supports
 a given filetype (canPlayType).
 
-It also uses native code to decode TimeRanges objects (which cannot be accessed
+It also uses kernel code to decode TimeRanges objects (which cannot be accessed
 via an array syntax and therefore cannot be decoded currently in pure Elm).
 
 Aside from the basic playback tasks, the heart of this library is a Json decoder that
@@ -76,7 +76,7 @@ import Html exposing (Attribute)
 import Html.Attributes exposing (property)
 import Json.Encode as Encode exposing (bool)
 import Media.State exposing (Id, Playback(..), State)
-import Native.Media
+import Elm.Kernel.Media
 import Task exposing (Task)
 import Time exposing (Time)
 
@@ -88,8 +88,10 @@ NotMediaElement: The element found with that Id was not an HTMLMediaElement. Ret
 PlayPromiseFailure: On modern browsers, Play() returns a promise.
 
 -}
-type alias Error =
-    Media.State.Error
+type DomError
+    = NotFound String
+    | NotMediaElement String String
+    | PlayPromiseFailure String
 
 
 
@@ -128,42 +130,42 @@ playbackRate rate =
 -}
 play : Id -> Task Error ()
 play =
-    Native.Media.play
+    Elm.Kernel.Media.play
 
 
 {-| Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 pause : Id -> Task Error ()
 pause =
-    Native.Media.pause
+    Elm.Kernel.Media.pause
 
 
 {-| Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 load : Id -> Task Error ()
 load =
-    Native.Media.load
+    Elm.Kernel.Media.load
 
 
 {-| Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 seek : Id -> Time -> Task Error ()
 seek =
-    Native.Media.seek
+    Elm.Kernel.Media.seek
 
 
 {-| Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 fastSeek : Id -> Time -> Task Error ()
 fastSeek =
-    Native.Media.fastSeek
+    Elm.Kernel.Media.fastSeek
 
 
 {-| Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.
 -}
 canPlayType : Id -> String -> Task Error CanPlay
 canPlayType =
-    Native.Media.canPlayType
+    Elm.Kernel.Media.canPlayType
 
 
 {-| These are the three possible results of canPlayType.
@@ -205,14 +207,14 @@ timeToString time =
         s =
             rem (rem (floor time) 3600) 60
     in
-    if isNaN time then
-        "0:00"
-    else if isInfinite time then
-        "0:00"
-    else if h <= 0 then
-        toString m ++ ":" ++ timeDigits s
-    else
-        toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
+        if isNaN time then
+            "0:00"
+        else if isInfinite time then
+            "0:00"
+        else if h <= 0 then
+            toString m ++ ":" ++ timeDigits s
+        else
+            toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
 
 
 {-| Takes a Playback type and returns a nicely formatted string
