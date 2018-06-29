@@ -1,0 +1,9 @@
+{
+  "name": "elm-media",
+  "version": "1.0.4",
+  "description": "an elm native package exposing the javascript media DOM functions and Media Fragments",
+  "main": "index.js",
+  "repository": "https://github.com/danabrams/elm-media",
+  "author": "Dan Abrams",
+  "license": "MIT"
+}

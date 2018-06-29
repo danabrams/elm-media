@@ -1,4 +1,4 @@
-module Source
+module Media.Source
     exposing
         ( source
         , mediaType

@@ -76,7 +76,7 @@ import Html exposing (Attribute)
 import Html.Attributes exposing (property)
 import Json.Encode as Encode exposing (bool)
 import Media.State exposing (Id, Playback(..), State)
-import Elm.Kernel.Media
+import Native.Media
 import Task exposing (Task)
 import Time exposing (Time)
 

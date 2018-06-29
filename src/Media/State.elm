@@ -45,7 +45,7 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 
 import Json.Decode exposing (Decoder, Value, andThen, bool, fail, field, float, int, list, maybe, map, map2, map3, map4, string, succeed, value)
 import Json.Decode.Pipeline exposing (custom, decode, optional, optionalAt, required, requiredAt, resolve)
-import Elm.Kernel.Media
+import Native.Media
 import Task exposing (Task)
 import Time exposing (Time)
 
