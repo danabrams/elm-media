@@ -2,7 +2,7 @@ module Media.State
     exposing
         ( Error(..)
         , Id
-        , MediaError(..)
+        , PlaybackError(..)
         , MediaType(..)
         , NetworkState(..)
         , Playback(..)
@@ -35,7 +35,7 @@ You can also use decode to transform a value representing an HTMLMediaElement in
 ###State Types
 
 @docs Id, MediaType, Playback
-@docs MediaError, ReadyState, NetworkState
+@docs PlaybackError, ReadyState, NetworkState
 @docs TimeRange, Error, VideoSize
 
 -}
@@ -185,7 +185,7 @@ type alias TimeGroup =
 
 nowRaw : Id -> Task Error Value
 nowRaw =
-    Elm.Kernel.Media.getMediaById
+    Native.Media.getMediaById
 
 
 {-| Takes an Id, and returns the State of a mediaElement with that id.
@@ -281,6 +281,17 @@ type alias TimeRange =
     }
 
 
+{-| Current Playback state of the media player. Error represents a PlaybackError, thrown by the browser, not an Error thrown by the tasks in this module.
+-}
+type Playback
+    = Paused
+    | Playing
+    | Loading
+    | Buffering
+    | Ended
+    | Problem PlaybackError
+
+
 {-| These are the errors the media player itself might throw. The errors include a human readable string with specific diagnostic information, passed from the browser itself.
 
 Aborted: Fetching of the media resource was aborted by user request
@@ -296,22 +307,14 @@ type PlaybackError
     | Unsupported String
 
 
-{-| Current Playback state of the media player. Error represents a MediaError, thrown by the browser, not an Error thrown by the tasks in this module.
--}
-type Playback
-    = Paused
-    | Playing
-    | Loading
-    | Buffering
-    | Ended
-    | Problem MediaError
-
-
 {-| These are the errors of this library, that may be returned when calling a task
 or decoding a state.
 -}
-type DecodeError
-    = NotTimeRanges String
+type Error
+    = NotFound String
+    | NotMediaElement String String
+    | PlayPromiseFailure String
+    | NotTimeRanges String
     | DecodeError String
 
 
@@ -440,7 +443,7 @@ mediaType =
 playback : Decoder Playback
 playback =
     let
-        toPlayback : Maybe MediaError -> ReadyState -> Bool -> Bool -> Decoder Playback
+        toPlayback : Maybe PlaybackError -> ReadyState -> Bool -> Bool -> Decoder Playback
         toPlayback error ready ended paused =
             case error of
                 Just err ->
@@ -536,10 +539,10 @@ readyState =
             |> resolve
 
 
-mediaError : Decoder (Maybe MediaError)
+mediaError : Decoder (Maybe PlaybackError)
 mediaError =
     let
-        toMediaError : Int -> String -> Decoder (Maybe MediaError)
+        toMediaError : Int -> String -> Decoder (Maybe PlaybackError)
         toMediaError code message =
             case code of
                 0 ->
@@ -705,7 +708,7 @@ trackKind =
 
 timeRanges : Value -> List TimeRange
 timeRanges =
-    Elm.Kernel.Media.decodeTimeRanges
+    Native.Media.decodeTimeRanges
 
 
 collection : Decoder a -> Decoder (List a)
@@ -715,5 +718,5 @@ collection decoder =
             (\length ->
                 List.range 0 (length - 1)
                     |> List.map (\index -> field (toString index) decoder)
-                    |> combine
+                    |> List.foldr (map2 (::)) (succeed [])
             )

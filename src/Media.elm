@@ -81,17 +81,10 @@ import Task exposing (Task)
 import Time exposing (Time)
 
 
-{-| These are errors thrown by the tasks defined in this module.
-
-NotFound: No element with that Id was found. Returns the Id provided
-NotMediaElement: The element found with that Id was not an HTMLMediaElement. Returns the Id provided and the constructor of the element found with that id
-PlayPromiseFailure: On modern browsers, Play() returns a promise.
-
+{-| Simply an alias for Media.State.Error
 -}
-type DomError
-    = NotFound String
-    | NotMediaElement String String
-    | PlayPromiseFailure String
+type alias Error =
+    Media.State.Error
 
 
 
@@ -130,42 +123,42 @@ playbackRate rate =
 -}
 play : Id -> Task Error ()
 play =
-    Elm.Kernel.Media.play
+    Native.Media.play
 
 
 {-| Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 pause : Id -> Task Error ()
 pause =
-    Elm.Kernel.Media.pause
+    Native.Media.pause
 
 
 {-| Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 load : Id -> Task Error ()
 load =
-    Elm.Kernel.Media.load
+    Native.Media.load
 
 
 {-| Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 seek : Id -> Time -> Task Error ()
 seek =
-    Elm.Kernel.Media.seek
+    Native.Media.seek
 
 
 {-| Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
 -}
 fastSeek : Id -> Time -> Task Error ()
 fastSeek =
-    Elm.Kernel.Media.fastSeek
+    Native.Media.fastSeek
 
 
 {-| Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.
 -}
 canPlayType : Id -> String -> Task Error CanPlay
 canPlayType =
-    Elm.Kernel.Media.canPlayType
+    Native.Media.canPlayType
 
 
 {-| These are the three possible results of canPlayType.

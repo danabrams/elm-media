@@ -3,9 +3,9 @@ module Video exposing (..)
 import Html exposing (Html, button, div, text, video)
 import Html.Attributes exposing (controls, id, src, style)
 import Html.Events exposing (onClick)
-import Media exposing (Error, load, pause, play, playbackToString, seek, timeToString)
+import Media exposing (load, pause, play, playbackToString, seek, timeToString)
 import Media.Events exposing (onDurationChange, onError, onLoadStart, onLoadedData, onLoadedMetadata, onPaused, onPlaying, onProgress, onStalled, onTimeUpdate)
-import Media.State exposing (Playback(..), State, defaultVideo)
+import Media.State exposing (Error, Playback(..), State, defaultVideo)
 import Task
 
 
@@ -97,32 +97,32 @@ view model =
                 _ ->
                     Play
     in
-    div []
-        [ video
-            [ id model.id
-            , src "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-            , onDurationChange MediaUpdate
-            , onTimeUpdate MediaUpdate
-            , onPlaying MediaUpdate
-            , onPaused MediaUpdate
-            , onLoadedData MediaUpdate
-            , onLoadStart MediaUpdate
-            , onLoadedMetadata MediaUpdate
-            , onProgress MediaUpdate
-            , onError MediaUpdate
-            , onStalled MediaUpdate
+        div []
+            [ video
+                [ id model.id
+                , src "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+                , onDurationChange MediaUpdate
+                , onTimeUpdate MediaUpdate
+                , onPlaying MediaUpdate
+                , onPaused MediaUpdate
+                , onLoadedData MediaUpdate
+                , onLoadStart MediaUpdate
+                , onLoadedMetadata MediaUpdate
+                , onProgress MediaUpdate
+                , onError MediaUpdate
+                , onStalled MediaUpdate
+                ]
+                []
+            , div [ style [ ( "display", "block" ) ] ]
+                [ text <| timeToString model.currentTime ++ "/" ++ timeToString model.duration ]
+            , div [ style [ ( "display", "block" ) ] ]
+                [ text <| "Video Dimensions: " ++ toString model.videoSize.width ++ "x" ++ toString model.videoSize.height ]
+            , div [ style [ ( "display", "block" ) ] ]
+                [ button [ onClick <| Seek <| model.currentTime - 15 ] [ text "Back 15s" ]
+                , button [ onClick buttonMsg ] [ text buttonText ]
+                , button [ onClick <| Seek <| model.currentTime + 15 ] [ text "Forward 15s" ]
+                ]
             ]
-            []
-        , div [ style [ ( "display", "block" ) ] ]
-            [ text <| timeToString model.currentTime ++ "/" ++ timeToString model.duration ]
-        , div [ style [ ( "display", "block" ) ] ]
-            [ text <| "Video Dimensions: " ++ toString model.videoSize.width ++ "x" ++ toString model.videoSize.height ]
-        , div [ style [ ( "display", "block" ) ] ]
-            [ button [ onClick <| Seek <| model.currentTime - 15 ] [ text "Back 15s" ]
-            , button [ onClick buttonMsg ] [ text buttonText ]
-            , button [ onClick <| Seek <| model.currentTime + 15 ] [ text "Forward 15s" ]
-            ]
-        ]
 
 
 

@@ -97,31 +97,31 @@ view model =
                 _ ->
                     Play
     in
-    div []
-        [ audio
-            [ id model.id
-            , src "https://archive.org/download/gettysburg_johng_librivox/gettysburg_address_64kb.mp3"
+        div []
+            [ audio
+                [ id model.id
+                , src "https://archive.org/download/gettysburg_johng_librivox/gettysburg_address_64kb.mp3"
 
-            --, src "assets/Joplin.mp3"
-            , onDurationChange MediaUpdate
-            , onTimeUpdate MediaUpdate
-            , onPlaying MediaUpdate
-            , onPaused MediaUpdate
-            , onLoadedData MediaUpdate
-            , onLoadStart MediaUpdate
-            , onLoadedMetadata MediaUpdate
-            , onProgress MediaUpdate
-            , onError MediaUpdate
-            , onStalled MediaUpdate
+                --, src "assets/Joplin.mp3"
+                , onDurationChange MediaUpdate
+                , onTimeUpdate MediaUpdate
+                , onPlaying MediaUpdate
+                , onPaused MediaUpdate
+                , onLoadedData MediaUpdate
+                , onLoadStart MediaUpdate
+                , onLoadedMetadata MediaUpdate
+                , onProgress MediaUpdate
+                , onError MediaUpdate
+                , onStalled MediaUpdate
+                ]
+                []
+            , text <| timeToString model.currentTime ++ "/" ++ timeToString model.duration
+            , div [ style [ ( "display", "block" ) ] ]
+                [ button [ onClick <| Seek <| model.currentTime - 15 ] [ text "Back 15s" ]
+                , button [ onClick buttonMsg ] [ text buttonText ]
+                , button [ onClick <| Seek <| model.currentTime + 15 ] [ text "Forward 15s" ]
+                ]
             ]
-            []
-        , text <| timeToString model.currentTime ++ "/" ++ timeToString model.duration
-        , div [ style [ ( "display", "block" ) ] ]
-            [ button [ onClick <| Seek <| model.currentTime - 15 ] [ text "Back 15s" ]
-            , button [ onClick buttonMsg ] [ text buttonText ]
-            , button [ onClick <| Seek <| model.currentTime + 15 ] [ text "Forward 15s" ]
-            ]
-        ]
 
 
 
