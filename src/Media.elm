@@ -1,234 +1,227 @@
-module Media exposing (..)
+module Media
+    exposing
+        ( State
+        , audio
+        , audioWithEvents
+        , video
+        , videoWithEvents
+        , play
+        , pause
+        , seek
+        , fastSeek
+        , load
+        , newVideo
+        , newAudio
+        , PortMsg
+        )
 
-{-| This is an experimental attempt to wrap the HTML5 Media API,
-making it possible to write more sophisticated audio and video players
-in Elm. Let me reiterate, this is experiemental, and not ready
-for production. Use at your peril.
+{-| ###State
 
-This package is a fairly direct layer over the Media API. I'm all for higher
-level abstractions, but when dealing with media, a player *is* the abstraction.
-This package will hopefully allow myself and others to write great players that
-abstract away the annoying details of dealing with audio & video. I've also
-published an example of such a player [here](https://github.com/danabrams/elm-audio-player-example).
+@docs newVideo, newAudio, State
 
-This package uses kernel code for a set of tasks that control playback
-of media (Play, Pause, Load, Seek, etc) and to get the current state of
-the media (Media.State.now) and also to check if a the browser supports
-a given filetype (canPlayType).
+###Audio and Video Elements
 
-It also uses kernel code to decode TimeRanges objects (which cannot be accessed
-via an array syntax and therefore cannot be decoded currently in pure Elm).
+@docs audio, video, audioWithEvents, videoWithEvents
 
-Aside from the basic playback tasks, the heart of this library is a Json decoder that
-takes an HtmlMediaElement's state and decodes it to an Elm record, as well as a set
-of events that return a (Media.State.State -> Msg) so you can update your model
-whenever these events fire. Also, there's a subscription for getting the state every
-animation frame, in case you need a more frame accurate result, but this comes
-with a performance penalty, and most great javascript media players simply rely on the
-events, so I don't recommend.
+###Playback Control
 
-Four important parts of writing players are not wrapped by this library:
-
-1.  Subtitles - These are very important and are the next thing on my list to implement,
-    I just need to figure out the cross-browser issues first. I'm very sensitive to the needs
-    of hearing impaired users, so this is a top priority.
-
-2.  Media Source Extensions - This is a portion of the Media API that allows us to do live
-    streaming and adaptibe bitrate media. I think I have a good design for it, but it's a big
-    challenge, and I want to make sure people like the API design of the basic Media API first.
-
-3.  Web Audio - Web Audio API is often used to calculate the waveforms of audio files in
-    audio players. However, wrapping that part of the Web API is beyond the scope of this package.
-    Use ports for now. If this package gains acceptance and use, I'll commit to doing Web Audio
-    as well.
-
-4.  Fullscreen API - This is a pretty necessary Web API for writing a proper video player,
-    but it beyond the scope of this package (besides, smarter people are working on this).
-
-But as long as you're not planning to display subtitles, do live streaming (or Adaptive Bitrate),
-generate waveforms or make a video fullscreen, this package should be ready to go.
-
-This is a 1.0.0, and I'd love your feedback.
-
-
-### Helpers
-
-@docs muted, playbackRate, timeToString, playbackToString
-
-
-### Media Control
-
-@docs play, pause, load, fastSeek, seek
-
-
-### canPlayMedia
-
-@docs canPlayType, CanPlay
-
-
-### Elm-Media Errors
-
-@docs Error
+@docs PortMsg, play, pause, seek, fastSeek, load
 
 -}
 
-import Html exposing (Attribute)
-import Html.Attributes exposing (property)
-import Json.Encode as Encode exposing (bool)
-import Media.State exposing (Id, Playback(..), State)
-import Native.Media
-import Task exposing (Task)
-import Time exposing (Time)
+import Json.Encode as Encode
+import Media.State exposing (id)
+import Media.Events exposing (..)
+import Internal.Types exposing (defaultAudio, defaultVideo)
+import Html exposing (Attribute, Html)
+import Html.Attributes as Attrs exposing (src, controls, loop, autoplay, preload, poster)
 
 
-{-| Simply an alias for Media.State.Error
+{- Types -}
+
+
+{-| This is just a convenient alias to prevent you from having to type
+Media.State.State. State is an opaque type
 -}
-type alias Error =
-    Media.State.Error
+type alias State =
+    Internal.Types.State
 
 
 
--- PROPERTY & ATTRIBUTE HELPERS
+{- HTML Elements -}
 
 
-{-| A helper function for easily setting the muted property on a media element.
-
-    player =
-        audio [ id "player1", controls True, muted False, src "audiofile.mp3" ]
-            []
-
+{-| Generates an HTMLVideoElement with a state. Works exactly the same
+as Elm-lang/HTML's video function, except it requires a State type (which
+means it requires an id). It's probably best to generate a default video state in
+your init function using the newVideo function, but you can generate one
+here with the same function, if you prefer.
 -}
-muted : Bool -> Attribute msg
-muted muted =
-    property "muted" (Encode.bool muted)
+video : State -> List (Attribute msg) -> List (Html msg) -> Html msg
+video state attrs children =
+    Html.video ([ Attrs.id <| id state ] ++ attrs) children
 
 
-{-| A helper function for easily setting the muted property on a media element.
+{-| Same as the video function, but for an audio element.
 
-    player =
-        audio [ id "player1", controls True, muted False, src "audiofile.mp3" ]
-            []
-
--}
-playbackRate : Float -> Attribute msg
-playbackRate rate =
-    property "playbackRate" (Encode.float rate)
-
-
-
--- TASKS
-
-
-{-| Tries to take an Id and switch it to a Playing state of Playback. Can fail if the Id isn't found, isn't an HTMLMediaElement, or fails to play.
--}
-play : Id -> Task Error ()
-play =
-    Native.Media.play
-
-
-{-| Tries to take an Id switch it to a Paused state of Playback. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
--}
-pause : Id -> Task Error ()
-pause =
-    Native.Media.pause
-
-
-{-| Tries to take an Id, finds a media element and resets it. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
--}
-load : Id -> Task Error ()
-load =
-    Native.Media.load
-
-
-{-| Tries to take an Id and Time, find a media element and change the playback position to the provided Time. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
--}
-seek : Id -> Time -> Task Error ()
-seek =
-    Native.Media.seek
-
-
-{-| Take an Id and Time, find a media element and change the playback position to the provided Time. Gives up some precision (compared to setting currentTime to desired seek value) for speed. Can fail if the Id isn't found or it isn't an HTMLMediaElement.
--}
-fastSeek : Id -> Time -> Task Error ()
-fastSeek =
-    Native.Media.fastSeek
-
-
-{-| Tries to find a media element by Id and test if it can a given MIME-type, provided as a String.
--}
-canPlayType : Id -> String -> Task Error CanPlay
-canPlayType =
-    Native.Media.canPlayType
-
-
-{-| These are the three possible results of canPlayType.
-
-Probably: This source is probably a playable type (probably because media can have all sorts of problem and browser support is all over the place)
-Maybe: The player can try to play the media, but until it does, it has no idea where it will play or not
-No: The media definitely cannot be played
+NOTE: audio elements and video playments can each play both audio
+and video files. If you give a video file to an audio element, it will only
+play the audio track. These audio and video functions only refer to the kind
+of HTML element you're using, not the source file.
 
 -}
-type CanPlay
-    = Probably
-    | Maybe
-    | No
+audio : State -> List (Attribute msg) -> List (Html msg) -> Html msg
+audio state attrs children =
+    Html.audio ([ Attrs.id <| id state ] ++ attrs) children
 
 
-{-| Converts a time value, such as a currentTime or duration, and returns a nicely
-formatted string. Values of NaN or infinity will return 0:00.
+{-| Creates a video element with updates for all Media Events. Works just like a standard Html element from
+elm-lang/Html, except it required you to specify an id and give it a message
+for updating the media state.
 
-It will always return a single-digit minute place and double-digit second place.
-It will automatically format the minutes to two digits when necessary
+The simplest update will look like this:
+
+`type Msg =
+UpdateMedia Media.State
+
+update msg model =
+case msg of
+UpdateMedia state ->
+({model | mediaState = state }, Cmd.none )
+`
+It throws an update event on any of the standard HTMLMediaElement Events,
+such as onTimeUpdate, onPlaying, etc.
+
+NOTE: onTimeUpdate does not update every frame on some browsers, and can be
+thrown as infrequently as once every 1/4 second. For updates with single-frame precision,
+you'll have to figure something out using requestAnimationFrame.
 
 -}
-timeToString : Float -> String
-timeToString time =
-    let
-        timeDigits : Int -> String
-        timeDigits v =
-            if v <= 9 then
-                "0" ++ toString v
-            else
-                toString v
-
-        h =
-            floor time // 3600
-
-        m =
-            rem (floor time) 3600 // 60
-
-        s =
-            rem (rem (floor time) 3600) 60
-    in
-        if isNaN time then
-            "0:00"
-        else if isInfinite time then
-            "0:00"
-        else if h <= 0 then
-            toString m ++ ":" ++ timeDigits s
-        else
-            toString h ++ ":" ++ timeDigits m ++ ":" ++ timeDigits s
+videoWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
+videoWithEvents state tagger attrs children =
+    Html.video ([ Attrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
 
 
-{-| Takes a Playback type and returns a nicely formatted string
+{-| Same as videoWithEvents, but generates an audio element.
+
+NOTE: video and audio elements can both play any supported file, but
+audio elements have no picture element. So if you play a video file in
+an audio element, you will hear the audio track, but not see the video track.
+
 -}
-playbackToString : Playback -> String
-playbackToString status =
-    case status of
-        Paused ->
-            "Paused"
+audioWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
+audioWithEvents state tagger attrs children =
+    Html.video ([ Attrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
 
-        Playing ->
-            "Playing"
 
-        Loading ->
-            "Loading"
+allEvents : (State -> msg) -> List (Attribute msg)
+allEvents tagger =
+    [ onAbort tagger
+    , onCanPlay tagger
+    , onCanPlayThrough tagger
+    , onDurationChange tagger
+    , onEmptied tagger
+    , onEnded tagger
+    , onError tagger
+    , onLoadStart tagger
+    , onLoadSuspend tagger
+    , onLoadedData tagger
+    , onLoadedMetadata tagger
+    , onPaused tagger
+    , onPlaying tagger
+    , onProgress tagger
+    , onSeeked tagger
+    , onSeeking tagger
+    , onStalled tagger
+    , onTimeUpdate tagger
+    , onWaiting tagger
+    ]
 
-        Buffering ->
-            "Buffering"
 
-        Ended ->
-            "End"
 
-        Problem err ->
-            "Problem"
+{- DEFAULT STATES -}
+
+
+{-| This generates a default video state to put in your init, such as:
+type alias Model =
+Media.State
+
+init: (Model, Cmd msg)
+init =
+( newVideo "myVideo", Cmd.none )
+`
+
+NOTE: newAudio is for HTMLAudioElements and newVideo is for HTMLVideoElements.
+The kind of file you're using doesn't really matter in this context, what matters
+is what type the media element is. An audio file will play in a video element &
+vice-versa.
+
+-}
+newVideo : String -> State
+newVideo uniqueId =
+    defaultVideo uniqueId
+
+
+{-| Same as newVideo, but for an audio element.
+
+NOTE: newAudio is for HTMLAudioElements and newVideo is for HTMLVideoElements.
+The kind of file you're using doesn't really matter in this context, what matters
+is what type the media element is. An audio file will play in a video element &
+vice-versa.
+
+-}
+newAudio : String -> State
+newAudio uniqueId =
+    defaultAudio uniqueId
+
+
+
+{- HTML Attributes -}
+{- FOR PORTS -}
+
+
+{-| This is the data you'll send through the port you setup.
+There should be no need to generate this yourself, the following
+control functions will generate for you.
+-}
+type alias PortMsg =
+    { tag : String
+    , id : String
+    , data : Encode.Value
+    }
+
+
+{-| Begin playback.
+-}
+play : State -> (PortMsg -> Cmd msg) -> Cmd msg
+play state tagger =
+    tagger { tag = "Play", id = id state, data = Encode.null }
+
+
+{-| Pause
+-}
+pause : State -> (PortMsg -> Cmd msg) -> Cmd msg
+pause state tagger =
+    tagger { tag = "Pause", id = id state, data = Encode.null }
+
+
+{-| Change the current position of the playhead to a different time.
+-}
+seek : State -> Float -> (PortMsg -> Cmd msg) -> Cmd msg
+seek state time tagger =
+    tagger { tag = "Seek", id = id state, data = Encode.float time }
+
+
+{-| Same as seek, but changes position to nearest keyframe to specified
+time, trading precision for performance
+-}
+fastSeek : State -> Float -> (PortMsg -> Cmd msg) -> Cmd msg
+fastSeek state time tagger =
+    tagger { tag = "Seek", id = id state, data = Encode.float time }
+
+
+{-| Resets the media. Useful if you're changing the media source, for instance.
+-}
+load : State -> (PortMsg -> Cmd msg) -> Cmd msg
+load state tagger =
+    tagger { tag = "Load", id = id state, data = Encode.null }

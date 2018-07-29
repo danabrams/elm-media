@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Elm Media Example</title>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script src="main.js"></script>
+    <script src="Port/mediaPort.js"></script>
+
+
+    <script>
+        var elmApp = Elm.Main.fullscreen();
+
+        setupAll(elmApp.ports.playbackControl);
+
+        let v = document.getElementById("video");
+
+    </script>
+</body>
+
+</html>

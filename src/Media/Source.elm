@@ -1,8 +1,8 @@
 module Media.Source
     exposing
         ( source
-        , mediaType
-        , MediaType(..)
+        , fileType
+        , FileType(..)
         , audioCodec
         , videoCodec
         , timeFragment
@@ -20,7 +20,7 @@ codec attributes, and also for generating Media Fragment URIs.
 
 # Mime Types & Codecs
 
-@docs mediaType, MediaType, audioCodec, videoCodec
+@docs fileType, FileType, audioCodec, videoCodec
 
 
 # Media Fragment API
@@ -38,7 +38,7 @@ import Html.Attributes exposing (controls, type_, src)
 
 {-| Represents different audio and video formats. Some also include codec information.
 -}
-type MediaType
+type FileType
     = MP3
     | AAC
     | MP4
@@ -99,10 +99,10 @@ older browsers, and a baseline-variant h264 MP4 (extremely compatible) for older
 that, like so:
 
 ```video
-        [   source "media-h265.mp4" [mediaType MP4, videoCodec "hevc"]
-        ,   source "media-vp9.webm" [mediaType WebMVideo, videoCodec "vp9"]
-        ,   source "media-high.mp4" [mediaType MP4, videoCodec "avc1.64001E"]
-        ,   source "media-baseline.mp4" [mediaType MP4, videoCodec "avc1.42E01E"]
+        [   source "media-h265.mp4" [fileType MP4, videoCodec "hevc"]
+        ,   source "media-vp9.webm" [fileType WebMVideo, videoCodec "vp9"]
+        ,   source "media-high.mp4" [fileType MP4, videoCodec "avc1.64001E"]
+        ,   source "media-baseline.mp4" [fileType MP4, videoCodec "avc1.42E01E"]
         ]
 ```
 
@@ -287,13 +287,13 @@ type Source msg
     | Frag Fragment
 
 
-{-| Used to set a type (and possibly a codec) with pre-built settings, using the union type MediaType.
+{-| Used to set a type (and possibly a codec) with pre-built settings, using the union type FileType.
 
-`source [mediaType OggOpus]` becomes `<source type="audio/ogg; codecs="opus"">`
+`source [fileType OggOpus]` becomes `<source type="audio/ogg; codecs="opus"">`
 
 -}
-mediaType : MediaType -> Source msg
-mediaType mime =
+fileType : FileType -> Source msg
+fileType mime =
     case mime of
         MP3 ->
             Mime "audio/mpeg"
@@ -337,7 +337,7 @@ mediaType mime =
 
 {-| For adding a custom audio codec:
 
-`source "media.webm" [ mediaType WebMAudio, audioCodec "opus"]` becomes `<source type="audio/WebM; codecs="opus"">`
+`source "media.webm" [ fileType WebMAudio, audioCodec "opus"]` becomes `<source type="audio/WebM; codecs="opus"">`
 
 -}
 audioCodec : String -> Source msg
@@ -347,7 +347,7 @@ audioCodec codec =
 
 {-| {-| For adding a custom audio codec:
 
-`source "media.webm" [ mediaType WebMVideo, videoCodec "vp9"]` becomes `<source type="video/WebM; codecs="vp9"">`
+`source "media.webm" [ fileType WebMVideo, videoCodec "vp9"]` becomes `<source type="video/WebM; codecs="vp9"">`
 
 -}
 
@@ -359,7 +359,7 @@ videoCodec codec =
 
 {-| Allows you to specify a start and end time for a media file:
 
-`source "media.mp4" [mediaType MP4, timeFragment (2,15)]` will specify the video media.mp4
+`source "media.mp4" [fileType MP4, timeFragment (2,15)]` will specify the video media.mp4
 from 2 seconds in until 15 seconds in.
 
 ** Note: This is the most cross-browser compatible part of the Media Fragments I've seen. I haven't tested
@@ -377,7 +377,7 @@ timeFragment times =
 {-| Allows you to specify a source where you jump to a specific time based on an id string
 embedded in the source.
 
-`source "media.mp4" [mediaType MP4, idFragment "#Chapter1"]` will start playing at #Chapter1.
+`source "media.mp4" [fileType MP4, idFragment "#Chapter1"]` will start playing at #Chapter1.
 
 ** Note: Honestly, I produce mp4's all day, every day for a living, and I've never seen this used on the web.
 I've only seen it implemented differently.
@@ -396,7 +396,7 @@ idFragment name =
 
 {-| Allows you to specify a specific track in a multi-track file.
 
-`source "media.mp4" [mediaType MP4, trackFragment "spanish-audio"]` becomes
+`source "media.mp4" [fileType MP4, trackFragment "spanish-audio"]` becomes
 `<source src="media.mp4" type="video/mp4#track=spanish-audio>"`
 
 ** Note: Multi-track files are a rarity on the internet. Players like YouTube tend to implement
