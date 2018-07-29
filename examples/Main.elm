@@ -51,7 +51,6 @@ view model =
                 MediaStateUpdate
                 [ controls True ]
                 [ source [ src "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" ] []
-                , track [ src "examples/sub.vtt" ] []
                 ]
             , playPauseButton
             , button [ onClick <| Seek 15 ] [ text "15s" ]
