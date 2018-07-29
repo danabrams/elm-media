@@ -34,7 +34,8 @@ import Media.State exposing (id)
 import Media.Events exposing (..)
 import Internal.Types exposing (defaultAudio, defaultVideo)
 import Html exposing (Attribute, Html)
-import Html.Attributes as Attrs exposing (src, controls, loop, autoplay, preload, poster)
+import Html.Attributes as HtmlAttrs
+import Media.Attributes as Attrs
 
 
 {- Types -}
@@ -59,7 +60,7 @@ here with the same function, if you prefer.
 -}
 video : State -> List (Attribute msg) -> List (Html msg) -> Html msg
 video state attrs children =
-    Html.video ([ Attrs.id <| id state ] ++ attrs) children
+    Html.video ([ HtmlAttrs.id <| id state ] ++ attrs) children
 
 
 {-| Same as the video function, but for an audio element.
@@ -72,7 +73,7 @@ of HTML element you're using, not the source file.
 -}
 audio : State -> List (Attribute msg) -> List (Html msg) -> Html msg
 audio state attrs children =
-    Html.audio ([ Attrs.id <| id state ] ++ attrs) children
+    Html.audio ([ HtmlAttrs.id <| id state ] ++ attrs) children
 
 
 {-| Creates a video element with updates for all Media Events. Works just like a standard Html element from
@@ -99,7 +100,7 @@ you'll have to figure something out using requestAnimationFrame.
 -}
 videoWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 videoWithEvents state tagger attrs children =
-    Html.video ([ Attrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
+    Html.video ([ HtmlAttrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
 
 
 {-| Same as videoWithEvents, but generates an audio element.
@@ -111,7 +112,7 @@ an audio element, you will hear the audio track, but not see the video track.
 -}
 audioWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 audioWithEvents state tagger attrs children =
-    Html.video ([ Attrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
+    Html.video ([ HtmlAttrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
 
 
 allEvents : (State -> msg) -> List (Attribute msg)

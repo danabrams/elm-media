@@ -48,7 +48,7 @@ decodeState =
             |> custom decodeMediaType
             |> custom decodePlaybackStatus
             |> custom decodeReadyState
-            |> required "src" string
+            |> required "currentSrc" string
             |> required "currentTime" float
             |> required "duration" float
             |> custom decodeNetworkState

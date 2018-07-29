@@ -5,6 +5,7 @@ import Html.Attributes exposing (src, controls)
 import Html.Events exposing (onClick)
 import Media exposing (videoWithEvents, play, pause, seek, PortMsg, newVideo)
 import Media.State exposing (currentTime, duration, id, playbackStatus, PlaybackStatus(..), played, TimeRanges)
+import Media.Attributes exposing (playsInline)
 
 
 port playbackControl : PortMsg -> Cmd msg
@@ -49,11 +50,11 @@ view model =
         div []
             [ videoWithEvents model
                 MediaStateUpdate
-                [ controls True ]
+                [ playsInline True, controls True ]
                 [ source [ src "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" ] []
                 ]
             , playPauseButton
-            , button [ onClick <| Seek 15 ] [ text "15s" ]
+            , button [ onClick <| Seek 25 ] [ text "25s" ]
             , p [] [ text ("current: " ++ (toString <| currentTime model)) ]
             , p [] [ text ("duration: " ++ (toString <| duration model)) ]
             , p [] <| [ text "Played Ranges: " ] ++ playedRanges
