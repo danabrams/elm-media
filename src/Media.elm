@@ -127,7 +127,7 @@ allEvents tagger =
     , onLoadSuspend tagger
     , onLoadedData tagger
     , onLoadedMetadata tagger
-    , onPaused tagger
+    , onPause tagger
     , onPlaying tagger
     , onProgress tagger
     , onSeeked tagger

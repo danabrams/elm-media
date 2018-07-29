@@ -1,8 +1,8 @@
-module Media.Events exposing (onAbort, onCanPlay, onCanPlayThrough, onDurationChange, onEmptied, onEnded, onError, onLoadStart, onLoadSuspend, onLoadedData, onLoadedMetadata, onPaused, onPlaying, onProgress, onSeeked, onSeeking, onStalled, onTimeUpdate, onWaiting)
+module Media.Events exposing (onAbort, onCanPlay, onCanPlayThrough, onDurationChange, onEmptied, onEnded, onError, onLoadStart, onLoadSuspend, onLoadedData, onLoadedMetadata, onPause, onPlaying, onProgress, onSeeked, onSeeking, onStalled, onTimeUpdate, onWaiting)
 
 {-| ###Events
 
-@docs onPlaying, onPaused, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError
+@docs onPlaying, onPause, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError
 
 -}
 
@@ -37,8 +37,8 @@ onPlaying tagger =
 
 {-| Triggered when the media is paused
 -}
-onPaused : (State -> msg) -> Html.Attribute msg
-onPaused tagger =
+onPause : (State -> msg) -> Html.Attribute msg
+onPause tagger =
     on "pause" <| target tagger decodeState
 
 
