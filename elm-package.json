@@ -1,5 +1,5 @@
 {
-    "version": "2.0.4",
+    "version": "2.0.5",
     "summary": "A wrapping of the HTML5 Media API for build Multimedia Applications",
     "repository": "https://github.com/danabrams/elm-media.git",
     "license": "BSD3",
