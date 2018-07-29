@@ -19,5 +19,5 @@ assets
 # VS Code settings
 .vscode
 
-# some testing
-portsTest.*
+# the compiled files
+examples/main.js
