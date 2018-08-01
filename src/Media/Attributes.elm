@@ -27,7 +27,7 @@ These are provided to have all the properties and attributes for media
 elements in one place. Attributes that are included in Html.Attributes, such
 as loop, controls, autoplay are implemented better here, and several new ones are added.
 
-@docs loop, controls, autoplay, muted, volume, playbackRate, crossOrigin, anonymous, useCredentials, playsinline, showTrack, hideTrack, disableTrack, label
+@docs loop, controls, autoplay, muted, volume, playbackRate, crossOrigin, anonymous, useCredentials, playsinline, showTrack, hideTrack, disableTrack, label, controlList
 
 -}
 
