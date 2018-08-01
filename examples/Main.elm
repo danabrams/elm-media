@@ -3,9 +3,9 @@ port module Main exposing (..)
 import Html exposing (div, source, button, text, p, track, video)
 import Html.Attributes exposing (id, src, kind, srclang)
 import Html.Events exposing (onClick)
-import Media exposing (showTextTrack, play, pause, seek, PortMsg, newVideo, changeTrackModes)
+import Media exposing (play, pause, seek, PortMsg, newVideo, changeTextTrackMode)
 import Media.State exposing (currentTime, duration, getId, playbackStatus, PlaybackStatus(..), played, TimeRanges)
-import Media.Attributes exposing (label, playsInline, controls, hideTrack, showTrack, disableTrack, crossOrigin, anonymous)
+import Media.Attributes exposing (label, playsInline, controls, mode, crossOrigin, anonymous)
 import Media.Events
 
 
@@ -60,10 +60,10 @@ view model =
         trackAttr =
             case model.trackState of
                 Hide ->
-                    hideTrack
+                    mode Media.State.Hidden
 
                 Show ->
-                    showTrack
+                    mode Media.State.Showing
     in
         div []
             [ video
@@ -93,16 +93,16 @@ view model =
 update msg model =
     case msg of
         Play ->
-            ( model, play model.state elmToJSPort )
+            ( model, play model.state outbound )
 
         Pause ->
-            ( model, pause model.state elmToJSPort )
+            ( model, pause model.state outbound )
 
         Seek time ->
-            ( model, seek model.state time elmToJSPort )
+            ( model, seek model.state time outbound )
 
         MediaStateUpdate state ->
-            ( model, Cmd.none )
+            ( { model | state = state }, Cmd.none )
 
         ToggleTextTrack ->
             let

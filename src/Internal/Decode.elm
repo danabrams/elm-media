@@ -40,8 +40,7 @@ decodeState =
                     , buffered = buff
                     , seekable = seek
                     , played = played
-                    , textTracks =
-                        tTracks
+                    , textTracks = tTracks
                     }
     in
         succeed toState
@@ -49,7 +48,7 @@ decodeState =
             |> custom decodeMediaType
             |> custom decodePlaybackStatus
             |> custom decodeReadyState
-            |> required "currentSrc" string
+            |> optional "currentSrc" string ""
             |> required "currentTime" float
             |> required "duration" float
             |> custom decodeNetworkState
@@ -78,7 +77,7 @@ decodeMediaType =
                     fail <| "This decoder only knows how to decode the state of Audio and Video elements, but was given an element of type " ++ element
     in
         succeed toMediaType
-            |> required "tagName" string
+            |> optional "tagName" string "VIDEO"
             |> resolve
 
 

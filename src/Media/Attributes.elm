@@ -34,7 +34,7 @@ as loop, controls, autoplay are implemented better here, and several new ones ar
 import Html.Attributes as Attrs exposing (property, attribute)
 import Html exposing (Attribute)
 import Json.Encode exposing (string, bool, float, int, list)
-import Media.State exposing (TextTrack, TextTrackMode(..))
+import Media.State exposing (TextTrack, TextTrackMode(..), TextTrackKind(..))
 import Internal.Helpers
 
 
@@ -146,3 +146,33 @@ mode md =
 label : String -> Attribute msg
 label lbl =
     property "label" (string lbl)
+
+
+{-| -}
+kind : TextTrackKind -> Attribute msg
+kind knd =
+    let
+        kindToString =
+            case knd of
+                Subtitles ->
+                    "subtitles"
+
+                Descriptions ->
+                    "description"
+
+                Metadata ->
+                    "metadata"
+
+                Captions ->
+                    "captions"
+
+                Chapters ->
+                    "chapters"
+
+                Other str ->
+                    str
+
+                _ ->
+                    ""
+    in
+        property "kind" <| string kindToString
