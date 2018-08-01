@@ -11,30 +11,20 @@
     <script src="main.js"></script>
     <script src="../Port/mediaPorts.js"></script>
 
-    <div>
-        <!--<video id="myVideo" controls="" src="https://html5multimedia.com/code/media/elephants-dream-medium.mp4">
-            <track id="track" src="elephants-dream-subtitles-en.vtt" kind="subtitles" srclang="en" label="English">
-        </video>-->
-        <button>Play</button>
-        <button>25s</button>
-        <button>Toggle Subtitles</button>
-        <p>current: 0</p>
-        <p>duration: 0</p>
-        <p>Played Ranges: </p>
-    </div>
+
     <script>
 
 
-        MediaApp.Modify.TimeRanges();
+        MediaApp.Modify.timeRanges();
 
-        MediaApp.Modify.Track();
+        MediaApp.Modify.tracks();
 
         //document.getElementById("test-track").mode = "showing";
 
         //document.getElementById("test-video").addEventListener("timeupdate", function () { console.log('timeupdate'); });
 
         var elmApp = Elm.Main.fullscreen();
-        MediaApp.Ports.setupElmToJSPort(elmApp.ports.elmToJS);
+        MediaApp.Ports.setupElmToJSPort(elmApp.ports.outbound);
 
         function getTrack() {
             let track = document.getElementById("track");

@@ -9,7 +9,7 @@ import Media.Attributes exposing (label, playsInline, controls, hideTrack, showT
 import Media.Events
 
 
-port elmToJSPort : PortMsg -> Cmd msg
+port outbound : PortMsg -> Cmd msg
 
 
 type alias Model =

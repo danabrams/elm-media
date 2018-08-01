@@ -2,10 +2,9 @@ let MediaApp =
 {
     Ports:
     {
-        setupElmToJSPort: function (sendPort) {
-
-            if (sendPort.subscribe !== undefined) {
-                sendPort.subscribe(function (msg) {
+        setupElmToJSPort: function (port) {
+            if (port.subscribe) {
+                port.subscribe(function (msg) {
                     var media = null;
                     switch (msg.tag) {
                         case "Play":
@@ -67,13 +66,13 @@ let MediaApp =
     }
     , Modify:
     {
-        TimeRanges: function () {
+        timeRanges: function () {
             if (!(TimeRanges.prototype.asArray)) {
                 Object.defineProperty(TimeRanges.prototype, "asArray", { get: function () { var arr = []; for (i = 0; i < this.length; i++) { arr.push({ start: this.start(i), end: this.end(i) }); }; return arr; } });
             }
             return;
         },
-        Track: function () {
+        tracks: function () {
             if (!(HTMLTrackElement.prototype.mode)) {
                 Object.defineProperty(HTMLTrackElement.prototype, "mode",
                     {
@@ -87,8 +86,9 @@ let MediaApp =
                             return this.track.mode;
                         }
                     });
+            } else {
+                return;
             }
-            if (!(HTMLTrackElement.prototype.oncue))
         }
 
     }
@@ -96,7 +96,7 @@ let MediaApp =
         All: function (controlPort) {
             MediaApp.Modify.TimeRanges();
             MediaApp.Modify.TextTracks();
-            addMediaPort(controlPort);
+            setupElmToJSPort(controlPort);
         }
     }
     , Helpers: {
