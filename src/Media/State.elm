@@ -1,7 +1,7 @@
 module Media.State
     exposing
         ( currentTime
-        , id
+        , getId
         , duration
         , source
         , playbackStatus
@@ -23,11 +23,13 @@ module Media.State
         , VTTCue
         , TextTrackMode(..)
         , TextTrackKind(..)
+        , textTrackModeToString
+        , stringToTextTrackMode
         )
 
 {-| ###State
 
-@docs id, MediaType, mediaType, duration, PlaybackStatus, PlaybackError, playbackStatus, currentTime, duration, source, ReadyState, readyState, NetworkState, networkState, videoSize, TimeRanges, buffered, played, seekable, TextTrack, TextTrackKind, TextTrackMode, VTTCue, textTracks
+@docs getId, MediaType, mediaType, duration, PlaybackStatus, PlaybackError, playbackStatus, currentTime, duration, source, ReadyState, readyState, NetworkState, networkState, videoSize, TimeRanges, buffered, played, seekable, TextTrack, TextTrackKind, TextTrackMode, VTTCue, textTracks,textTrackModeToString, stringToTextTrackMode
 
 -}
 
@@ -199,8 +201,8 @@ Since State and Id are both opaque types, this is the easiest way to
 access the id of the media element.
 
 -}
-id : State -> String
-id state =
+getId : State -> String
+getId state =
     case state of
         Types.State iState ->
             case iState.id of
@@ -452,3 +454,33 @@ textTracks state =
         case state of
             Types.State s ->
                 List.map textTrackConverter s.textTracks
+
+
+{-| Simple conversion from a TextTrackMode to string
+-}
+textTrackModeToString : TextTrackMode -> String
+textTrackModeToString mode =
+    case mode of
+        Showing ->
+            "showing"
+
+        Hidden ->
+            "hidden"
+
+        _ ->
+            "disabled"
+
+
+{-| Simple conversion from a string to TextTrackMode
+-}
+stringToTextTrackMode : String -> TextTrackMode
+stringToTextTrackMode str =
+    case str of
+        "showing" ->
+            Showing
+
+        "hidden" ->
+            Hidden
+
+        _ ->
+            Disabled

@@ -1,18 +1,26 @@
 port module Main exposing (..)
 
-import Html exposing (div, source, button, text, p, track)
-import Html.Attributes exposing (src, controls)
+import Html exposing (div, source, button, text, p, track, video)
+import Html.Attributes exposing (id, src, kind, srclang)
 import Html.Events exposing (onClick)
-import Media exposing (videoWithEvents, play, pause, seek, PortMsg, newVideo)
-import Media.State exposing (currentTime, duration, id, playbackStatus, PlaybackStatus(..), played, TimeRanges)
-import Media.Attributes exposing (playsInline)
+import Media exposing (showTextTrack, play, pause, seek, PortMsg, newVideo, changeTrackModes)
+import Media.State exposing (currentTime, duration, getId, playbackStatus, PlaybackStatus(..), played, TimeRanges)
+import Media.Attributes exposing (label, playsInline, controls, hideTrack, showTrack, disableTrack, crossOrigin, anonymous)
+import Media.Events
 
 
-port playbackControl : PortMsg -> Cmd msg
+port elmToJSPort : PortMsg -> Cmd msg
 
 
 type alias Model =
-    Media.State
+    { state : Media.State
+    , trackState : TrackState
+    }
+
+
+type TrackState
+    = Hide
+    | Show
 
 
 type Msg
@@ -21,17 +29,19 @@ type Msg
     | Pause
     | Seek Float
     | MediaStateUpdate Media.State
+    | ToggleTextTrack
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( newVideo "myVideo", Cmd.none )
+    ( { state = newVideo "myVideo", trackState = Hide }, Cmd.none )
 
 
+view : Model -> Html.Html Msg
 view model =
     let
         playPauseButton =
-            case playbackStatus model of
+            case playbackStatus model.state of
                 Playing ->
                     button [ onClick Pause ] [ text "Pause" ]
 
@@ -45,18 +55,37 @@ view model =
             p [] [ text <| "\nStart :" ++ (toString tr.start) ++ ", End: " ++ (toString tr.end) ]
 
         playedRanges =
-            (List.map playededRange (played model))
+            (List.map playededRange (played model.state))
+
+        trackAttr =
+            case model.trackState of
+                Hide ->
+                    hideTrack
+
+                Show ->
+                    showTrack
     in
         div []
-            [ videoWithEvents model
-                MediaStateUpdate
-                [ playsInline True, controls True ]
-                [ source [ src "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" ] []
+            [ video
+                {- model.state -}
+                ((Media.Events.allEvents MediaStateUpdate)
+                    ++ [ Html.Attributes.id "myVideo", playsInline True, controls True, src "elephants-dream-medium.mp4", crossOrigin anonymous ]
+                )
+                [ track
+                    [ id "track"
+                    , src "elephants-dream-subtitles-en.vtt"
+                    , kind "subtitles"
+                    , srclang "en"
+                    , label "English"
+                    , trackAttr
+                    ]
+                    []
                 ]
             , playPauseButton
             , button [ onClick <| Seek 25 ] [ text "25s" ]
-            , p [] [ text ("current: " ++ (toString <| currentTime model)) ]
-            , p [] [ text ("duration: " ++ (toString <| duration model)) ]
+            , button [ onClick ToggleTextTrack ] [ text "Toggle Subtitles" ]
+            , p [] [ text ("current: " ++ (toString <| currentTime model.state)) ]
+            , p [] [ text ("duration: " ++ (toString <| duration model.state)) ]
             , p [] <| [ text "Played Ranges: " ] ++ playedRanges
             ]
 
@@ -64,16 +93,28 @@ view model =
 update msg model =
     case msg of
         Play ->
-            ( model, play model playbackControl )
+            ( model, play model.state elmToJSPort )
 
         Pause ->
-            ( model, pause model playbackControl )
+            ( model, pause model.state elmToJSPort )
 
         Seek time ->
-            ( model, seek model time playbackControl )
+            ( model, seek model.state time elmToJSPort )
 
         MediaStateUpdate state ->
-            ( state, Cmd.none )
+            ( model, Cmd.none )
+
+        ToggleTextTrack ->
+            let
+                newTrackState =
+                    case model.trackState of
+                        Show ->
+                            Hide
+
+                        _ ->
+                            Show
+            in
+                ( { model | trackState = newTrackState }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )

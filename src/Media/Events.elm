@@ -1,17 +1,47 @@
-module Media.Events exposing (onAbort, onCanPlay, onCanPlayThrough, onDurationChange, onEmptied, onEnded, onError, onLoadStart, onLoadSuspend, onLoadedData, onLoadedMetadata, onPause, onPlaying, onProgress, onSeeked, onSeeking, onStalled, onTimeUpdate, onWaiting)
+module Media.Events exposing (allEvents, onVolumeChange, onAbort, onCanPlay, onCanPlayThrough, onDurationChange, onEmptied, onEnded, onError, onLoadStart, onLoadSuspend, onLoadedData, onLoadedMetadata, onPause, onPlaying, onProgress, onSeeked, onSeeking, onStalled, onTimeUpdate, onWaiting)
 
 {-| ###Events
 
-@docs onPlaying, onPause, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError
+@docs allEvents, onPlaying, onPause, onVolumeChange, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError
 
 -}
 
 import Array exposing (fromList, get)
 import Html exposing (Attribute)
-import Html.Events exposing (on)
+import Html.Events exposing (onWithOptions)
 import Json.Decode exposing (Decoder, field, map)
 import Internal.Types exposing (State)
 import Internal.Decode exposing (..)
+
+
+on e msg =
+    onWithOptions e { preventDefault = True, stopPropagation = True } msg
+
+
+{-| -}
+allEvents : (State -> msg) -> List (Attribute msg)
+allEvents tagger =
+    [ onAbort tagger
+    , onCanPlay tagger
+    , onCanPlayThrough tagger
+    , onDurationChange tagger
+    , onEmptied tagger
+    , onEnded tagger
+    , onError tagger
+    , onLoadStart tagger
+    , onLoadSuspend tagger
+    , onLoadedData tagger
+    , onLoadedMetadata tagger
+    , onPause tagger
+    , onPlaying tagger
+    , onProgress tagger
+    , onSeeked tagger
+    , onSeeking tagger
+    , onStalled tagger
+    , onTimeUpdate tagger
+    , onWaiting tagger
+    , onVolumeChange tagger
+    ]
 
 
 {-| Triggered when a player finishes seeking
@@ -163,6 +193,23 @@ the media.
 onProgress : (State -> msg) -> Attribute msg
 onProgress tagger =
     on "progress" <| target tagger decodeState
+
+
+{-| Triggered when volume changes, including muting or unmuting
+-}
+onVolumeChange : (State -> msg) -> Attribute msg
+onVolumeChange tagger =
+    on "volumechange" <| target tagger decodeState
+
+
+{-| NOTE: Only apply to a "track" element.
+
+Triggered when a textTrack cue changes.
+
+-}
+onCueChange : (State -> msg) -> Attribute msg
+onCueChange tagger =
+    on "cuechange" <| target tagger decodeState
 
 
 target : (a -> msg) -> Decoder a -> Decoder msg

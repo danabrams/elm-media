@@ -14,6 +14,8 @@ module Media.Attributes
         , preloadAuto
         , preloadMetadata
         , preloadNone
+        , mode
+        , label
         )
 
 {-|
@@ -25,13 +27,15 @@ These are provided to have all the properties and attributes for media
 elements in one place. Attributes that are included in Html.Attributes, such
 as loop, controls, autoplay are implemented better here, and several new ones are added.
 
-@docs loop, controls, autoplay, muted, volume, playbackRate, crossOrigin, anonymous, useCredentials, playsinline
+@docs loop, controls, autoplay, muted, volume, playbackRate, crossOrigin, anonymous, useCredentials, playsinline, showTrack, hideTrack, disableTrack, label
 
 -}
 
 import Html.Attributes as Attrs exposing (property, attribute)
 import Html exposing (Attribute)
-import Json.Encode exposing (string, bool, float, int)
+import Json.Encode exposing (string, bool, float, int, list)
+import Media.State exposing (TextTrack, TextTrackMode(..))
+import Internal.Helpers
 
 
 {-| -}
@@ -130,3 +134,15 @@ preloadMetadata =
 preloadNone : Attribute msg
 preloadNone =
     property "preload" (string "none")
+
+
+{-| -}
+mode : TextTrackMode -> Attribute msg
+mode md =
+    property "mode" (string <| Internal.Helpers.textTrackModeToString md)
+
+
+{-| -}
+label : String -> Attribute msg
+label lbl =
+    property "label" (string lbl)

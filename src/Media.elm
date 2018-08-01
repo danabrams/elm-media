@@ -8,11 +8,11 @@ module Media
         , play
         , pause
         , seek
-        , fastSeek
         , load
         , newVideo
         , newAudio
         , PortMsg
+        , changeTextTrackMode
         )
 
 {-| ###State
@@ -25,17 +25,18 @@ module Media
 
 ###Playback Control
 
-@docs PortMsg, play, pause, seek, fastSeek, load
+@docs PortMsg, play, pause, seek, load, changeTextTrackMode
 
 -}
 
 import Json.Encode as Encode
-import Media.State exposing (id)
+import Media.State exposing (getId, textTracks, TextTrack, TextTrackMode(..))
 import Media.Events exposing (..)
 import Internal.Types exposing (defaultAudio, defaultVideo)
 import Html exposing (Attribute, Html)
 import Html.Attributes as HtmlAttrs
 import Media.Attributes as Attrs
+import Internal.Helpers
 
 
 {- Types -}
@@ -60,7 +61,7 @@ here with the same function, if you prefer.
 -}
 video : State -> List (Attribute msg) -> List (Html msg) -> Html msg
 video state attrs children =
-    Html.video ([ HtmlAttrs.id <| id state ] ++ attrs) children
+    Html.video ([ HtmlAttrs.id <| getId state ] ++ attrs) children
 
 
 {-| Same as the video function, but for an audio element.
@@ -73,7 +74,7 @@ of HTML element you're using, not the source file.
 -}
 audio : State -> List (Attribute msg) -> List (Html msg) -> Html msg
 audio state attrs children =
-    Html.audio ([ HtmlAttrs.id <| id state ] ++ attrs) children
+    Html.audio ([ HtmlAttrs.id <| getId state ] ++ attrs) children
 
 
 {-| Creates a video element with updates for all Media Events. Works just like a standard Html element from
@@ -100,7 +101,7 @@ you'll have to figure something out using requestAnimationFrame.
 -}
 videoWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 videoWithEvents state tagger attrs children =
-    Html.video ([ HtmlAttrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
+    Html.video ([ HtmlAttrs.id <| getId state ] ++ (allEvents tagger) ++ attrs) children
 
 
 {-| Same as videoWithEvents, but generates an audio element.
@@ -112,31 +113,7 @@ an audio element, you will hear the audio track, but not see the video track.
 -}
 audioWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 audioWithEvents state tagger attrs children =
-    Html.video ([ HtmlAttrs.id <| id state ] ++ (allEvents tagger) ++ attrs) children
-
-
-allEvents : (State -> msg) -> List (Attribute msg)
-allEvents tagger =
-    [ onAbort tagger
-    , onCanPlay tagger
-    , onCanPlayThrough tagger
-    , onDurationChange tagger
-    , onEmptied tagger
-    , onEnded tagger
-    , onError tagger
-    , onLoadStart tagger
-    , onLoadSuspend tagger
-    , onLoadedData tagger
-    , onLoadedMetadata tagger
-    , onPause tagger
-    , onPlaying tagger
-    , onProgress tagger
-    , onSeeked tagger
-    , onSeeking tagger
-    , onStalled tagger
-    , onTimeUpdate tagger
-    , onWaiting tagger
-    ]
+    Html.video ([ HtmlAttrs.id <| getId state ] ++ (allEvents tagger) ++ attrs) children
 
 
 
@@ -196,33 +173,66 @@ type alias PortMsg =
 -}
 play : State -> (PortMsg -> Cmd msg) -> Cmd msg
 play state tagger =
-    tagger { tag = "Play", id = id state, data = Encode.null }
+    tagger { tag = "Play", id = getId state, data = Encode.null }
 
 
 {-| Pause
 -}
 pause : State -> (PortMsg -> Cmd msg) -> Cmd msg
 pause state tagger =
-    tagger { tag = "Pause", id = id state, data = Encode.null }
+    tagger { tag = "Pause", id = getId state, data = Encode.null }
 
 
 {-| Change the current position of the playhead to a different time.
 -}
 seek : State -> Float -> (PortMsg -> Cmd msg) -> Cmd msg
 seek state time tagger =
-    tagger { tag = "Seek", id = id state, data = Encode.float time }
-
-
-{-| Same as seek, but changes position to nearest keyframe to specified
-time, trading precision for performance
--}
-fastSeek : State -> Float -> (PortMsg -> Cmd msg) -> Cmd msg
-fastSeek state time tagger =
-    tagger { tag = "Seek", id = id state, data = Encode.float time }
+    tagger { tag = "Seek", id = getId state, data = Encode.float time }
 
 
 {-| Resets the media. Useful if you're changing the media source, for instance.
 -}
 load : State -> (PortMsg -> Cmd msg) -> Cmd msg
 load state tagger =
-    tagger { tag = "Load", id = id state, data = Encode.null }
+    tagger { tag = "Load", id = getId state, data = Encode.null }
+
+
+{-| -}
+changeTrackModes : State -> List TextTrack -> String -> List TextTrack
+changeTrackModes state tracks mode =
+    let
+        stringToTextTrackMode : String -> TextTrackMode
+        stringToTextTrackMode m =
+            case m of
+                "showing" ->
+                    Showing
+
+                "hidden" ->
+                    Hidden
+
+                _ ->
+                    Disabled
+
+        mapFunction acc alls =
+            case alls of
+                [] ->
+                    acc
+
+                x :: xs ->
+                    if List.member x tracks then
+                        mapFunction (acc ++ [ { x | mode = (stringToTextTrackMode mode) } ]) xs
+                    else
+                        mapFunction (acc ++ [ x ]) xs
+    in
+        mapFunction [] (Media.State.textTracks state)
+
+
+{-| sets the mode of the given textTrack to "showing"
+-}
+changeTextTrackMode : State -> { track : Int, mode : TextTrackMode } -> (PortMsg -> Cmd msg) -> Cmd msg
+changeTextTrackMode state options tagger =
+    tagger
+        { tag = "ChangeTextTrackMode"
+        , id = getId state
+        , data = Encode.object [ ( "trackNumber", Encode.int options.track ), ( "mode", Encode.string <| Internal.Helpers.textTrackModeToString options.mode ) ]
+        }

@@ -1,7 +1,7 @@
 module Internal.Decode exposing (..)
 
 import Json.Decode exposing (Decoder, succeed, Value, andThen, bool, fail, field, float, int, list, maybe, map, map2, map3, map4, string, succeed, value)
-import Json.Decode.Pipeline exposing (custom, optional, optionalAt, required, requiredAt, resolve)
+import Json.Decode.Pipeline exposing (hardcoded, custom, optional, optionalAt, required, requiredAt, resolve)
 import Internal.Types exposing (..)
 
 
@@ -24,7 +24,7 @@ decodeState =
             -> List TimeRange
             -> List TextTrack
             -> Decoder State
-        toState idString typeOfMedia pbStatus rdyState src current dur netState wid hght buff seek played {- aTracks vTracks -} tTracks =
+        toState idString typeOfMedia pbStatus rdyState src current dur netState wid hght buff seek played tTracks =
             succeed <|
                 State
                     { id = Id idString
@@ -40,7 +40,8 @@ decodeState =
                     , buffered = buff
                     , seekable = seek
                     , played = played
-                    , textTracks = tTracks
+                    , textTracks =
+                        tTracks
                     }
     in
         succeed toState
@@ -247,13 +248,13 @@ decodeTimeRange =
 decodeTextTrack : Decoder TextTrack
 decodeTextTrack =
     succeed TextTrack
-        |> required "id" string
+        |> optional "id" string ""
         |> optional "activeCues" (collection decodeVttCue) []
         |> optional "cues" (collection decodeVttCue) []
         |> custom decodeTextTrackKind
-        |> required "inBandMetadataTrackDispatchType" string
-        |> required "label" string
-        |> required "language" string
+        |> optional "inBandMetadataTrackDispatchType" string ""
+        |> optional "label" string ""
+        |> optional "language" string ""
         |> custom decodeTextTrackMode
 
 

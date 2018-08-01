@@ -21,3 +21,7 @@ assets
 
 # the compiled files
 examples/main.js
+
+# media assets
+*.vtt
+*.mp4
