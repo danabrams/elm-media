@@ -11,8 +11,8 @@ This project requires a port (and some other javascript). You can set it up by i
         var elmApp = Elm.Main.fullscreen();
 
         MediaApp.Ports.setupElmToJSPort(elmApp.ports.elmToJS);
-        MediaApp.Modify.TimeRanges();
-        MediaApp.Modify.Track();
+        MediaApp.Modify.timeRanges();
+        MediaApp.Modify.tracks();
 
     </script>
 ```
