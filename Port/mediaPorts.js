@@ -73,57 +73,6 @@ let MediaApp =
             }
             return;
         },
-        /*TextTracks: function () {
-            if (!(HTMLTrackElement.prototype.textTrackModes)) {
-                Object.defineProperty(HTMLMediaElement.prototype, "textTrackModes",
-                    {
-                        set: function (modes) {
-                            if (modes.length == this.textTracks.length) {
-                                for (i = 0; i < modes.length; i++) {
-                                    this.textTracks[i].mode = modes[i];
-                                }
-                            }
-                            return;
-                        },
-                        get: function () {
-                            var modes = [];
-                            for (i = 0; i < this.textTracks.length; i++) {
-                                modes.push(this.textTracks[i].mode);
-                            }
-                            return modes;
-                        }
-                    });
-            }
-        },
-        Track: function () {
-            if (!(HTMLTrackElement.prototype.mode)) {
-                Object.defineProperty(HTMLTrackElement.prototype, "mode",
-                    {
-                        set: function (m) {
-                            _mode = m;
-                            var par = this.parentNode;
-                            if ((par == null) || (par == undefined)) {
-                                console.log("null parentNode");
-                                setTimeout(function () { this.mode = m; }.bind(this), 16);
-                            } else if ((par.tagName.toLowerCase() == "audio") || (par.tagName.toLowerCase() == "video")) {
-                                var track;
-                                for (i = 0; i < par.textTracks.length; i++) {
-                                    track = par.textTracks[i];
-                                    if (track.id == this.id) {
-                                        track.mode = m;
-
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                        ,
-                        get: function () {
-                            return _m;
-                        }
-                    });
-            }
-        }*/
         Track: function () {
             if (!(HTMLTrackElement.prototype.mode)) {
                 Object.defineProperty(HTMLTrackElement.prototype, "mode",
