@@ -10,6 +10,8 @@ module Media.Source
         , trackFragment
           --, spatialFragment
           --, spatialFragmentWithPercent
+        , mediaCapture
+        , track
         )
 
 {-| API for creating better source elements. Includes support for easily generating mime type and
@@ -30,9 +32,19 @@ tell, no browser has ever implemented this part of the spec for video. **
 
 @docs timeFragment, idFragment, trackFragment
 
+
+# Tracks (Subtitles, captions, metadata, etc)
+
+@docs track
+
+
+# Media Capture
+
+@docs mediaCapture
+
 -}
 
-import Html exposing (audio, Html)
+import Html exposing (audio, Html, Attribute, node)
 import Html.Attributes exposing (controls, type_, src)
 
 
@@ -421,3 +433,15 @@ trackFragment name =
    spatialFragmentWithPercent { x, y, width, height } =
        Frag <| SpatialWithPercent { x = x, y = y, width = width, height = height }
 -}
+
+
+{-| -}
+mediaCapture : List (Attribute msg) -> List (Html msg) -> Html msg
+mediaCapture attrs childs =
+    node "media-capture" attrs childs
+
+
+{-| -}
+track : List (Attribute msg) -> List (Html msg) -> Html msg
+track attrs childs =
+    Html.track attrs childs

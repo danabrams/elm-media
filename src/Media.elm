@@ -34,6 +34,7 @@ import Media.State exposing (getId, textTracks, TextTrack, TextTrackMode(..))
 import Media.Events exposing (..)
 import Internal.Types exposing (defaultAudio, defaultVideo)
 import Html exposing (Attribute, Html)
+import Html.Keyed exposing (node)
 import Html.Attributes as HtmlAttrs
 import Media.Attributes as Attrs
 import Internal.Helpers
@@ -59,9 +60,9 @@ means it requires an id). It's probably best to generate a default video state i
 your init function using the newVideo function, but you can generate one
 here with the same function, if you prefer.
 -}
-video : State -> List (Attribute msg) -> List (Html msg) -> Html msg
+video : State -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
 video state attrs children =
-    Html.video ([ HtmlAttrs.id <| getId state ] ++ attrs) children
+    node "video" ([ HtmlAttrs.id <| getId state ] ++ attrs) children
 
 
 {-| Same as the video function, but for an audio element.

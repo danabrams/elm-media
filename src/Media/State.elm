@@ -23,13 +23,11 @@ module Media.State
         , VTTCue
         , TextTrackMode(..)
         , TextTrackKind(..)
-        , textTrackModeToString
-        , stringToTextTrackMode
         )
 
 {-| ###State
 
-@docs getId, MediaType, mediaType, duration, PlaybackStatus, PlaybackError, playbackStatus, currentTime, duration, source, ReadyState, readyState, NetworkState, networkState, videoSize, TimeRanges, buffered, played, seekable, TextTrack, TextTrackKind, TextTrackMode, VTTCue, textTracks,textTrackModeToString, stringToTextTrackMode
+@docs getId, MediaType, mediaType, duration, PlaybackStatus, PlaybackError, playbackStatus, currentTime, duration, source, ReadyState, readyState, NetworkState, networkState, videoSize, TimeRanges, buffered, played, seekable, TextTrack, TextTrackKind, TextTrackMode, VTTCue, textTracks
 
 -}
 
@@ -454,33 +452,3 @@ textTracks state =
         case state of
             Types.State s ->
                 List.map textTrackConverter s.textTracks
-
-
-{-| Simple conversion from a TextTrackMode to string
--}
-textTrackModeToString : TextTrackMode -> String
-textTrackModeToString mode =
-    case mode of
-        Showing ->
-            "showing"
-
-        Hidden ->
-            "hidden"
-
-        _ ->
-            "disabled"
-
-
-{-| Simple conversion from a string to TextTrackMode
--}
-stringToTextTrackMode : String -> TextTrackMode
-stringToTextTrackMode str =
-    case str of
-        "showing" ->
-            Showing
-
-        "hidden" ->
-            Hidden
-
-        _ ->
-            Disabled

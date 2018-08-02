@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <script src="main.js"></script>
+    <script src="mediaCapture.js"></script>
     <script src="../Port/mediaApp.js"></script>
 
     <script>
@@ -16,10 +16,10 @@
         MediaApp.Modify.tracks();
         /* Adds the "mode" setter and getter to the HTMLTrack object prototype, letting us show/hide/disable text tracks from the view function. */
         MediaApp.Elements.defineMediaCapture();
+        //Sets up the <media-source> custom element
         let elmApp = Elm.Main.fullscreen();
         /* Creates a fullscreen Elm App from our example (Main.elm) */
-
-        elmApp.ports.outbound.subscribe(MediaApp.portHandler);
+        //elmApp.ports.outbound.subscribe(MediaApp.portHandler);
         /* Subscribe to our port and pass it the default portHandler(msg) function from "/Port/mediaApp.js" */
     </script>
 </body>
