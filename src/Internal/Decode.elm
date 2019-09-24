@@ -1,8 +1,8 @@
-module Internal.Decode exposing (..)
+module Internal.Decode exposing (collection, decodeMediaType, decodeNetworkState, decodePlaybackError, decodePlaybackStatus, decodeReadyState, decodeState, decodeTextTrack, decodeTextTrackKind, decodeTextTrackMode, decodeTimeRange, decodeVttCue)
 
-import Json.Decode exposing (Decoder, succeed, Value, andThen, bool, fail, field, float, int, list, maybe, map, map2, map3, map4, string, succeed, value)
-import Json.Decode.Pipeline exposing (hardcoded, custom, optional, optionalAt, required, requiredAt, resolve)
-import Internal.Types exposing (..)
+import Internal.Types exposing (Id(..), MediaType(..), NetworkState(..), PlaybackError(..), PlaybackStatus(..), ReadyState(..), State(..), TextTrack, TextTrackKind(..), TextTrackMode(..), TimeRange, VTTCue)
+import Json.Decode exposing (Decoder, andThen, bool, fail, field, float, int, list, map, map2, string, succeed)
+import Json.Decode.Pipeline exposing (custom, optional, optionalAt, required, resolve)
 
 
 decodeState : Decoder State
@@ -43,22 +43,22 @@ decodeState =
                     , textTracks = tTracks
                     }
     in
-        succeed toState
-            |> required "id" string
-            |> custom decodeMediaType
-            |> custom decodePlaybackStatus
-            |> custom decodeReadyState
-            |> optional "currentSrc" string ""
-            |> required "currentTime" float
-            |> required "duration" float
-            |> custom decodeNetworkState
-            |> optional "videoWidth" int 0
-            |> optional "videoHeight" int 0
-            |> optionalAt [ "buffered", "asArray" ] (list decodeTimeRange) []
-            |> optionalAt [ "seekable", "asArray" ] (list decodeTimeRange) []
-            |> optionalAt [ "played", "asArray" ] (list decodeTimeRange) []
-            |> optional "textTracks" (collection decodeTextTrack) []
-            |> resolve
+    succeed toState
+        |> required "id" string
+        |> custom decodeMediaType
+        |> custom decodePlaybackStatus
+        |> custom decodeReadyState
+        |> optional "currentSrc" string ""
+        |> required "currentTime" float
+        |> required "duration" float
+        |> custom decodeNetworkState
+        |> optional "videoWidth" int 0
+        |> optional "videoHeight" int 0
+        |> optionalAt [ "buffered", "asArray" ] (list decodeTimeRange) []
+        |> optionalAt [ "seekable", "asArray" ] (list decodeTimeRange) []
+        |> optionalAt [ "played", "asArray" ] (list decodeTimeRange) []
+        |> optional "textTracks" (collection decodeTextTrack) []
+        |> resolve
 
 
 decodeMediaType : Decoder MediaType
@@ -76,9 +76,9 @@ decodeMediaType =
                 _ ->
                     fail <| "This decoder only knows how to decode the state of Audio and Video elements, but was given an element of type " ++ element
     in
-        succeed toMediaType
-            |> optional "tagName" string "VIDEO"
-            |> resolve
+    succeed toMediaType
+        |> optional "tagName" string "VIDEO"
+        |> resolve
 
 
 decodePlaybackStatus : Decoder PlaybackStatus
@@ -105,24 +105,21 @@ decodePlaybackStatus =
                             succeed Buffering
 
                         HaveEnoughData ->
-                            case ended of
-                                True ->
-                                    succeed Ended
+                            if ended then
+                                succeed Ended
 
-                                False ->
-                                    case paused of
-                                        True ->
-                                            succeed Paused
+                            else if paused then
+                                succeed Paused
 
-                                        False ->
-                                            succeed Playing
+                            else
+                                succeed Playing
     in
-        succeed toPlaybackStatus
-            |> custom decodePlaybackError
-            |> custom decodeReadyState
-            |> required "ended" bool
-            |> required "paused" bool
-            |> resolve
+    succeed toPlaybackStatus
+        |> custom decodePlaybackError
+        |> custom decodeReadyState
+        |> required "ended" bool
+        |> required "paused" bool
+        |> resolve
 
 
 decodePlaybackError : Decoder (Maybe PlaybackError)
@@ -149,14 +146,14 @@ decodePlaybackError =
                 _ ->
                     fail <|
                         "Unexpected HTML5MediaError code: "
-                            ++ toString code
+                            ++ String.fromInt code
                             ++ ": "
                             ++ message
     in
-        succeed toPlaybackError
-            |> optionalAt [ "error", "code" ] int 0
-            |> optionalAt [ "error", "message" ] string ""
-            |> resolve
+    succeed toPlaybackError
+        |> optionalAt [ "error", "code" ] int 0
+        |> optionalAt [ "error", "message" ] string ""
+        |> resolve
 
 
 decodeReadyState : Decoder ReadyState
@@ -181,11 +178,11 @@ decodeReadyState =
                     succeed HaveEnoughData
 
                 _ ->
-                    fail <| "Unexpect Ready State Index: " ++ toString code
+                    fail <| "Unexpect Ready State Index: " ++ String.fromInt code
     in
-        succeed toReadyState
-            |> required "readyState" int
-            |> resolve
+    succeed toReadyState
+        |> required "readyState" int
+        |> resolve
 
 
 decodeNetworkState : Decoder NetworkState
@@ -207,11 +204,11 @@ decodeNetworkState =
                     succeed NoSource
 
                 _ ->
-                    fail <| "Unexpect Network State Index: " ++ toString code
+                    fail <| "Unexpect Network State Index: " ++ String.fromInt code
     in
-        succeed toNetworkState
-            |> required "networkState" int
-            |> resolve
+    succeed toNetworkState
+        |> required "networkState" int
+        |> resolve
 
 
 decodeTimeRange : Decoder TimeRange
@@ -280,9 +277,9 @@ decodeTextTrackMode =
                 _ ->
                     succeed Disabled
     in
-        succeed toMode
-            |> optional "mode" string ""
-            |> resolve
+    succeed toMode
+        |> optional "mode" string ""
+        |> resolve
 
 
 decodeTextTrackKind : Decoder TextTrackKind
@@ -292,22 +289,28 @@ decodeTextTrackKind =
         toKind kind =
             if kind == "captions" then
                 succeed Captions
+
             else if kind == "chapters" then
                 succeed Chapters
-            else if (kind == "description" || kind == "descriptions") then
+
+            else if kind == "description" || kind == "descriptions" then
                 succeed Descriptions
+
             else if kind == "metadata" then
                 succeed Metadata
+
             else if kind == "subtitles" then
                 succeed Subtitles
-            else if (kind == "" || kind == " ") then
+
+            else if kind == "" || kind == " " then
                 succeed None
+
             else
                 succeed <| Other kind
     in
-        succeed toKind
-            |> optional "kind" string ""
-            |> resolve
+    succeed toKind
+        |> optional "kind" string ""
+        |> resolve
 
 
 collection : Decoder a -> Decoder (List a)
@@ -316,6 +319,6 @@ collection decoder =
         |> andThen
             (\length ->
                 List.range 0 (length - 1)
-                    |> List.map (\index -> field (toString index) decoder)
+                    |> List.map (\index -> field (String.fromInt index) decoder)
                     |> List.foldr (map2 (::)) (succeed [])
             )

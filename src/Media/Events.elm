@@ -1,4 +1,4 @@
-module Media.Events exposing (allEvents, onVolumeChange, onAbort, onCanPlay, onCanPlayThrough, onDurationChange, onEmptied, onEnded, onError, onLoadStart, onLoadSuspend, onLoadedData, onLoadedMetadata, onPause, onPlaying, onProgress, onSeeked, onSeeking, onStalled, onTimeUpdate, onWaiting)
+module Media.Events exposing (allEvents, onPlaying, onPause, onVolumeChange, onTimeUpdate, onDurationChange, onEnded, onAbort, onSeeked, onSeeking, onLoadStart, onLoadedMetadata, onLoadedData, onLoadSuspend, onEmptied, onWaiting, onStalled, onProgress, onCanPlay, onCanPlayThrough, onError)
 
 {-| ###Events
 
@@ -8,14 +8,17 @@ module Media.Events exposing (allEvents, onVolumeChange, onAbort, onCanPlay, onC
 
 import Array exposing (fromList, get)
 import Html exposing (Attribute)
-import Html.Events exposing (onWithOptions)
-import Json.Decode exposing (Decoder, field, map)
-import Internal.Types exposing (State)
+import Html.Events exposing (custom)
 import Internal.Decode exposing (..)
+import Internal.Types exposing (State)
+import Json.Decode exposing (Decoder, field, map)
 
 
-on e msg =
-    onWithOptions e { preventDefault = True, stopPropagation = True } msg
+
+-- on e decoder msg =
+--     custom e (decoder { message = msg, preventDefault = True, stopPropagation = True })
+-- on e msg =
+--     custom e <| target tagger decodeState
 
 
 {-| -}
@@ -48,59 +51,59 @@ allEvents tagger =
 -}
 onSeeked : (State -> msg) -> Attribute msg
 onSeeked tagger =
-    on "seeked" <| target tagger decodeState
+    custom "seeked" <| target tagger decodeState
 
 
 {-| Triggered when a player begins seeking
 -}
 onSeeking : (State -> msg) -> Attribute msg
 onSeeking tagger =
-    on "seeking" <| target tagger decodeState
+    custom "seeking" <| target tagger decodeState
 
 
 {-| Triggered when playback begins
 -}
 onPlaying : (State -> msg) -> Html.Attribute msg
 onPlaying tagger =
-    on "playing" <| target tagger decodeState
+    custom "playing" <| target tagger decodeState
 
 
 {-| Triggered when the media is paused
 -}
 onPause : (State -> msg) -> Html.Attribute msg
 onPause tagger =
-    on "pause" <| target tagger decodeState
+    custom "pause" <| target tagger decodeState
 
 
 {-| Triggered when the currentTime of the player has changed.
-** NOTE: This doesn't occur on a per frame basis. For performance reasons,
+\*\* NOTE: This doesn't occur custom a per frame basis. For performance reasons,
 some browsers only trigger this event every so often, as infrequently as ever 250ms
-in some cases. **
+in some cases. \*\*
 -}
 onTimeUpdate : (State -> msg) -> Attribute msg
 onTimeUpdate tagger =
-    on "timeupdate" <| target tagger decodeState
+    custom "timeupdate" <| target tagger decodeState
 
 
 {-| Triggered when the duration of a media file changes.
 -}
 onDurationChange : (State -> msg) -> Attribute msg
 onDurationChange tagger =
-    on "durationchange" <| target tagger decodeState
+    custom "durationchange" <| target tagger decodeState
 
 
 {-| Triggered when playback completes
 -}
 onEnded : (State -> msg) -> Attribute msg
 onEnded tagger =
-    on "ended" <| target tagger decodeState
+    custom "ended" <| target tagger decodeState
 
 
 {-| Triggered when the playback of media is aborted (such as restarting it)
 -}
 onAbort : (State -> msg) -> Attribute msg
 onAbort tagger =
-    on "abort" <| target tagger decodeState
+    custom "abort" <| target tagger decodeState
 
 
 {-| Triggered when enough data has been loaded to begin playback of the media,
@@ -109,20 +112,20 @@ buffer.
 -}
 onCanPlay : (State -> msg) -> Attribute msg
 onCanPlay tagger =
-    on "canplay" <| target tagger decodeState
+    custom "canplay" <| target tagger decodeState
 
 
 {-| Triggered when enough data has been loaded to playback the file to the end.
-**NOTE: This event does mean the whole media file has been buffered, only that enough
+\*\*NOTE: This event does mean the whole media file has been buffered, only that enough
 has been buffered that if the current download rate is continued, it will be finished
 fast enough that the user will never have to wait.
 
-** NOTE: Also fired on a toggle of play/pause **
+\*\* NOTE: Also fired on a toggle of play/pause \*\*
 
 -}
 onCanPlayThrough : (State -> msg) -> Attribute msg
 onCanPlayThrough tagger =
-    on "canplaythrough" <| target tagger decodeState
+    custom "canplaythrough" <| target tagger decodeState
 
 
 {-| Triggered when the media has become empty, such as if the load task
@@ -130,7 +133,7 @@ is invoked.
 -}
 onEmptied : (State -> msg) -> Attribute msg
 onEmptied tagger =
-    on "emptied" <| target tagger decodeState
+    custom "emptied" <| target tagger decodeState
 
 
 {-| Fired when the loading of the media stalls, that is, when the browser is trying
@@ -138,37 +141,37 @@ to fetch media data, but it is not forthcoming.
 -}
 onStalled : (State -> msg) -> Attribute msg
 onStalled tagger =
-    on "stalled" <| target tagger decodeState
+    custom "stalled" <| target tagger decodeState
 
 
 {-| Triggered when a media Error occurs.
-** NOTE: These are errors from the native playr of the browser, not errors
-generated by this package. **
+\*\* NOTE: These are errors from the native playr of the browser, not errors
+generated by this package. \*\*
 -}
 onError : (State -> msg) -> Attribute msg
 onError tagger =
-    on "error" <| target tagger decodeState
+    custom "error" <| target tagger decodeState
 
 
 {-| Triggered when the media's first frame or sample has finished loading.
 -}
 onLoadedData : (State -> msg) -> Attribute msg
 onLoadedData tagger =
-    on "loadeddata" <| target tagger decodeState
+    custom "loadeddata" <| target tagger decodeState
 
 
 {-| Triggered when the media's metadata has been completely loaded.
 -}
 onLoadedMetadata : (State -> msg) -> Attribute msg
 onLoadedMetadata tagger =
-    on "loadedmetadata" <| target tagger decodeState
+    custom "loadedmetadata" <| target tagger decodeState
 
 
 {-| Triggered when the loading of the media has begun.
 -}
 onLoadStart : (State -> msg) -> Attribute msg
 onLoadStart tagger =
-    on "loadstart" <| target tagger decodeState
+    custom "loadstart" <| target tagger decodeState
 
 
 {-| Triggered when the loading of the media is suspended for any reason (including
@@ -176,15 +179,15 @@ because it has finished downloading
 -}
 onLoadSuspend : (State -> msg) -> Attribute msg
 onLoadSuspend tagger =
-    on "suspend" <| target tagger decodeState
+    custom "suspend" <| target tagger decodeState
 
 
-{-| Sent when a task is waiting on the completion of another task (such as Play having
+{-| Sent when a task is waiting custom the completion of another task (such as Play having
 to wait until Seek is complete).
 -}
 onWaiting : (State -> msg) -> Attribute msg
 onWaiting tagger =
-    on "waiting" <| target tagger decodeState
+    custom "waiting" <| target tagger decodeState
 
 
 {-| Triggered periodically to provide updates on the download progress of
@@ -192,14 +195,14 @@ the media.
 -}
 onProgress : (State -> msg) -> Attribute msg
 onProgress tagger =
-    on "progress" <| target tagger decodeState
+    custom "progress" <| target tagger decodeState
 
 
 {-| Triggered when volume changes, including muting or unmuting
 -}
 onVolumeChange : (State -> msg) -> Attribute msg
 onVolumeChange tagger =
-    on "volumechange" <| target tagger decodeState
+    custom "volumechange" <| target tagger decodeState
 
 
 {-| NOTE: Only apply to a "track" element.
@@ -209,9 +212,15 @@ Triggered when a textTrack cue changes.
 -}
 onCueChange : (State -> msg) -> Attribute msg
 onCueChange tagger =
-    on "cuechange" <| target tagger decodeState
+    custom "cuechange" <| target tagger decodeState
 
 
-target : (a -> msg) -> Decoder a -> Decoder msg
+
+-- target : (a -> msg) -> Decoder a -> Decoder msg
+-- target tagger decoder =
+--     map tagger <| field "target" decoder
+
+
+target : (a -> msg) -> Decoder a -> Decoder { message : msg, stopPropagation : Bool, preventDefault : Bool }
 target tagger decoder =
-    map tagger <| field "target" decoder
+    map (\payload -> { message = tagger payload, stopPropagation = True, preventDefault = True }) <| field "target" decoder

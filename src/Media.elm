@@ -1,19 +1,9 @@
-module Media
-    exposing
-        ( State
-        , audio
-        , audioWithEvents
-        , video
-        , videoWithEvents
-        , play
-        , pause
-        , seek
-        , load
-        , newVideo
-        , newAudio
-        , PortMsg
-        , changeTextTrackMode
-        )
+module Media exposing
+    ( newVideo, newAudio, State
+    , audio, video, audioWithEvents, videoWithEvents
+    , PortMsg, play, pause, seek, load, changeTextTrackMode
+    , mute
+    )
 
 {-| ###State
 
@@ -29,15 +19,15 @@ module Media
 
 -}
 
-import Json.Encode as Encode
-import Media.State exposing (getId, textTracks, TextTrack, TextTrackMode(..))
-import Media.Events exposing (..)
-import Internal.Types exposing (defaultAudio, defaultVideo)
 import Html exposing (Attribute, Html)
-import Html.Keyed exposing (node)
 import Html.Attributes as HtmlAttrs
-import Media.Attributes as Attrs
+import Html.Keyed exposing (node)
 import Internal.Helpers
+import Internal.Types exposing (defaultAudio, defaultVideo)
+import Json.Encode as Encode
+import Media.Events exposing (allEvents)
+import Media.State exposing (TextTrack, TextTrackMode(..), getId, textTracks)
+
 
 
 {- Types -}
@@ -62,7 +52,7 @@ here with the same function, if you prefer.
 -}
 video : State -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
 video state attrs children =
-    node "video" ([ HtmlAttrs.id <| getId state ] ++ attrs) children
+    node "video" ((HtmlAttrs.id <| getId state) :: attrs) children
 
 
 {-| Same as the video function, but for an audio element.
@@ -75,7 +65,7 @@ of HTML element you're using, not the source file.
 -}
 audio : State -> List (Attribute msg) -> List (Html msg) -> Html msg
 audio state attrs children =
-    Html.audio ([ HtmlAttrs.id <| getId state ] ++ attrs) children
+    Html.audio ((HtmlAttrs.id <| getId state) :: attrs) children
 
 
 {-| Creates a video element with updates for all Media Events. Works just like a standard Html element from
@@ -84,14 +74,14 @@ for updating the media state.
 
 The simplest update will look like this:
 
-`type Msg =
+\`type Msg =
 UpdateMedia Media.State
 
 update msg model =
 case msg of
 UpdateMedia state ->
 ({model | mediaState = state }, Cmd.none )
-`
+\`
 It throws an update event on any of the standard HTMLMediaElement Events,
 such as onTimeUpdate, onPlaying, etc.
 
@@ -102,7 +92,7 @@ you'll have to figure something out using requestAnimationFrame.
 -}
 videoWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 videoWithEvents state tagger attrs children =
-    Html.video ([ HtmlAttrs.id <| getId state ] ++ (allEvents tagger) ++ attrs) children
+    Html.video ((HtmlAttrs.id <| getId state) :: allEvents tagger ++ attrs) children
 
 
 {-| Same as videoWithEvents, but generates an audio element.
@@ -114,7 +104,7 @@ an audio element, you will hear the audio track, but not see the video track.
 -}
 audioWithEvents : State -> (State -> msg) -> List (Attribute msg) -> List (Html msg) -> Html msg
 audioWithEvents state tagger attrs children =
-    Html.video ([ HtmlAttrs.id <| getId state ] ++ (allEvents tagger) ++ attrs) children
+    Html.video ((HtmlAttrs.id <| getId state) :: allEvents tagger ++ attrs) children
 
 
 
@@ -128,7 +118,7 @@ Media.State
 init: (Model, Cmd msg)
 init =
 ( newVideo "myVideo", Cmd.none )
-`
+\`
 
 NOTE: newAudio is for HTMLAudioElements and newVideo is for HTMLVideoElements.
 The kind of file you're using doesn't really matter in this context, what matters
@@ -184,6 +174,13 @@ pause state tagger =
     tagger { tag = "Pause", id = getId state, data = Encode.null }
 
 
+{-| Mute
+-}
+mute : State -> (PortMsg -> Cmd msg) -> Cmd msg
+mute state tagger =
+    tagger { tag = "Mute", id = getId state, data = Encode.null }
+
+
 {-| Change the current position of the playhead to a different time.
 -}
 seek : State -> Float -> (PortMsg -> Cmd msg) -> Cmd msg
@@ -221,11 +218,12 @@ changeTrackModes state tracks mode =
 
                 x :: xs ->
                     if List.member x tracks then
-                        mapFunction (acc ++ [ { x | mode = (stringToTextTrackMode mode) } ]) xs
+                        mapFunction (acc ++ [ { x | mode = stringToTextTrackMode mode } ]) xs
+
                     else
                         mapFunction (acc ++ [ x ]) xs
     in
-        mapFunction [] (Media.State.textTracks state)
+    mapFunction [] (Media.State.textTracks state)
 
 
 {-| sets the mode of the given textTrack to "showing"

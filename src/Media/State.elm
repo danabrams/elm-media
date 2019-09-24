@@ -1,29 +1,4 @@
-module Media.State
-    exposing
-        ( currentTime
-        , getId
-        , duration
-        , source
-        , playbackStatus
-        , PlaybackStatus(..)
-        , PlaybackError
-        , ReadyState(..)
-        , readyState
-        , mediaType
-        , MediaType(..)
-        , networkState
-        , NetworkState(..)
-        , videoSize
-        , buffered
-        , seekable
-        , played
-        , TimeRanges
-        , textTracks
-        , TextTrack
-        , VTTCue
-        , TextTrackMode(..)
-        , TextTrackKind(..)
-        )
+module Media.State exposing (getId, MediaType(..), mediaType, duration, PlaybackStatus(..), PlaybackError, playbackStatus, currentTime, source, ReadyState(..), readyState, NetworkState(..), networkState, videoSize, TimeRanges, buffered, played, seekable, TextTrack, TextTrackKind(..), TextTrackMode(..), VTTCue, textTracks)
 
 {-| ###State
 
@@ -449,6 +424,6 @@ textTracks state =
             , mode = textTrackModeConverter tt.mode
             }
     in
-        case state of
-            Types.State s ->
-                List.map textTrackConverter s.textTracks
+    case state of
+        Types.State s ->
+            List.map textTrackConverter s.textTracks

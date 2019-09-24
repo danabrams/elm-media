@@ -1,14 +1,15 @@
-port module Main exposing (..)
+port module Main exposing (Model, Msg(..), SourceType(..), TrackState(..), init, main, outbound, update, view)
 
-import Html exposing (div, button, text, p)
-import Html.Attributes exposing (id, kind, srclang, src)
+import Browser
+import Html exposing (button, div, p, text, track)
+import Html.Attributes exposing (id, kind, src, srclang)
 import Html.Events exposing (onClick)
-import Media exposing (load, play, pause, seek, PortMsg, newVideo, changeTextTrackMode, video)
-import Media.State exposing (currentTime, duration, getId, playbackStatus, PlaybackStatus(..), played, TimeRanges)
-import Media.Attributes exposing (label, playsInline, controls, mode, crossOrigin, anonymous, autoplay)
-import Media.Events
-import Media.Source exposing (mediaCapture, source, track)
 import Html.Keyed exposing (node)
+import Media exposing (PortMsg, load, mute, newVideo, pause, play, seek, video)
+import Media.Attributes exposing (anonymous, autoplay, controls, crossOrigin, label, mode, playsInline)
+import Media.Events
+import Media.Source exposing (mediaCapture, source)
+import Media.State exposing (PlaybackStatus(..), currentTime, duration, playbackStatus, played)
 
 
 port outbound : PortMsg -> Cmd msg
@@ -41,12 +42,16 @@ type Msg
     | ToggleSource
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { state = newVideo "myVideo", trackState = Hide, mediaSource = VideoSource }, Cmd.none )
+init : () -> ( Model, Cmd Msg )
+init _ =
+    let
+        model =
+            { state = newVideo "myVideo", trackState = Hide, mediaSource = VideoSource }
+    in
+    ( model, Cmd.none )
 
 
-view : Model -> Html.Html Msg
+view : Model -> Browser.Document Msg
 view model =
     let
         playPauseButton =
@@ -60,11 +65,12 @@ view model =
                 _ ->
                     button [ onClick Play ] [ text "Other" ]
 
-        playededRange tr =
-            p [] [ text <| "\nStart :" ++ (toString tr.start) ++ ", End: " ++ (toString tr.end) ]
+        -- mutButton =
+        playedRange tr =
+            p [] [ text <| "\nStart :" ++ String.fromFloat tr.start ++ ", End: " ++ String.fromFloat tr.end ]
 
         playedRanges =
-            (List.map playededRange (played model.state))
+            List.map playedRange (played model.state)
 
         trackAttr =
             case model.trackState of
@@ -88,7 +94,7 @@ view model =
                     ( "video"
                     , video
                         model.state
-                        ((Media.Events.allEvents MediaStateUpdate)
+                        (Media.Events.allEvents MediaStateUpdate
                             ++ [ playsInline True, controls True, crossOrigin anonymous ]
                         )
                         [ ( "source", source "elephants-dream-medium.mp4" [] )
@@ -109,7 +115,7 @@ view model =
                 MediaCapture ->
                     ( "cap"
                     , video model.state
-                        ((Media.Events.allEvents MediaStateUpdate)
+                        (Media.Events.allEvents MediaStateUpdate
                             ++ [ playsInline True, controls True, crossOrigin anonymous, autoplay True ]
                         )
                         [ ( "media-capture", mediaCapture [] [] ) ]
@@ -118,15 +124,17 @@ view model =
         mediaInfo =
             case model.mediaSource of
                 VideoSource ->
-                    [ p [] [ text ("current: " ++ (toString <| currentTime model.state)) ]
-                    , p [] [ text ("duration: " ++ (toString <| duration model.state)) ]
-                    , p [] <| [ text ("Played Ranges: ") ] ++ playedRanges
+                    [ p [] [ text ("current: " ++ (String.fromFloat <| currentTime model.state)) ]
+                    , p [] [ text ("duration: " ++ (String.fromFloat <| duration model.state)) ]
+                    , p [] <| [ text "Played Ranges: " ] ++ playedRanges
                     ]
 
                 MediaCapture ->
                     [ p [] [ text "Live Capture" ] ]
     in
-        div []
+    { title = "Elm Media Example"
+    , body =
+        [ div []
             [ node "div" [] [ videoElement ]
             , p []
                 [ playPauseButton
@@ -134,14 +142,22 @@ view model =
                 , button [ onClick ToggleSource ] [ text "Toggle Source" ]
                 , if isVideo then
                     button [ onClick ToggleTextTrack ] [ text "Toggle Subtitles" ]
+
                   else
                     text ""
                 ]
             , div [] mediaInfo
             ]
+        ]
+    }
 
 
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        _ =
+            Debug.log "model" model
+    in
     case msg of
         Play ->
             ( model, play model.state outbound )
@@ -165,7 +181,7 @@ update msg model =
                         _ ->
                             Show
             in
-                ( { model | trackState = newTrackState }, Cmd.none )
+            ( { model | trackState = newTrackState }, Cmd.none )
 
         ToggleSource ->
             let
@@ -177,11 +193,12 @@ update msg model =
                         MediaCapture ->
                             { model | mediaSource = VideoSource }
             in
-                ( newModel, load model.state outbound )
+            ( newModel, load model.state outbound )
 
         _ ->
             ( model, Cmd.none )
 
 
+main : Program () Model Msg
 main =
-    Html.program { init = init, view = view, update = update, subscriptions = always Sub.none }
+    Browser.document { init = init, view = view, update = update, subscriptions = always Sub.none }
