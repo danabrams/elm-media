@@ -1,15 +1,15 @@
-port module Main exposing (..)
+module Main exposing (main)
 
-import Html exposing (div, button, text, p)
-import Html.Attributes
-import Media.Source exposing (mediaCapture)
-import Media exposing (State, newVideo, video)
+import Html exposing (Html, div)
+import Media exposing (newVideo, video)
 import Media.Attributes exposing (controls)
+import Media.Source exposing (mediaCapture)
 
 
+main : Html msg
 main =
     div []
         [ video (newVideo "capture")
             [ controls True ]
-            [ mediaCapture [] [] ]
+            [ ( "mediaCapture", mediaCapture [] [] ) ]
         ]

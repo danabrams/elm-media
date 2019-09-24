@@ -1,15 +1,26 @@
 # Elm-Media
 
-A New, port-based wrapper on the HTML Media API
+A New, port-based wrapper on the HTML Media API. This has been ported, with no improvements, to Elm 0.19.
+
+## Trying out the example
+
+To try out the example:
+
+1. Clone this repo.
+2. Download the [elephants-dream mp4](https://archive.org/details/ElephantsDream) and move it to `examples/elephants-dream-medium.mp4` and the [subtitle track](https://github.com/gpac/gpac/blob/master/tests/media/webvtt/elephants-dream-subtitles-en.vtt) and move it to `examples/elephants-dream-subtitles-en.vtt`.
+3. Navigate to the `examples` directory and run `elm make Main.elm --output=main.js`.
+4. Start an http server in the root directory of the repo. [This](https://www.npmjs.com/package/http-server) node server worked well.
+5. In a browser, navigate to `http://127.0.0.1:8080/examples/Main.html`.
+
 ## Getting Started
 
 This project requires a port (and some other javascript). You can set it up by importing the "Port/mediaPort.js" file into your html file, and doing something like the following:
 
 ```html 
    <script src="main.js"></script>
-    <script src="../Port/mediaApp.js"></script>
+   <script src="../Port/mediaApp.js"></script>
 
-    <script>
+   <script>
         MediaApp.Modify.timeRanges();
         /* Adds the "asArray getter to the TimeRanges object prototype, allowing us to decode the media element state without using Native/Kernel Code */
         MediaApp.Modify.tracks();
@@ -21,6 +32,7 @@ This project requires a port (and some other javascript). You can set it up by i
         /* Subscribe to our port and pass it the default portHandler(msg) function from "/Port/mediaApp.js" */
     </script>
 ```
+
 
 ### Tracking Media Element State
 

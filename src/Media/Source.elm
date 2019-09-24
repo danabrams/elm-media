@@ -1,18 +1,12 @@
-module Media.Source
-    exposing
-        ( source
-        , fileType
-        , FileType(..)
-        , audioCodec
-        , videoCodec
-        , timeFragment
-        , idFragment
-        , trackFragment
-          --, spatialFragment
-          --, spatialFragmentWithPercent
-        , mediaCapture
-        , track
-        )
+module Media.Source exposing
+    ( source
+    , fileType, FileType(..), audioCodec, videoCodec
+    , timeFragment, idFragment, trackFragment
+    , track
+    , mediaCapture
+    --, spatialFragment
+    --, spatialFragmentWithPercent
+    )
 
 {-| API for creating better source elements. Includes support for easily generating mime type and
 codec attributes, and also for generating Media Fragment URIs.
@@ -27,8 +21,8 @@ codec attributes, and also for generating Media Fragment URIs.
 
 # Media Fragment API
 
-** Note: If you check the code, there's commented out support for spatial fragments. However, so far as I can
-tell, no browser has ever implemented this part of the spec for video. **
+\*\* Note: If you check the code, there's commented out support for spatial fragments. However, so far as I can
+tell, no browser has ever implemented this part of the spec for video. \*\*
 
 @docs timeFragment, idFragment, trackFragment
 
@@ -44,8 +38,8 @@ tell, no browser has ever implemented this part of the spec for video. **
 
 -}
 
-import Html exposing (audio, Html, Attribute, node)
-import Html.Attributes exposing (controls, type_, src)
+import Html exposing (Attribute, Html, audio, node)
+import Html.Attributes exposing (controls, src, type_)
 
 
 {-| Represents different audio and video formats. Some also include codec information.
@@ -131,7 +125,7 @@ source url attrs =
             }
 
         gathered =
-            List.foldl gatherAttributes (initAttributes) attrs
+            List.foldl gatherAttributes initAttributes attrs
 
         codecs =
             case ( gathered.audioCodec, gathered.videoCodec ) of
@@ -161,15 +155,16 @@ source url attrs =
                     []
 
         fragment =
-            if (List.isEmpty gathered.fragments) then
+            if List.isEmpty gathered.fragments then
                 ""
+
             else
                 "#" ++ fragmentsToUriString gathered.fragments
 
         sourceAttributes =
             mime
     in
-        Html.source ([ src <| url ++ fragment ] ++ sourceAttributes) []
+    Html.source ([ src <| url ++ fragment ] ++ sourceAttributes) []
 
 
 {-| -}
@@ -185,7 +180,7 @@ playableType attrs =
             }
 
         gathered =
-            List.foldl gatherAttributes (initAttributes) attrs
+            List.foldl gatherAttributes initAttributes attrs
 
         codecs =
             case ( gathered.audioCodec, gathered.videoCodec ) of
@@ -201,17 +196,17 @@ playableType attrs =
                 ( Just ac, Just vc ) ->
                     Just <| vc ++ "," ++ ac
     in
-        case gathered.mime of
-            Just m ->
-                case codecs of
-                    Just c ->
-                        m ++ "; codecs=\"" ++ c ++ "\""
+    case gathered.mime of
+        Just m ->
+            case codecs of
+                Just c ->
+                    m ++ "; codecs=\"" ++ c ++ "\""
 
-                    Nothing ->
-                        m
+                Nothing ->
+                    m
 
-            Nothing ->
-                ""
+        Nothing ->
+            ""
 
 
 gatherAttributes : Source msg -> GatheredAttributes -> GatheredAttributes
@@ -232,8 +227,8 @@ gatherAttributes attr gathered =
         MimeWithVideoCodec { mime, codec } ->
             { gathered | mime = Just mime, videoCodec = Just codec }
 
-        MimeWithCodecs { mime, audioCodec, videoCodec } ->
-            { gathered | mime = Just mime, audioCodec = Just audioCodec, videoCodec = Just videoCodec }
+        MimeWithCodecs { mime, mimeAudioCodec, mimeVideoCodec } ->
+            { gathered | mime = Just mime, audioCodec = Just mimeAudioCodec, videoCodec = Just mimeVideoCodec }
 
         Frag newFragment ->
             { gathered | fragments = gathered.fragments ++ [ newFragment ] }
@@ -256,7 +251,7 @@ fragmentToString : Fragment -> String
 fragmentToString fragment =
     case fragment of
         Temporal ( start, end ) ->
-            "t=" ++ toString start ++ "," ++ toString end
+            "t=" ++ String.fromFloat start ++ "," ++ String.fromFloat end
 
         Id name ->
             "id=" ++ name
@@ -295,7 +290,7 @@ type Source msg
     | VideoCodec String
     | MimeWithAudioCodec { mime : String, codec : String }
     | MimeWithVideoCodec { mime : String, codec : String }
-    | MimeWithCodecs { mime : String, audioCodec : String, videoCodec : String }
+    | MimeWithCodecs { mime : String, mimeAudioCodec : String, mimeVideoCodec : String }
     | Frag Fragment
 
 
@@ -374,11 +369,11 @@ videoCodec codec =
 `source "media.mp4" [fileType MP4, timeFragment (2,15)]` will specify the video media.mp4
 from 2 seconds in until 15 seconds in.
 
-** Note: This is the most cross-browser compatible part of the Media Fragments I've seen. I haven't tested
+\*\* Note: This is the most cross-browser compatible part of the Media Fragments I've seen. I haven't tested
 Windows at all yet, but this seems to work on the latest versions of Safari, Chrome, and Firefox.
 
 Also note, this doesn't appear to work on any of the browsers with the `loop` attribute. It will merely
-play as normal, with the time-fragment, but without looping **
+play as normal, with the time-fragment, but without looping \*\*
 
 -}
 timeFragment : ( Float, Float ) -> Source msg
@@ -391,14 +386,14 @@ embedded in the source.
 
 `source "media.mp4" [fileType MP4, idFragment "#Chapter1"]` will start playing at #Chapter1.
 
-** Note: Honestly, I produce mp4's all day, every day for a living, and I've never seen this used on the web.
+\*\* Note: Honestly, I produce mp4's all day, every day for a living, and I've never seen this used on the web.
 I've only seen it implemented differently.
 
 In theory, MP4 is a subset of the MOV container format, and I believe WebM is a subset of MKV, both of which
 support chapters, but I've never seen either with ids.
 
 I'm going to do some work with FFMPEG, Apple Compressor, Adobe Media Encoder and MP4Box to find out, but until then,
-this is built the HTML5 spec, but untested. **
+this is built the HTML5 spec, but untested. \*\*
 
 -}
 idFragment : String -> Source msg
@@ -411,9 +406,9 @@ idFragment name =
 `source "media.mp4" [fileType MP4, trackFragment "spanish-audio"]` becomes
 `<source src="media.mp4" type="video/mp4#track=spanish-audio>"`
 
-** Note: Multi-track files are a rarity on the internet. Players like YouTube tend to implement
+\*\* Note: Multi-track files are a rarity on the internet. Players like YouTube tend to implement
 this functionality in a different way. That said, I definitely can create multi-track files and test
-this cross-browser, and will do so ASAP. **
+this cross-browser, and will do so ASAP. \*\*
 
 -}
 trackFragment : String -> Source msg

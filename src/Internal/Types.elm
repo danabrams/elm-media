@@ -1,4 +1,4 @@
-module Internal.Types exposing (..)
+module Internal.Types exposing (Id(..), InternalState, MediaType(..), NetworkState(..), PlaybackError(..), PlaybackStatus(..), ReadyState(..), State(..), TextTrack, TextTrackKind(..), TextTrackMode(..), TimeRange, VTTCue, defaultAudio, defaultVideo)
 
 
 type alias InternalState =
